@@ -36,6 +36,7 @@ jobs:
         run: |
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
           echo "::add-matcher::.github/workflows/matchers/python.json"
-      - name: Write secrets file
-        run: echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml
+      - name: Write secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
       - run: esphome yeelight_ceiling_light.yaml compile
