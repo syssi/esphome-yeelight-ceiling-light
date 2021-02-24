@@ -1,0 +1,42 @@
+name: CI
+on: [push]  # yamllint disable-line rule:truthy
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      - name: Cache pip modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: esphome-pip-3.7
+      - name: Cache ~/.platformio
+        uses: actions/cache@v1
+        with:
+          path: ~/.platformio
+          key: test-home-platformio
+      - name: Set up environment
+        run: pip3 install esphome
+      - name: Register problem matchers
+        run: |
+          echo "::add-matcher::.github/workflows/matchers/gcc.json"
+          echo "::add-matcher::.github/workflows/matchers/python.json"
+      - name: Write secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
+      - run: esphome yeelight_ceiling_light.yaml compile
