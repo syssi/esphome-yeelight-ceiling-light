@@ -25,15 +25,11 @@ jobs:
         with:
           path: ~/.cache/pip
           key: esphome-pip-3.7
-          restore-keys: |
-            esphome-pip-3.7
       - name: Cache ~/.platformio
         uses: actions/cache@v1
         with:
           path: ~/.platformio
           key: test-home-platformio
-          restore-keys: |
-            test-home-platformio
       - name: Set up environment
         run: script/setup
       - name: Register problem matchers
