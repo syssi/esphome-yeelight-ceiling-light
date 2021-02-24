@@ -46,12 +46,18 @@ power_supply:
 
 light:
   - platform: monochromatic
-    output: output_nightlight
     name: "${name} night light"
+    id: night_light
+    output: output_nightlight
+    on_turn_on:
+      - light.turn_off: ceiling_light
   - platform: cwww
     name: "${name} ceiling light"
+    id: ceiling_light
     cold_white: output_cold
     warm_white: output_warm
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
     constant_brightness: true
+    on_turn_on:
+      - light.turn_off: night_light

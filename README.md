@@ -19,13 +19,8 @@ Esphome custom firmware for the Yeelight Ceiling Light (YLXD76YL).
 - Nightlight (2700K)
   - Brightness
 - Sensor
-  - Power supply (ESP32 VCC)
+  - Power supply voltage (ESP32 VCC)
 
-
-## TODOs
-
-- Interlock light and nightlight mode
-- Bluethooth gateway ([Known bugs](#known-bugs))
 
 ## Known bugs
 
