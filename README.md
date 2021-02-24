@@ -25,8 +25,11 @@ Esphome custom firmware for the Yeelight Ceiling Light (YLXD76YL).
 ## TODOs
 
 - Interlock light and nightlight mode
-- Bluethooth gateway
+- Bluethooth gateway ([Known bugs](#known-bugs))
 
+## Known bugs
+
+- Bootloop when BLE Tracker configured: https://github.com/esphome/issues/issues/1731
 
 ## GPIOs
 
