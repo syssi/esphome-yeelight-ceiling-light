@@ -1,0 +1,57 @@
+substitutions:
+  name: yeelight_ceiling_light
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp32doit-devkit-v1
+  platformio_options:
+    platform: espressif32@1.11.0
+    platform_packages: |-4
+          framework-arduinoespressif32 @ https://github.com/pauln/arduino-esp32.git#solo-no-mac-crc/1.0.4
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+api:
+logger:
+
+sensor:
+  - platform: adc
+    pin: GPIO35
+    name: "${name} power supply"
+    attenuation: 11db
+
+output:
+  - platform: ledc
+    pin: GPIO19
+    id: output_warm
+    power_supply: power
+  - platform: ledc
+    pin: GPIO21
+    id: output_cold
+    power_supply: power
+  - platform: ledc
+    pin: GPIO23
+    id: output_nightlight
+    power_supply: power
+
+power_supply:
+  - id: power
+    pin: GPIO22
+    enable_time: 0s
+    keep_on_time: 2s
+
+light:
+  - platform: monochromatic
+    output: output_nightlight
+    name: "${name} night light"
+  - platform: cwww
+    name: "${name} ceiling light"
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
