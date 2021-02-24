@@ -31,7 +31,7 @@ jobs:
           path: ~/.platformio
           key: test-home-platformio
       - name: Set up environment
-        run: script/setup
+        run: tests/setup
       - name: Register problem matchers
         run: |
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
