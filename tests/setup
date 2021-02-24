@@ -1,7 +1,0 @@
-#!/bin/bash
-# Set up ESPHome dev environment
-
-set -e
-
-pip3 install -r tests/requirements.txt -r tests/requirements_test.txt
-pip3 install -e .
