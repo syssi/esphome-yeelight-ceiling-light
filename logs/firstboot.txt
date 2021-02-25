@@ -1,0 +1,107 @@
+[11:56:29]ets Jun  8 2016 00:22:57
+[11:56:29]
+[11:56:29]rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+[11:56:29]configsip: 0, SPIWP:0xee
+[11:56:29]clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+[11:56:29]mode:DIO, clock div:2
+[11:56:29]load:0x3fff0018,len:4
+[11:56:29]load:0x3fff001c,len:1044
+[11:56:29]load:0x40078000,len:8896
+[11:56:29]load:0x40080400,len:5828
+[11:56:29]entry 0x400806ac
+[11:56:30]\xff[I][logger:166]: Log initialized
+[11:56:30][C][ota:366]: There have been 0 suspected unsuccessful boot attempts.
+[11:56:30][I][app:029]: Running through setup()...
+[11:56:30][C][power_supply:010]: Setting up Power Supply...
+[11:56:30][C][light:097]: Setting up light 'unused_yeelight night light'...
+[11:56:30][D][light:265]: 'unused_yeelight night light' Setting:
+[11:56:30][D][light:278]:   Brightness: 100%
+[11:56:30][C][light:097]: Setting up light 'unused_yeelight ceiling light'...
+[11:56:30][D][light:265]: 'unused_yeelight ceiling light' Setting:
+[11:56:30][D][light:278]:   Brightness: 100%
+[11:56:30][D][light:282]:   Color Temperature: 1.0 mireds
+[11:56:30][D][light:287]:   Red=100%, Green=100%, Blue=100%
+[11:56:30][D][binary_sensor:034]: 'unused_yeelight Status': Sending initial state OFF
+[11:56:30][C][adc:018]: Setting up ADC 'unused_yeelight power supply'...
+[11:56:30][D][text_sensor:015]: 'unused_yeelight Esphome Version': Sending state '1.15.3 Feb 25 2021, 11:52:09'
+[11:56:30][C][wifi:033]: Setting up WiFi...
+[11:56:30][I][wifi:194]: WiFi Connecting to 'xxxxxxxx'...
+[11:56:30][D][sensor:092]: 'unused_yeelight Uptime': Sending state 0.00000 days with 0 decimals of accuracy
+[11:56:30][D][adc:056]: 'unused_yeelight power supply': Got voltage=3.90V
+[11:56:30][D][sensor:092]: 'unused_yeelight power supply': Sending state 3.90000 V with 2 decimals of accuracy
+[11:56:31][I][wifi:457]: WiFi Connected!
+[11:56:31][C][wifi:303]:   SSID: 'xxxxxxxx'
+[11:56:31][C][wifi:304]:   IP Address: 192.168.xxx.xxx
+[11:56:31][C][wifi:306]:   BSSID: F6:XX:XX:XX:XX:XX
+[11:56:31][C][wifi:307]:   Hostname: 'unused_yeelight'
+[11:56:31][C][wifi:311]:   Signal strength: -68 dB ▂▄▆█
+[11:56:31][C][wifi:315]:   Channel: 3
+[11:56:31][C][wifi:316]:   Subnet: 255.255.255.0
+[11:56:31][C][wifi:317]:   Gateway: 192.168.xxx.xxx
+[11:56:31][C][wifi:318]:   DNS1: 192.168.xxx.xxx
+[11:56:31][C][wifi:319]:   DNS2: 0.0.0.0
+[11:56:31][C][ota:029]: Over-The-Air Updates:
+[11:56:31][C][ota:030]:   Address: unused_yeelight.local:3232
+[11:56:31][C][ota:032]:   Using Password.
+[11:56:31][C][api:022]: Setting up Home Assistant API server...
+[11:56:31][I][app:059]: setup() finished successfully!
+[11:56:31][I][app:105]: ESPHome version 1.15.3 compiled on Feb 25 2021, 11:52:09
+[11:56:31][C][wifi:443]: WiFi:
+[11:56:31][C][wifi:303]:   SSID: 'xxxxxxxx'
+[11:56:31][C][wifi:304]:   IP Address: 192.168.xxx.xxx
+[11:56:31][C][wifi:306]:   BSSID: F6:XX:XX:XX:XX:XX
+[11:56:31][C][wifi:307]:   Hostname: 'unused_yeelight'
+[11:56:31][C][wifi:311]:   Signal strength: -68 dB ▂▄▆█
+[11:56:31][C][wifi:315]:   Channel: 3
+[11:56:31][C][wifi:316]:   Subnet: 255.255.255.0
+[11:56:31][C][wifi:317]:   Gateway: 192.168.xxx.xxx
+[11:56:31][C][wifi:318]:   DNS1: 192.168.xxx.xxx
+[11:56:31][C][wifi:319]:   DNS2: 0.0.0.0
+[11:56:31][C][power_supply:017]: Power Supply:
+[11:56:31][C][power_supply:018]:   Pin: GPIO22 (Mode: OUTPUT)
+[11:56:31][C][power_supply:019]:   Time to enable: 0 ms
+[11:56:31][C][power_supply:020]:   Keep on time: 2.0 s
+[11:56:31][C][uptime.sensor:030]: Uptime Sensor 'unused_yeelight Uptime'
+[11:56:31][C][uptime.sensor:030]:   Unit of Measurement: 'days'
+[11:56:31][C][uptime.sensor:030]:   Accuracy Decimals: 0
+[11:56:31][C][uptime.sensor:030]:   Icon: 'mdi:timer-outline'
+[11:56:31][C][ledc.output:032]: LEDC Output:
+[11:56:31][C][ledc.output:033]:   Pin GPIO19 (Mode: OUTPUT)
+[11:56:31][C][ledc.output:034]:   LEDC Channel: 0
+[11:56:31][C][ledc.output:035]:   Frequency: 1000.0 Hz
+[11:56:31][C][ledc.output:032]: LEDC Output:
+[11:56:31][C][ledc.output:033]:   Pin GPIO21 (Mode: OUTPUT)
+[11:56:31][C][ledc.output:034]:   LEDC Channel: 1
+[11:56:31][C][ledc.output:035]:   Frequency: 1000.0 Hz
+[11:56:31][C][ledc.output:032]: LEDC Output:
+[11:56:31][C][ledc.output:033]:   Pin GPIO23 (Mode: OUTPUT)
+[11:56:31][C][ledc.output:034]:   LEDC Channel: 2
+[11:56:31][C][ledc.output:035]:   Frequency: 1000.0 Hz
+[11:56:31][C][logger:185]: Logger:
+[11:56:31][C][logger:186]:   Level: DEBUG
+[11:56:31][C][logger:187]:   Log Baud Rate: 115200
+[11:56:31][C][logger:188]:   Hardware UART: UART0
+[11:56:31][C][light:178]: Light 'unused_yeelight night light'
+[11:56:31][C][light:180]:   Default Transition Length: 0.3s
+[11:56:31][C][light:181]:   Gamma Correct: 0.00
+[11:56:31][C][light:178]: Light 'unused_yeelight ceiling light'
+[11:56:31][C][light:180]:   Default Transition Length: 0.3s
+[11:56:31][C][light:181]:   Gamma Correct: 0.00
+[11:56:31][C][light:184]:   Min Mireds: 153.8
+[11:56:31][C][light:185]:   Max Mireds: 370.4
+[11:56:31][C][status:034]: Status Binary Sensor 'unused_yeelight Status'
+[11:56:31][C][status:034]:   Device Class: 'connectivity'
+[11:56:31][C][adc:026]: ADC Sensor 'unused_yeelight power supply'
+[11:56:31][C][adc:026]:   Unit of Measurement: 'V'
+[11:56:31][C][adc:026]:   Accuracy Decimals: 2
+[11:56:31][C][adc:026]:   Icon: 'mdi:flash'
+[11:56:31][C][adc:035]:   Pin: 35
+[11:56:31][C][adc:047]:  Attenuation: 11db (max 3.9V)
+[11:56:31][C][adc:051]:   Update Interval: 60.0s
+[11:56:31][C][version.text_sensor:021]: Version Text Sensor 'unused_yeelight Esphome Version'
+[11:56:31][C][version.text_sensor:021]:   Icon: 'mdi:new-box'
+[11:56:31][C][ota:029]: Over-The-Air Updates:
+[11:56:31][C][ota:030]:   Address: unused_yeelight.local:3232
+[11:56:31][C][ota:032]:   Using Password.
+[11:56:31][C][api:095]: API Server:
+[11:56:31][C][api:096]:   Address: unused_yeelight.local:6053

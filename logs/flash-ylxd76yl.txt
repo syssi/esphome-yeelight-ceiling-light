@@ -1,0 +1,271 @@
+$ ~/.local/bin/esphome unused_yeelight.yaml run   
+INFO Reading configuration unused_yeelight.yaml...
+INFO Generating C++ source...
+INFO Core config or version changed, cleaning build files...
+INFO Compiling app...
+INFO Running:  platformio run -d unused_yeelight
+**************************************************************************************************************************************************************************************************************************
+Obsolete PIO Core v4.3.4 is used (previous was 5.0.2)
+Please remove multiple PIO Cores from a system:
+https://docs.platformio.org/page/faq.html#multiple-pio-cores-in-a-system
+**************************************************************************************************************************************************************************************************************************
+Processing unused_yeelight (board: esp32doit-devkit-v1; framework: arduino; platform: espressif32@1.11.0)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
+PACKAGES: 
+ - framework-arduinoespressif32 49b5f52 
+ - tool-esptoolpy 1.20600.0 (2.6.0) 
+ - toolchain-xtensa32 2.50200.80 (5.2.0)
+Looking for AsyncTCP-esphome library in registry
+LibraryManager: Installing id=6798 @ 1.1.1
+AsyncTCP-esphome @ 1.1.1 has been successfully installed!
+Dependency Graph
+|-- <AsyncTCP-esphome> 1.1.1
+|-- <ESPmDNS> 1.0
+|   |-- <WiFi> 1.0
+|-- <Update> 1.0
+|-- <WiFi> 1.0
+Compiling .pioenvs/unused_yeelight/src/esphome/components/adc/adc_sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/api_connection.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/api_pb2.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/api_pb2_service.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/api_server.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/list_entities.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/proto.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/subscribe_state.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/user_services.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/api/util.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/binary_sensor/automation.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/binary_sensor/binary_sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/binary_sensor/filter.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/ledc/ledc_output.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/light/addressable_light.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/light/light_state.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/logger/logger.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/ota/ota_component.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/output/automation.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/output/float_output.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/power_supply/power_supply.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/sensor/automation.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/sensor/filter.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/sensor/sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/status/status_binary_sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/text_sensor/text_sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/uptime/uptime_sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/version/version_text_sensor.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/wifi/wifi_component.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/wifi/wifi_component_esp32.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/components/wifi/wifi_component_esp8266.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/application.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/component.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/controller.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/esphal.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/helpers.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/log.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/preferences.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/scheduler.cpp.o
+Compiling .pioenvs/unused_yeelight/src/esphome/core/util.cpp.o
+Compiling .pioenvs/unused_yeelight/src/main.cpp.o
+Generating partitions .pioenvs/unused_yeelight/partitions.bin
+Compiling .pioenvs/unused_yeelight/lib00b/AsyncTCP-esphome/AsyncTCP.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/ETH.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFi.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiAP.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiClient.cpp.o
+Archiving .pioenvs/unused_yeelight/lib00b/libAsyncTCP-esphome.a
+Indexing .pioenvs/unused_yeelight/lib00b/libAsyncTCP-esphome.a
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiGeneric.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiMulti.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiSTA.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiScan.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiServer.cpp.o
+Compiling .pioenvs/unused_yeelight/lib057/WiFi/WiFiUdp.cpp.o
+Compiling .pioenvs/unused_yeelight/lib8d8/ESPmDNS/ESPmDNS.cpp.o
+Compiling .pioenvs/unused_yeelight/libf5c/Update/Updater.cpp.o
+Archiving .pioenvs/unused_yeelight/libFrameworkArduinoVariant.a
+Indexing .pioenvs/unused_yeelight/libFrameworkArduinoVariant.a
+Archiving .pioenvs/unused_yeelight/lib057/libWiFi.a
+Indexing .pioenvs/unused_yeelight/lib057/libWiFi.a
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/Esp.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/FunctionalInterrupt.cpp.o
+Archiving .pioenvs/unused_yeelight/lib8d8/libESPmDNS.a
+Indexing .pioenvs/unused_yeelight/lib8d8/libESPmDNS.a
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/HardwareSerial.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/IPAddress.cpp.o
+Archiving .pioenvs/unused_yeelight/libf5c/libUpdate.a
+Indexing .pioenvs/unused_yeelight/libf5c/libUpdate.a
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/IPv6Address.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/MD5Builder.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/Print.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/Stream.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/StreamString.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/WMath.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/WString.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/base64.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/cbuf.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-adc.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-bt.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-cpu.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-dac.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-gpio.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-i2c.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-ledc.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-matrix.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-misc.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-psram.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-rmt.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-sigmadelta.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-spi.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-time.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-timer.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-touch.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/esp32-hal-uart.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/libb64/cdecode.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/libb64/cencode.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/main.cpp.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/stdlib_noniso.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/wiring_pulse.c.o
+Compiling .pioenvs/unused_yeelight/FrameworkArduino/wiring_shift.c.o
+Archiving .pioenvs/unused_yeelight/libFrameworkArduino.a
+Indexing .pioenvs/unused_yeelight/libFrameworkArduino.a
+Linking .pioenvs/unused_yeelight/firmware.elf
+Building .pioenvs/unused_yeelight/firmware.bin
+Retrieving maximum program size .pioenvs/unused_yeelight/firmware.elf
+Checking size .pioenvs/unused_yeelight/firmware.elf
+RAM:   [=         ]  12.2% (used 39864 bytes from 327680 bytes)
+Flash: [=====     ]  47.3% (used 868190 bytes from 1835008 bytes)
+============================================================================================== [SUCCESS] Took 26.17 seconds ==============================================================================================
+INFO Successfully compiled program.
+INFO Resolving IP address of unused_yeelight.local
+ERROR Error resolving IP address of unused_yeelight.local. Is it connected to WiFi?
+ERROR (If this error persists, please set a static IP address: https://esphome.io/components/wifi.html#manual-ips)
+ERROR Error resolving IP address: Error resolving address with mDNS: Did not respond. Maybe the device is offline., [Errno -2] Name or service not known
+sebastian@wolowitz:~/esphome$ ~/.local/bin/esphome unused_yeelight.yaml run
+INFO Reading configuration unused_yeelight.yaml...
+INFO Generating C++ source...
+INFO Compiling app...
+INFO Running:  platformio run -d unused_yeelight
+**************************************************************************************************************************************************************************************************************************
+Obsolete PIO Core v4.3.4 is used (previous was 5.0.2)
+Please remove multiple PIO Cores from a system:
+https://docs.platformio.org/page/faq.html#multiple-pio-cores-in-a-system
+**************************************************************************************************************************************************************************************************************************
+Processing unused_yeelight (board: esp32doit-devkit-v1; framework: arduino; platform: espressif32@1.11.0)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
+PACKAGES: 
+ - framework-arduinoespressif32 49b5f52 
+ - tool-esptoolpy 1.20600.0 (2.6.0) 
+ - toolchain-xtensa32 2.50200.80 (5.2.0)
+Dependency Graph
+|-- <AsyncTCP-esphome> 1.1.1
+|-- <ESPmDNS> 1.0
+|   |-- <WiFi> 1.0
+|-- <Update> 1.0
+|-- <WiFi> 1.0
+Retrieving maximum program size .pioenvs/unused_yeelight/firmware.elf
+Checking size .pioenvs/unused_yeelight/firmware.elf
+RAM:   [=         ]  12.2% (used 39864 bytes from 327680 bytes)
+Flash: [=====     ]  47.3% (used 868190 bytes from 1835008 bytes)
+============================================================================================== [SUCCESS] Took 1.73 seconds ==============================================================================================
+INFO Successfully compiled program.
+Found multiple options, please choose one:
+  [1] /dev/ttyUSB0 (FT232R USB UART)
+  [2] Over The Air (unused_yeelight.local)
+(number): 1
+INFO Running:  platformio run -d unused_yeelight -t upload --upload-port /dev/ttyUSB0
+**************************************************************************************************************************************************************************************************************************
+Obsolete PIO Core v4.3.4 is used (previous was 5.0.2)
+Please remove multiple PIO Cores from a system:
+https://docs.platformio.org/page/faq.html#multiple-pio-cores-in-a-system
+**************************************************************************************************************************************************************************************************************************
+Processing unused_yeelight (board: esp32doit-devkit-v1; framework: arduino; platform: espressif32@1.11.0)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
+PACKAGES: 
+ - framework-arduinoespressif32 49b5f52 
+ - tool-esptoolpy 1.20600.0 (2.6.0) 
+ - tool-mkspiffs 2.230.0 (2.30) 
+ - toolchain-xtensa32 2.50200.80 (5.2.0)
+Dependency Graph
+|-- <AsyncTCP-esphome> 1.1.1
+|-- <ESPmDNS> 1.0
+|   |-- <WiFi> 1.0
+|-- <Update> 1.0
+|-- <WiFi> 1.0
+Retrieving maximum program size .pioenvs/unused_yeelight/firmware.elf
+Checking size .pioenvs/unused_yeelight/firmware.elf
+RAM:   [=         ]  12.2% (used 39864 bytes from 327680 bytes)
+Flash: [=====     ]  47.3% (used 868190 bytes from 1835008 bytes)
+Configuring upload protocol...
+AVAILABLE: esp-prog, espota, esptool, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa
+CURRENT: upload_protocol = esptool
+Looking for upload port...
+Use manually specified: /dev/ttyUSB0
+Uploading .pioenvs/unused_yeelight/firmware.bin
+Serial port /dev/ttyUSB0
+Connecting.....
+Chip is unknown ESP32 (revision 1)
+Features: WiFi, BT, Single Core, 240MHz, VRef calibration in efuse, Coding Scheme 3/4
+MAC: 64:XX:XX:XX:XX:XX
+Uploading stub...
+Running stub...
+Stub running...
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Compressed 15872 bytes to 10319...
+
+Writing at 0x00001000... (100 %)
+Wrote 15872 bytes (10319 compressed) at 0x00001000 in 0.9 seconds (effective 139.3 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 144...
+
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (144 compressed) at 0x00008000 in 0.0 seconds (effective 772.9 kbit/s)...
+Hash of data verified.
+Compressed 8192 bytes to 47...
+
+Writing at 0x0000e000... (100 %)
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.0 seconds (effective 4095.8 kbit/s)...
+Hash of data verified.
+Compressed 868304 bytes to 484986...
+
+Writing at 0x00010000... (3 %)
+Writing at 0x00014000... (6 %)
+Writing at 0x00018000... (10 %)
+Writing at 0x0001c000... (13 %)
+Writing at 0x00020000... (16 %)
+Writing at 0x00024000... (20 %)
+Writing at 0x00028000... (23 %)
+Writing at 0x0002c000... (26 %)
+Writing at 0x00030000... (30 %)
+Writing at 0x00034000... (33 %)
+Writing at 0x00038000... (36 %)
+Writing at 0x0003c000... (40 %)
+Writing at 0x00040000... (43 %)
+Writing at 0x00044000... (46 %)
+Writing at 0x00048000... (50 %)
+Writing at 0x0004c000... (53 %)
+Writing at 0x00050000... (56 %)
+Writing at 0x00054000... (60 %)
+Writing at 0x00058000... (63 %)
+Writing at 0x0005c000... (66 %)
+Writing at 0x00060000... (70 %)
+Writing at 0x00064000... (73 %)
+Writing at 0x00068000... (76 %)
+Writing at 0x0006c000... (80 %)
+Writing at 0x00070000... (83 %)
+Writing at 0x00074000... (86 %)
+Writing at 0x00078000... (90 %)
+Writing at 0x0007c000... (93 %)
+Writing at 0x00080000... (96 %)
+Writing at 0x00084000... (100 %)
+Wrote 868304 bytes (484986 compressed) at 0x00010000 in 43.0 seconds (effective 161.4 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+============================================================================================== [SUCCESS] Took 48.79 seconds ==============================================================================================
+INFO Successfully uploaded program.
+INFO Starting log output from /dev/ttyUSB0 with baud rate 115200
+

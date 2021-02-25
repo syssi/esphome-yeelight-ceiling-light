@@ -1,0 +1,279 @@
+[0;32m02:21:43.830 [I] ots: -->kplv sent.[0m
+[0;32m02:21:45.590 [I] ots: <--kplv ack.[0m
+[0;31m02:21:47.900 [E] Invalid upnp discover message, ignore
+ (mcast_sock_recv,192)[0m
+[1;37mValue Changed[0m
+[0;31m02:21:48.620 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;31m02:21:58.580 [E] Invalid upnp discover message, ignore
+ (mcast_sock_recv,192)[0m
+[1;37mValue Changed[0m
+[0;31m02:21:59.260 [E] Invalid upnp discover message, ignore
+ (mcast_sock_recv,192)[0m
+[0;33m02:22:03.250 [W] ot: up session[id=1966604598] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:22:03.250 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;33m02:22:03.510 [W] ot: up session[id=662700343] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:22:03.510 [W] miio_info: no "result" in property_ack (send_property_ack,708)[0m
+[0;33m02:22:04.610 [W] ot: up session[id=1966604598] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:22:07.570 [W] ot: up session[id=662700343] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;32m02:22:23.580 [I] ots: -->kplv sent.[0m
+[0;32m02:22:23.840 [I] ots: <--kplv ack.[0m
+[0;32m02:22:39.840 [I] ots: -->kplv sent.[0m
+[0;32m02:22:43.840 [I] ots: -->kplv sent.[0m
+[0;32m02:22:43.860 [I] ots: <--kplv ack.[0m
+[0;32m02:22:44.110 [I] ots: <--kplv ack.[0m
+[0;32m02:23:00.110 [I] ots: -->kplv sent.[0m
+[1;37mValue Changed[0m
+[0;31m02:23:00.450 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;31m02:23:00.450 [E] invalid rpc format
+ (yglc_json_parser_init,152)[0m
+[0;31m02:23:00.460 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;32m02:23:00.460 [I] ots: <--kplv ack.[0m
+[1;37mValue Changed[0m
+[0;31m02:23:02.080 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 117 need (d0_tls_write,464)[0m
+[0;33m02:23:02.080 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:23:02.080 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;31m02:23:02.090 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;31m02:23:04.080 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 116 need (d0_tls_write,464)[0m
+[0;33m02:23:04.080 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:23:04.080 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;31m02:23:04.090 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;31m02:23:06.080 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 116 need (d0_tls_write,464)[0m
+[0;33m02:23:06.080 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:23:06.080 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;31m02:23:06.090 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;33m02:23:06.100 [W] ot: down session[id = 747393] timeout (ot_instance_timer_down_session_timeout,390)[0m
+[0;31m02:23:07.780 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 73 need (d0_tls_write,464)[0m
+[0;33m02:23:07.780 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:23:07.800 [E] ots: down ack drop! (ots_down_rpc_delegate_ack,142)[0m
+[0;33m02:23:08.000 [W] ot: up session[id=1047003569] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:23:08.120 [W] miio_net: Wifi disconnect from ssid xxxxxxxxx, reason 200 (wifi_cb_event_handler,825)[0m
+[0;31m02:23:08.130 [E] tls: mbedtls_ssl_read returned -0x4c (d0_tls_read,421)[0m
+[0;33m02:23:08.130 [W] ot: up session[id=922223028] flushed... (ot_up_rpc_delegate_flush,1141)[0m
+[0;33m02:23:08.140 [W] miio_info: no "result" in property_ack (send_property_ack,708)[0m
+[0;33m02:23:08.140 [W] miio_ot: offline already (ots_event_handle,1097)[0m
+[0;32m02:23:08.150 [I] otu: closing.[0m
+[0;32m02:23:08.150 [I] ots: closed.[0m
+[0;32m02:23:08.160 [I] otu: closed.[0m
+[1;37mRe-announcing _hap._tcp mDNS service[0m
+
+************************
+Wifi ip=192.168.xxx.xxx,mask=255.255.255.0,gw=192.168.xxx.xxx
+************************
+
+[0;32m02:23:10.580 [I] otu: Opened.[0m
+[0;32m02:23:11.250 [I] httpc: Content-Length 214[0m
+[0;32m02:23:11.250 [I] httpc: ==> 100%[0m
+[0;32m02:23:11.250 [I] httpc: GET Done(214bytes).[0m
+[0;32m02:23:11.250 [I] httpc: File Done(214bytes).[0m
+[0;32m02:23:11.260 [I] ots: ots connect 120.92.96.155::443...[0m
+[0;32m02:23:11.270 [I] tls: connect to server Mijia Cloud, domain is 120.92.96.155, port is 443.[0m
+[0;33m02:23:11.570 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:11.760 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:11.860 [W] tls: timeout[300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:11.960 [W] tls: timeout[400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.060 [W] tls: timeout[500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.180 [W] tls: timeout[600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.280 [W] tls: timeout[700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.380 [W] tls: timeout[800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.480 [W] tls: timeout[900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.580 [W] tls: timeout[1000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.680 [W] tls: timeout[1100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.780 [W] tls: timeout[1200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:23:12.880 [W] tls: timeout[1300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;32m02:23:12.890 [I] ots: Connected.[0m
+[0;32m02:23:12.900 [I] ots: -->sync sent.[0m
+[0;32m02:23:13.090 [I] ots: <--sync ack.[0m
+[0;32m02:23:13.900 [I] ots: -->login sent.[0m
+[0;32m02:23:14.120 [I] ots: <--login ack, code=0.[0m
+[0;32m02:23:14.120 [I] miio_ot: info(ots) will start in 0 ms...[0m
+[0;32m02:23:14.120 [I] miio_ot: -->info(ots).[0m
+[0;32m02:23:14.320 [I] miio_ot: <--info ack(ots).[0m
+[1;37mValue Changed[0m
+[0;31m02:23:25.740 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[1;37mValue Changed[0m
+[0;31m02:23:27.150 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;32m02:23:43.550 [I] ots: -->kplv sent.[0m
+[0;32m02:23:46.590 [I] ots: <--kplv ack.[0m
+[1;37mValue Changed[0m
+[0;32m02:24:02.590 [I] ots: -->kplv sent.[0m
+[0;33m02:24:05.140 [W] ot: up session[id=1258684952] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:05.140 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;33m02:24:05.550 [W] ot: up session[id=920125978] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:05.550 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;31m02:24:07.580 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 63 need (d0_tls_write,464)[0m
+[0;33m02:24:07.580 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:24:07.580 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;31m02:24:07.590 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;31m02:24:09.580 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 8 need (d0_tls_write,464)[0m
+[0;33m02:24:09.580 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;32m02:24:09.580 [I] ots: -->kplv send failed.[0m
+[1;37mValue Changed[0m
+[0;31m02:24:10.090 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;31m02:24:10.090 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;31m02:24:10.090 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;33m02:24:12.530 [W] miio_net: Wifi disconnect from ssid xxxxxxxxx, reason 200 (wifi_cb_event_handler,825)[0m
+[0;31m02:24:12.540 [E] tls: mbedtls_ssl_read returned -0x4c (d0_tls_read,421)[0m
+[0;33m02:24:12.540 [W] ot: up session[id=447414821] flushed... (ot_up_rpc_delegate_flush,1141)[0m
+[0;33m02:24:12.550 [W] miio_info: no "result" in property_ack (send_property_ack,708)[0m
+[0;32m02:24:12.550 [I] ots: closed.[0m
+[0;33m02:24:12.560 [W] ot: up session[id=1473708583] flushed... (ot_up_rpc_delegate_flush,1141)[0m
+[0;31m02:24:12.570 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;33m02:24:12.570 [W] miio_ot: offline already (ots_event_handle,1097)[0m
+[0;32m02:24:12.600 [I] otu: closing.[0m
+[0;32m02:24:12.600 [I] otu: closed.[0m
+[1;37mRe-announcing _hap._tcp mDNS service[0m
+
+************************
+Wifi ip=192.168.xxx.xxx,mask=255.255.255.0,gw=192.168.xxx.xxx
+************************
+
+[0;32m02:24:15.100 [I] otu: Opened.[0m
+[0;32m02:24:15.660 [I] httpc: Content-Length 215[0m
+[0;32m02:24:15.660 [I] httpc: ==> 100%[0m
+[0;32m02:24:15.660 [I] httpc: GET Done(215bytes).[0m
+[0;32m02:24:15.660 [I] httpc: File Done(215bytes).[0m
+[0;32m02:24:15.670 [I] ots: ots connect 120.92.96.155::443...[0m
+[0;32m02:24:15.680 [I] tls: connect to server Mijia Cloud, domain is 120.92.96.155, port is 443.[0m
+[0;33m02:24:15.980 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.170 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.270 [W] tls: timeout[300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.390 [W] tls: timeout[400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.490 [W] tls: timeout[500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.590 [W] tls: timeout[600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.690 [W] tls: timeout[700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.790 [W] tls: timeout[800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.890 [W] tls: timeout[900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:16.990 [W] tls: timeout[1000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.090 [W] tls: timeout[1100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.190 [W] tls: timeout[1200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.290 [W] tls: timeout[1300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.390 [W] tls: timeout[1400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.490 [W] tls: timeout[1500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.590 [W] tls: timeout[1600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.690 [W] tls: timeout[1700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.790 [W] tls: timeout[1800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.890 [W] tls: timeout[1900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:17.990 [W] tls: timeout[2000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.090 [W] tls: timeout[2100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.190 [W] tls: timeout[2200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.290 [W] tls: timeout[2300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.420 [W] tls: timeout[2400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.520 [W] tls: timeout[2500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.620 [W] tls: timeout[2600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.720 [W] tls: timeout[2700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.820 [W] tls: timeout[2800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:24:18.920 [W] tls: timeout[2900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;32m02:24:18.940 [I] ots: Connected.[0m
+[0;32m02:24:18.940 [I] ots: -->sync sent.[0m
+[0;32m02:24:19.140 [I] ots: <--sync ack.[0m
+[0;32m02:24:19.940 [I] ots: -->login sent.[0m
+[0;32m02:24:20.370 [I] ots: <--login ack, code=0.[0m
+[0;32m02:24:20.370 [I] miio_ot: info(ots) will start in 0 ms...[0m
+[0;32m02:24:20.380 [I] miio_ot: -->info(ots).[0m
+[0;32m02:24:22.420 [I] miio_ot: <--info ack(ots).[0m
+[0;33m02:24:26.430 [W] ot: up session[id=1696006705] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:26.440 [W] ot: up session[id=455475762] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:29.430 [W] ot: up session[id=1696006705] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:24:29.430 [W] ot: up session[id=455475762] not found (ot_up_rpc_delegate_finish,881)[0m
+[1;37mValue Changed[0m
+[0;31m02:24:40.040 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[1;37mValue Changed[0m
+[0;31m02:24:41.380 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[1;37mValue Changed[0m
+[1;37mValue Changed[0m
+[0;31m02:24:41.890 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;31m02:24:42.410 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[1;37mValue Changed[0m
+[0;33m02:24:46.370 [W] ot: up session[id=1289290345] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:46.370 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;33m02:24:46.670 [W] ot: up session[id=289473127] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:46.690 [W] ot: up session[id=1271988843] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:46.690 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;33m02:24:47.420 [W] ot: up session[id=1289290345] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:24:47.670 [W] ot: up session[id=1943929454] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:48.170 [W] ot: up session[id=948175471] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:52.080 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 197 need (d0_tls_write,464)[0m
+[0;33m02:24:52.080 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:24:52.080 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;33m02:24:52.120 [W] ot: up session[id=289473127] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:24:52.130 [W] ot: up session[id=1271988843] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:24:52.130 [W] ot: up session[id=1943929454] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:24:52.140 [W] ot: up session[id=948175471] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;33m02:24:52.170 [W] ot: up session[id=270664304] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:52.380 [W] ot: up session[id=302318193] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:52.380 [E] jsmi: tok_array alloc err. (jsmi_parse_start,453)[0m
+[0;31m02:24:57.080 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 196 need (d0_tls_write,464)[0m
+[0;33m02:24:57.080 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:24:57.080 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;33m02:24:57.090 [W] ot: up session[id=652083828] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:57.100 [W] ot: up session[id=456131189] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:57.110 [W] ot: up session[id=2029781622] timeout (ot_timer_up_session_timeout,847)[0m
+[0;31m02:24:59.080 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 194 need (d0_tls_write,464)[0m
+[0;33m02:24:59.080 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:24:59.080 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;33m02:24:59.090 [W] ot: up session[id=1196032633] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:24:59.100 [W] miio_info: no "result" in property_ack (send_property_ack,708)[0m
+[0;33m02:24:59.430 [W] miio_net: Wifi disconnect from ssid xxxxxxxxx, reason 200 (wifi_cb_event_handler,825)[0m
+[0;31m02:24:59.430 [E] tls: mbedtls_ssl_write returned -0x4e, 0 written, 196 need (d0_tls_write,464)[0m
+[0;31m02:24:59.430 [E] tls: mbedtls_ssl_read returned -0x4c (d0_tls_read,421)[0m
+[0;33m02:24:59.440 [W] ots: packet send error! (ots_packet_send,56)[0m
+[0;31m02:24:59.450 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;33m02:24:59.460 [W] ots: no touching, send failed! (ots_packet_send,39)[0m
+[0;31m02:24:59.460 [E] ots: up req drop! (ots_up_rpc_delegate_out_cb,239)[0m
+[0;33m02:24:59.470 [W] ot: up session[id=1019675263] flushed... (ot_up_rpc_delegate_flush,1141)[0m
+[0;33m02:24:59.480 [W] miio_ot: offline already (ots_event_handle,1097)[0m
+[0;32m02:24:59.490 [I] ots: closed.[0m
+[0;32m02:24:59.540 [I] otu: closing.[0m
+[0;32m02:24:59.540 [I] otu: closed.[0m
+[1;37mRe-announcing _hap._tcp mDNS service[0m
+
+************************
+Wifi ip=192.168.xxx.xxx,mask=255.255.255.0,gw=192.168.xxx.xxx
+************************
+
+[0;32m02:25:02.100 [I] otu: Opened.[0m
+[0;32m02:25:02.590 [I] httpc: Content-Length 213[0m
+[0;32m02:25:02.600 [I] httpc: ==> 100%[0m
+[0;32m02:25:02.600 [I] httpc: GET Done(213bytes).[0m
+[0;32m02:25:02.600 [I] httpc: File Done(213bytes).[0m
+[0;32m02:25:02.610 [I] ots: ots connect 120.92.96.155::443...[0m
+[0;32m02:25:02.620 [I] tls: connect to server Mijia Cloud, domain is 120.92.96.155, port is 443.[0m
+[0;33m02:25:02.970 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:25:03.170 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:25:03.270 [W] tls: timeout[300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:25:03.390 [W] tls: timeout[400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:25:03.580 [W] tls: timeout[500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:25:03.680 [W] tls: timeout[600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;33m02:25:03.780 [W] tls: timeout[700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)[0m
+[0;32m02:25:03.790 [I] ots: Connected.[0m
+[0;32m02:25:03.800 [I] ots: -->sync sent.[0m
+[0;32m02:25:04.610 [I] ots: <--sync ack.[0m
+[0;32m02:25:04.800 [I] ots: -->login sent.[0m
+[0;32m02:25:05.840 [I] ots: <--login ack, code=0.[0m
+[0;32m02:25:05.840 [I] miio_ot: info(ots) will start in 0 ms...[0m
+[0;32m02:25:05.850 [I] miio_ot: -->info(ots).[0m
+[0;32m02:25:06.050 [I] miio_ot: <--info ack(ots).[0m
+[1;37mValue Changed[0m
+[0;31m02:25:08.520 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[1;37mValue Changed[0m
+[0;31m02:25:08.800 [E] executor: _changed_ack called (_changed_ack,385)[0m
+[0;33m02:25:46.670 [W] ot: up session[id=999162590] timeout (ot_timer_up_session_timeout,847)[0m
+[0;33m02:25:48.680 [W] ot: up session[id=999162590] not found (ot_up_rpc_delegate_finish,881)[0m
+[0;32m02:26:07.610 [I] ots: -->kplv sent.[0m
+[0;32m02:26:07.800 [I] ots: <--kplv ack.[0m
+
+Brownout detector was triggered
+
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:1136
+ho 0 tail 12 room 4
+load:0x40078000,len:9360
+load:0x40080400,len:5872
+entry 0x400806d4
+Fatal exception (p3⸮?⸮l⸮⸮q⸮⸮⸮⸮⸮,⸮OL⸮⸮0
