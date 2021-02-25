@@ -29,7 +29,8 @@ Esphome custom firmware for the Yeelight Ceiling Light (YLXD76YL).
 Bootloop when BLE Tracker configured. Luckily ESPHome goes into safe mode after 10 unsuccessful boot attempts by default. So the device can be flashed OTA nevertheless.
 
 <details>
-<summary>Bootlog</summary>
+  <summary>Bootlog</summary>
+
 ```
 [11:59:23]ets Jun  8 2016 00:22:57
 [11:59:23]
@@ -93,6 +94,7 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 [11:59:29]Rebooting...
 ```
 </details>
+
 
 ## GPIOs
 
@@ -203,8 +205,4 @@ Remove the single safety screw on the back and rotate the cover counterclockwise
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/011.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/thumbnails/011.jpg" width="18%">
-</a>
-
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/012.jpg" target="_blank">
-<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/thumbnails/012.jpg" width="18%">
 </a>
