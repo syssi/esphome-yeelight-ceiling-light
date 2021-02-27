@@ -1,17 +1,17 @@
 # esphome-yeelight-ceiling-light
 
-Esphome custom firmware for the Yeelight Ceiling Light (YLXD76YL).
+Esphome custom firmware for some Yeelight Ceiling Lights.
 
 
 ## Supported devices
 
 | Name                                             | Model                     | Model no.   | Specs                                   |
 | ------------------------------------------------ | ------------------------- | ----------- | --------------------------------------- |
-| Yeelight Ceiling Light                           | yeelink.light.ceil26      | YLXD76YL    | AC220V, 23W, 1500lm, 2700K-6500K, 32cm  |
+| Yeelight Ceiling Light YLXD76YL                  | yeelink.light.ceil26      | YLXD76YL    | AC220V, 23W, 1500lm, 2700K-6500K, 32cm  |
 | Yeelight XianYu C2001C550                        | yeelink.light.ceil26      | C2001C550   | AC220V, 50W, 2700K-6500K, 55.5cm        |
 | Yeelight XianYu C2001C450 (untested!)            | yeelink.light.ceil26(?)   | C2001C450   | AC220V, 50W, 2700K-6500K, 45.5cm        |
 | Yeelight XianYu C2001S500 (untested!)            | yeelink.light.ceil26(?)   | C2001S500   | AC220V, 50W, 2700K-6500K, 50.5x50.5cm   |
-| Yeelight YLXD42YL                                | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
+| Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 
 
 ## Features
@@ -99,14 +99,14 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 
 ## GPIOs
 
-# yeelink.light.ceil26
+### yeelink.light.ceil26
 
 | Name                | Label  | ESP32 GPIO   |
 | ------------------- | ------ | ------------ |
 | Warm white PWM      | W      | GPIO19       |
 | Cold white PWM      | C      | GPIO21       |
 | Night light PWM     | NL     | GPIO23       |
-| Power supply GPIO   | STB    | GPIO22       |
+| Power supply GPIO   | STB    | GPIO23       |
 | VCC measurement     | ADC1   | GPIO35       |
 | TXD                 |        | GPIO1        |
 | RXD                 |        | GPIO3        |
@@ -114,7 +114,8 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
 
-# yeelink.light.ceiling15
+
+### yeelink.light.ceiling15
 
 | Name                | Label  | ESP32 GPIO   |
 | ------------------- | ------ | ------------ |
@@ -126,6 +127,22 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held l
 | TXD                 |        | GPIO1        |
 | RXD                 |        | GPIO3        |
 | GPIO0               | TP1    | GPIO0        |
+
+The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the back) is held low (GND) on reset / power.
+
+```
+  ADC1 NL  WW GND           O  -- GND
+   |   |   |   |            O  -- TXD
+   8   6   4   2            O  -- RXD
+   |   |   |   |           [O] -- 3V3
+   o   o   o   o
+
+   o   o   o   o
+   |   |   |   |
+   7   5   3   1
+   |   |   |   |
+  3V3 ADC2 CW GND
+```
 
 
 ## Disassembly
@@ -171,6 +188,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held l
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/008.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/thumbnails/008.jpg" width="18%">
 </a>
+
 
 ### C2001C550
 
@@ -222,4 +240,37 @@ Remove the single safety screw on the back and rotate the cover counterclockwise
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/011.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/thumbnails/011.jpg" width="18%">
+</a>
+
+
+### YLXD42YL
+
+Rotate the cover counterclockwise.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/004.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/005.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/006.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/006.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/007.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/007.jpg" width="18%">
 </a>
