@@ -1,5 +1,5 @@
 substitutions:
-  name: yeelight_ceiling_light
+  name: yeelight_light_ceiling15
 
 esphome:
   name: ${name}
@@ -20,29 +20,24 @@ logger:
 
 sensor:
   - platform: adc
-    pin: GPIO35
-    name: "${name} power supply"
+    pin: GPIO36
+    name: "${name} adc1"
+    attenuation: 11db
+  - platform: adc
+    pin: GPIO32
+    name: "${name} adc2"
     attenuation: 11db
 
 output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
-    power_supply: power
   - platform: ledc
     pin: GPIO21
     id: output_cold
-    power_supply: power
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
-    power_supply: power
-
-power_supply:
-  - id: power
-    pin: GPIO22
-    enable_time: 0s
-    keep_on_time: 2s
 
 light:
   - platform: monochromatic
