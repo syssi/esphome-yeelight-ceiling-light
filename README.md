@@ -1,6 +1,6 @@
 # esphome-yeelight-ceiling-light
 
-Esphome custom firmware for the Yeelight Ceiling Light (YLXD76YL).
+Esphome custom firmware for some Yeelight Ceiling Lights.
 
 
 ## Supported devices
