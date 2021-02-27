@@ -11,6 +11,7 @@ Esphome custom firmware for the Yeelight Ceiling Light (YLXD76YL).
 | Yeelight XianYu C2001C550                        | yeelink.light.ceil26      | C2001C550   | AC220V, 50W, 2700K-6500K, 55.5cm        |
 | Yeelight XianYu C2001C450 (untested!)            | yeelink.light.ceil26(?)   | C2001C450   | AC220V, 50W, 2700K-6500K, 45.5cm        |
 | Yeelight XianYu C2001S500 (untested!)            | yeelink.light.ceil26(?)   | C2001S500   | AC220V, 50W, 2700K-6500K, 50.5x50.5cm   |
+| Yeelight YLXD42YL                                | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 
 
 ## Features
@@ -98,18 +99,34 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 
 ## GPIOs
 
+# yeelink.light.ceil26
+
 | Name                | Label  | ESP32 GPIO   |
 | ------------------- | ------ | ------------ |
 | Warm white PWM      | W      | GPIO19       |
 | Cold white PWM      | C      | GPIO21       |
 | Night light PWM     | NL     | GPIO23       |
-| Power supply GPIO   | STB    | GPIO23       |
+| Power supply GPIO   | STB    | GPIO22       |
 | VCC measurement     | ADC1   | GPIO35       |
 | TXD                 |        | GPIO1        |
 | RXD                 |        | GPIO3        |
 | GPIO0               | TP3    | GPIO0        |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
+
+# yeelink.light.ceiling15
+
+| Name                | Label  | ESP32 GPIO   |
+| ------------------- | ------ | ------------ |
+| Warm white PWM      | W      | GPIO19       |
+| Cold white PWM      | C      | GPIO21       |
+| Night light PWM     | NL     | GPIO23       |
+| VCC measurement     | ADC1   | GPIO36       |
+| VCC measurement     | ADC2   | GPIO32       |
+| TXD                 |        | GPIO1        |
+| RXD                 |        | GPIO3        |
+| GPIO0               | TP1    | GPIO0        |
+
 
 ## Disassembly
 

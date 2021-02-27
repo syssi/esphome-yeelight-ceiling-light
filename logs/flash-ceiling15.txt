@@ -1,0 +1,101 @@
+
+INFO Successfully compiled program.
+Found multiple options, please choose one:
+  [1] /dev/ttyUSB0 (FT232R USB UART)
+  [2] Over The Air (yeelight_light_ceiling15.local)
+(number): 1
+INFO Running:  platformio run -d yeelight_light_ceiling15 -t upload --upload-port /dev/ttyUSB0
+******************************************************************************************************************************************************************************************************************************************************************************************
+Obsolete PIO Core v4.3.4 is used (previous was 5.0.2)
+Please remove multiple PIO Cores from a system:
+https://docs.platformio.org/page/faq.html#multiple-pio-cores-in-a-system
+******************************************************************************************************************************************************************************************************************************************************************************************
+Processing yeelight_light_ceiling15 (board: esp32doit-devkit-v1; framework: arduino; platform: espressif32@1.11.0)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
+PACKAGES: 
+ - framework-arduinoespressif32 49b5f52 
+ - tool-esptoolpy 1.20600.0 (2.6.0) 
+ - tool-mkspiffs 2.230.0 (2.30) 
+ - toolchain-xtensa32 2.50200.80 (5.2.0)
+Dependency Graph
+|-- <AsyncTCP-esphome> 1.1.1
+|-- <ESPmDNS> 1.0
+|   |-- <WiFi> 1.0
+|-- <Update> 1.0
+|-- <WiFi> 1.0
+Retrieving maximum program size .pioenvs/yeelight_light_ceiling15/firmware.elf
+Checking size .pioenvs/yeelight_light_ceiling15/firmware.elf
+RAM:   [=         ]  12.1% (used 39752 bytes from 327680 bytes)
+Flash: [=====     ]  46.5% (used 853006 bytes from 1835008 bytes)
+Configuring upload protocol...
+AVAILABLE: esp-prog, espota, esptool, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa
+CURRENT: upload_protocol = esptool
+Looking for upload port...
+Use manually specified: /dev/ttyUSB0
+Uploading .pioenvs/yeelight_light_ceiling15/firmware.bin
+Serial port /dev/ttyUSB0
+Connecting......
+Chip is unknown ESP32 (revision 1)
+Features: WiFi, BT, Single Core, 240MHz, VRef calibration in efuse, Coding Scheme 3/4
+MAC: 50:ec:50:80:09:5f
+Uploading stub...
+Running stub...
+Stub running...
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Compressed 15872 bytes to 10319...
+
+Writing at 0x00001000... (100 %)
+Wrote 15872 bytes (10319 compressed) at 0x00001000 in 0.9 seconds (effective 137.0 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 144...
+
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (144 compressed) at 0x00008000 in 0.0 seconds (effective 775.2 kbit/s)...
+Hash of data verified.
+Compressed 8192 bytes to 47...
+
+Writing at 0x0000e000... (100 %)
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.0 seconds (effective 4127.2 kbit/s)...
+Hash of data verified.
+Compressed 853120 bytes to 478153...
+
+Writing at 0x00010000... (3 %)
+Writing at 0x00014000... (6 %)
+Writing at 0x00018000... (10 %)
+Writing at 0x0001c000... (13 %)
+Writing at 0x00020000... (16 %)
+Writing at 0x00024000... (20 %)
+Writing at 0x00028000... (23 %)
+Writing at 0x0002c000... (26 %)
+Writing at 0x00030000... (30 %)
+Writing at 0x00034000... (33 %)
+Writing at 0x00038000... (36 %)
+Writing at 0x0003c000... (40 %)
+Writing at 0x00040000... (43 %)
+Writing at 0x00044000... (46 %)
+Writing at 0x00048000... (50 %)
+Writing at 0x0004c000... (53 %)
+Writing at 0x00050000... (56 %)
+Writing at 0x00054000... (60 %)
+Writing at 0x00058000... (63 %)
+Writing at 0x0005c000... (66 %)
+Writing at 0x00060000... (70 %)
+Writing at 0x00064000... (73 %)
+Writing at 0x00068000... (76 %)
+Writing at 0x0006c000... (80 %)
+Writing at 0x00070000... (83 %)
+Writing at 0x00074000... (86 %)
+Writing at 0x00078000... (90 %)
+Writing at 0x0007c000... (93 %)
+Writing at 0x00080000... (96 %)
+Writing at 0x00084000... (100 %)
+Wrote 853120 bytes (478153 compressed) at 0x00010000 in 42.5 seconds (effective 160.8 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+============================================================================================================================== [SUCCESS] Took 48.34 seconds ==============================================================================================================================
+INFO Successfully uploaded program.
+INFO Starting log output from /dev/ttyUSB0 with baud rate 115200

@@ -1,0 +1,665 @@
+
+Brownout detector was triggered
+
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0ø40078000,len:10016
+csum err:ðÂÉ¢
+ê‚Âå5R*ÑÍ}µ…¥¹¹šºŠj¤üets Jun  8 20ñÿets Jun  8 2ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0x40078000,len:10016
+entry 0x40078c08
+08:00:00.040 [W] yglc loop started, wait msg ... (yglc_req_handler,1271)
+08:00:00.060 [W] fast_reboot_count=1 (fast_reboot_check,4799)
+08:00:00.180 [W] yglc_init_async done, ret=0 (yglc_init_async,746)
+08:00:00.270 [I] miio_ot: httpdns enabled
+08:00:00.270 [I] miio_ot: dlg enabled
+
+
+_|      _|  _|_|_|  _|_|_|    _|_|  
+_|_|  _|_|    _|      _|    _|    _|
+_|  _|  _|    _|      _|    _|    _|
+_|      _|    _|      _|    _|    _|
+_|      _|  _|_|_|  _|_|_|    _|_|  
+JENKINS BUILD NUMBER: N/A
+BUILD TIME: Nov 27 2020,09:33:16
+BUILT BY: N/A
+MIIO APP VER: 2.0.6_0026
+MIIO MCU VER: 
+MIIO DID: 270166479
+MIIO WIFI MAC: 50ec5080095f
+MIIO MODEL: yeelink.light.ceiling15
+ARCH TYPE: esp32,0x0000a601
+ARCH VER: 732da80
+Coprocessor Version: 3.0 (0x07)
+Firmware Version: 1
+Authentication Protocol Version: 3.0
+Keystore initialised
+Accessory is not Paired with any controller
+Database initialised. Accessory Device ID: 29:05:98:58:32:14
+mDNS initialised
+HAP Initialization succeeded. Version : 2.3.r1-5e8ddaf
+Setup ID: I9QO
+Setup ID: I9QO
+Getting setup info from factory NVS
+Network is Configured
+Connecting to xxxxxxxx h**************h
+HAP Main Loop Started
+Registering HomeKit web handlers
+Announcing _hap._tcp mDNS service
+
+************************
+Wifi ip=192.168.xxx.xxx,mask=255.255.255.0,gw=192.168.xxx.xxx
+************************
+
+Value Changed
+08:00:04.680 [I] otu: Opened.
+08:00:05.340 [I] httpc: Content-Length 215
+08:00:05.340 [I] httpc: ==> 100%
+08:00:05.340 [I] httpc: GET Done(215bytes).
+08:00:05.340 [I] httpc: File Done(215bytes).
+08:00:05.350 [I] ots: ots connect 120.92.96.155::443...
+08:00:05.360 [I] tls: connect to server Mijia Cloud, domain is 120.92.96.155, port is 443.
+08:00:05.660 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.760 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.860 [W] tls: timeout[300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.960 [W] tls: timeout[400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.060 [W] tls: timeout[500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.160 [W] tls: timeout[600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.260 [W] tls: timeout[700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.360 [W] tls: timeout[800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.460 [W] tls: timeout[900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.560 [W] tls: timeout[1000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.660 [W] tls: timeout[1100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.760 [W] tls: timeout[1200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.860 [W] tls: timeout[1300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.960 [W] tls: timeout[1400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.060 [W] tls: timeout[1500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.160 [W] tls: timeout[1600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.260 [W] tls: timeout[1700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.360 [W] tls: timeout[1800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.460 [W] tls: timeout[1900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.560 [W] tls: timeout[2000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.660 [W] tls: timeout[2100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.760 [W] tls: timeout[2200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.860 [W] tls: timeout[2300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.960 [W] tls: timeout[2400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.060 [W] tls: timeout[2500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.160 [W] tls: timeout[2600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.260 [W] tls: timeout[2700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.360 [W] tls: timeout[2800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.460 [W] tls: timeout[2900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.560 [W] tls: timeout[3000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.720 [W] tls: timeout[3100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.820 [W] tls: timeout[3200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.920 [W] tls: timeout[3300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.020 [W] tls: timeout[3400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.120 [W] tls: timeout[3500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.220 [W] tls: timeout[3600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.320 [W] tls: timeout[3700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.420 [W] tls: timeout[3800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.520 [W] tls: timeout[3900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.620 [W] tls: timeout[4000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.720 [W] tls: timeout[4100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.820 [W] tls: timeout[4200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:09.920 [W] tls: timeout[4300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.020 [W] tls: timeout[4400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.120 [W] tls: timeout[4500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.220 [W] tls: timeout[4600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.320 [W] tls: timeout[4700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.480 [W] tls: timeout[4800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.580 [W] tls: timeout[4900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.680 [W] tls: timeout[5000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.780 [W] tls: timeout[5100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.880 [W] tls: timeout[5200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:10.980 [W] tls: timeout[5300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.080 [W] tls: timeout[5400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.180 [W] tls: timeout[5500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.280 [W] tls: timeout[5600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.380 [W] tls: timeout[5700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.480 [W] tls: timeout[5800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.580 [W] tls: timeout[5900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.680 [W] tls: timeout[6000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.780 [W] tls: timeout[6100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.880 [W] tls: timeout[6200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:11.980 [W] tls: timeout[6300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.080 [W] tls: timeout[6400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.180 [W] tls: timeout[6500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.280 [W] tls: timeout[6600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.380 [W] tls: timeout[6700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.480 [W] tls: timeout[6800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.580 [W] tls: timeout[6900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.680 [W] tls: timeout[7000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.780 [W] tls: timeout[7100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.880 [W] tls: timeout[7200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:12.980 [W] tls: timeout[7300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.080 [W] tls: timeout[7400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.180 [W] tls: timeout[7500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.280 [W] tls: timeout[7600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.380 [W] tls: timeout[7700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.480 [W] tls: timeout[7800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.580 [W] tls: timeout[7900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.680 [W] tls: timeout[8000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.780 [W] tls: timeout[8100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.880 [W] tls: timeout[8200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:13.980 [W] tls: timeout[8300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.080 [W] tls: timeout[8400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.180 [W] tls: timeout[8500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.280 [W] tls: timeout[8600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.380 [W] tls: timeout[8700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.480 [W] tls: timeout[8800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.580 [W] tls: timeout[8900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.680 [W] tls: timeout[9000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.780 [W] tls: timeout[9100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.880 [W] tls: timeout[9200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:14.980 [W] tls: timeout[9300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.080 [W] tls: timeout[9400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.200 [W] tls: timeout[9500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.300 [W] tls: timeout[9600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.400 [W] tls: timeout[9700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.500 [W] tls: timeout[9800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.600 [W] tls: timeout[9900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.700 [W] tls: timeout[10000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.800 [W] tls: timeout[10100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:15.800 [E] tls: open failed! (d0_tls_open,403)
+08:00:15.800 [I] ots: Connect err.
+08:00:15.800 [W] ots: ots reconnect will start in 7023 ms... (ots_reconnect,1215)
+18:25:38.840 [I] ots: try to connect backlist[0] = 120.92.141.203::443
+18:25:38.840 [I] ots: ots connect 120.92.141.203::443...
+18:25:38.840 [I] tls: connect to server Mijia Cloud, domain is 120.92.141.203, port is 443.
+18:25:39.270 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.370 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.470 [W] tls: timeout[300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.570 [W] tls: timeout[400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.670 [W] tls: timeout[500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.770 [W] tls: timeout[600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.870 [W] tls: timeout[700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:39.970 [W] tls: timeout[800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.070 [W] tls: timeout[900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.170 [W] tls: timeout[1000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.270 [W] tls: timeout[1100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.370 [W] tls: timeout[1200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.470 [W] tls: timeout[1300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.570 [W] tls: timeout[1400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.670 [W] tls: timeout[1500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.770 [W] tls: timeout[1600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.870 [W] tls: timeout[1700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:40.970 [W] tls: timeout[1800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.070 [W] tls: timeout[1900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.170 [W] tls: timeout[2000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.270 [W] tls: timeout[2100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.370 [W] tls: timeout[2200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.470 [W] tls: timeout[2300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.570 [W] tls: timeout[2400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.670 [W] tls: timeout[2500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.770 [W] tls: timeout[2600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.870 [W] tls: timeout[2700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:41.970 [W] tls: timeout[2800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.070 [W] tls: timeout[2900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.260 [W] tls: timeout[3000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.360 [W] tls: timeout[3100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.460 [W] tls: timeout[3200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.570 [W] tls: timeout[3300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.670 [W] tls: timeout[3400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.770 [W] tls: timeout[3500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.870 [W] tls: timeout[3600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:42.970 [W] tls: timeout[3700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.070 [W] tls: timeout[3800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.170 [W] tls: timeout[3900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.270 [W] tls: timeout[4000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.370 [W] tls: timeout[4100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.470 [W] tls: timeout[4200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.570 [W] tls: timeout[4300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.670 [W] tls: timeout[4400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.770 [W] tls: timeout[4500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.870 [W] tls: timeout[4600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:43.970 [W] tls: timeout[4700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.070 [W] tls: timeout[4800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.170 [W] tls: timeout[4900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.270 [W] tls: timeout[5000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.370 [W] tls: timeout[5100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.470 [W] tls: timeout[5200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.570 [W] tls: timeout[5300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.670 [W] tls: timeout[5400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.770 [W] tls: timeout[5500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:44.900 [W] tls: timeout[5600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.000 [W] tls: timeout[5700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.100 [W] tls: timeout[5800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.200 [W] tls: timeout[5900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.300 [W] tls: timeout[6000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.400 [W] tls: timeout[6100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.500 [W] tls: timeout[6200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.600 [W] tls: timeout[6300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.700 [W] tls: timeout[6400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.800 [W] tls: timeout[6500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:45.900 [W] tls: timeout[6600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.000 [W] tls: timeout[6700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.100 [W] tls: timeout[6800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.200 [W] tls: timeout[6900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.300 [W] tls: timeout[7000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.400 [W] tls: timeout[7100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.500 [W] tls: timeout[7200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.600 [W] tls: timeout[7300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.700 [W] tls: timeout[7400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.800 [W] tls: timeout[7500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:46.900 [W] tls: timeout[7600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.000 [W] tls: timeout[7700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.100 [W] tls: timeout[7800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.200 [W] tls: timeout[7900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.300 [W] tls: timeout[8000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.400 [W] tls: timeout[8100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.500 [W] tls: timeout[8200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.600 [W] tls: timeout[8300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:25:47.680 [I] ots: Connected.
+18:25:47.680 [I] ots: -->sync sent.
+18:25:47.910 [I] ots: <--sync ack.
+18:25:48.680 [I] ots: -->login sent.
+18:25:50.230 [I] ots: <--login ack, code=0.
+18:25:50.230 [I] miio_ot: info(ots) will start in 0 ms...
+18:25:50.230 [I] miio_ot: -->info(ots).
+18:25:50.470 [I] miio_ot: <--info ack(ots).
+18:25:51.680 [I] ots: -->sync sent.
+18:25:52.620 [I] ots: <--sync ack.
+18:25:58.680 [I] ots: -->sync sent.
+18:25:59.370 [I] ots: <--sync ack.
+18:26:03.860 [W] otu: Token private!!. (otu_packet_handle,706)
+18:26:14.680 [I] ots: -->sync sent.
+18:26:14.940 [I] ots: <--sync ack.
+18:26:46.710 [I] ots: -->kplv sent.
+18:26:46.970 [I] ots: <--kplv ack.
+18:26:47.680 [I] ots: -->sync sent.
+18:26:47.910 [I] ots: <--sync ack.
+Value Changed
+18:27:17.700 [I] ots: -->kplv sent.
+Value Changed
+18:27:21.700 [I] ots: -->kplv sent.
+18:27:22.370 [W] ot: up session[id=1285816540] timeout (ot_timer_up_session_timeout,847)
+18:27:22.370 [W] miio_info: no "result" in property_ack (send_property_ack,708)
+18:27:23.730 [I] ots: <--kplv ack.
+18:27:24.230 [I] ots: <--kplv ack.
+18:27:24.240 [W] ot: up session[id=1285816540] not found (ot_up_rpc_delegate_finish,881)
+Value Changed
+Value Changed
+Value Changed
+18:27:51.680 [I] ots: -->sync sent.
+18:27:56.720 [I] ots: -->kplv sent.
+18:27:57.820 [I] ots: <--sync ack.
+18:27:58.330 [I] ots: <--kplv ack.
+18:28:14.330 [I] ots: -->kplv sent.
+18:28:14.610 [I] ots: <--kplv ack.
+18:28:30.610 [I] ots: -->kplv sent.
+18:28:30.890 [I] ots: <--kplv ack.
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+18:29:13.930 [I] ots: -->kplv sent.
+18:29:14.210 [I] ots: <--kplv ack.
+18:29:30.210 [I] ots: -->kplv sent.
+Value Changed
+Value Changed
+18:29:32.540 [I] ots: <--kplv ack.
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+18:29:59.680 [I] ots: -->sync sent.
+18:29:59.910 [I] ots: <--sync ack.
+Value Changed
+Value Changed
+Value Changed
+18:30:20.910 [I] ots: -->kplv sent.
+18:30:21.190 [I] ots: <--kplv ack.
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+18:31:15.070 [I] ots: -->kplv sent.
+18:31:15.350 [I] ots: <--kplv ack.
+18:31:31.350 [I] ots: -->kplv sent.
+Value Changed
+18:31:35.350 [I] ots: -->kplv sent.
+Value Changed
+18:31:36.790 [W] ot: up session[id=1652163290] timeout (ot_timer_up_session_timeout,847)
+18:31:36.790 [W] miio_info: no "result" in property_ack (send_property_ack,708)
+18:31:38.310 [I] ots: <--kplv ack.
+18:31:38.710 [I] ots: <--kplv ack.
+18:31:38.710 [W] ot: up session[id=1652163290] not found (ot_up_rpc_delegate_finish,881)
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+18:32:27.100 [I] ots: -->kplv sent.
+18:32:27.350 [I] ots: <--kplv ack.
+Value Changed
+Value Changed
+18:32:51.130 [I] ots: -->kplv sent.
+18:32:55.130 [I] ots: -->kplv sent.
+18:32:55.510 [I] ots: <--kplv ack.
+18:32:55.900 [I] ots: <--kplv ack.
+18:33:11.900 [I] ots: -->kplv sent.
+18:33:12.190 [I] ots: <--kplv ack.
+
+BrownïþÀüets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0x40078000,len:10016
+entry 0x40078c08
+08:00:00.040 [W] yglc loop started, wait msg ... (yglc_req_handler,1271)
+08:00:00.070 [W] fast_reboot_count=1 (fast_reboot_check,4799)
+08:00:00.450 [W] yglc_init_async done, ret=0 (yglc_init_async,746)
+08:00:00.470 [I] miio_ot: httpdns enabled
+08:00:00.470 [I] miio_ot: dlg enabled
+
+
+_|      _|  _|_|_|  _|_|_|    _|_|  
+_|_|  _|_|    _|      _|    _|    _|
+_|  _|  _|    _|      _|    _|    _|
+_|      _|    _|      _|    _|    _|
+_|      _|  _|_|_|  _|_|_|    _|_|  
+JENKINS BUILD NUMBER: N/A
+BUILD TIME: Nov 27 2020,09:33:16
+BUILT BY: N/A
+MIIO APP VER: 2.0.6_0026
+MIIO MCU VER: 
+MIIO DID: 270166479
+MIIO WIFI MAC: 50ec5080095f
+MIIO MODEL: yeelink.light.ceiling15
+ARCH TYPE: esp32,0x0000a601
+ARCH VER: 732da80
+Coprocessor Version: 3.0 (0x07)
+Firmware Version: 1
+Authentication Protocol Version: 3.0
+Keystore initialised
+Accessory is not Paired with any controller
+Database initialised. Accessory Device ID: 29:05:98:58:32:14
+mDNS initialised
+HAP Initialization succeeded. Version : 2.3.r1-5e8ddaf
+Setup ID: I9QO
+Setup ID: I9QO
+Getting setup info from factory NVS
+Network is Configured
+Connecting to xxxxxxxx h**************h
+HAP Main Loop Started
+Registering HomeKit web handlers
+Announcing _hap._tcp mDNS service
+
+************************
+Wifi ip=169.254.96.9,mask=255.255.0.0,gw=0.0.0.0
+************************
+
+Value Changed
+08:00:40.250 [I] otu: Opened.
+
+Brownout detector was triggered
+
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0xô‚ºÂ‚‚‚bb•¹éŠ‚‚Š²j¤4kÕµ*ÉÉé‚Â‘Ý
+þê‚Âå5R*ÑÍ}µ…¥¹¹šºŠj¤üets Jun  8 2àÿets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0x40078000,len:10016
+entry 0x40078c08
+08:00:00.020 [W] yglc loop started, wait msg ... (yglc_req_handler,1271)
+08:00:00.040 [W] fast_reboot_count=1 (fast_reboot_check,4799)
+08:00:00.150 [W] yglc_init_async done, ret=0 (yglc_init_async,746)
+08:00:00.160 [I] miio_ot: httpdns enabled
+08:00:00.160 [I] miio_ot: dlg enabled
+
+
+_|      _|  _|_|_|  _|_|_|    _|_|  
+_|_|  _|_|    _|      _|    _|    _|
+_|  _|  _|    _|      _|    _|    _|
+_|      _|    _|      _|    _|    _|
+_|      _|  _|_|_|  _|_|_|    _|_|  
+JENKINS BUILD NUMBER: N/A
+BUILD TIME: Nov 27 2020,09:33:16
+BUILT BY: N/A
+MIIO APP VER: 2.0.6_0026
+MIIO MCU VER: 
+MIIO DID: 270166479
+MIIO WIFI MAC: 50ec5080095f
+MIIO MODEL: yeelink.light.ceiling15
+ARCH TYPE: esp32,0x0000a601
+ARCH VER: 732da80
+Coprocessor Version: 3.0 (0x07)
+Firmware Version: 1
+Authentication Protocol Version: 3.0
+Keystore initialised
+Accessory is not Paired with any controller
+Database initialised. Accessory Device ID: 29:05:98:58:32:14
+mDNS initialised
+HAP Initialization succeeded. Version : 2.3.r1-5e8ddaf
+Setup ID: I9QO
+Setup ID: I9QO
+Getting setup info from factory NVS
+Network is Configured
+Connecting to xxxxxxxx h**************h
+HAP Main Loop Started
+Registering HomeKit web handlers
+Announcing _hap._tcp mDNS service
+
+************************
+Wifi ip=169.254.96.9,mask=255.255.0.0,gw=0.0.0.0
+************************
+
+Value Changed
+08:00:39.970 [I] otu: Opened.
+08:00:54.960 [W] miio_ot: miio_ntp got address[ot.io.mi.com] failed! (miio_ntp,346)
+08:00:58.220 [E] tcp: connect error! (d0_tcp_open,152)
+08:00:58.220 [E] tcp: open failed! (d0_tcp_open,222)
+08:00:58.220 [E] httpc: TLS/TCP Open Failed (httpc_connecting,94)
+
+Brownout detector was triggered
+
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0x40078000,len:10016
+csuí*ÉÉé‚ÂÙš
+ê‚Âå5R*ÑÍ}µ…¥¹¹šºŠjü…ets Jun  8 ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:252
+load:0x40078000,len:0
+load:0x40078000,len:10016
+entry 0x40078c08
+08:00:00.020 [W] yglc loop started, wait msg ... (yglc_req_handler,1271)
+08:00:00.040 [W] fast_reboot_count=1 (fast_reboot_check,4799)
+08:00:00.150 [W] yglc_init_async done, ret=0 (yglc_init_async,746)
+08:00:00.170 [I] miio_ot: httpdns enabled
+08:00:00.170 [I] miio_ot: dlg enabled
+
+
+_|      _|  _|_|_|  _|_|_|    _|_|  
+_|_|  _|_|    _|      _|    _|    _|
+_|  _|  _|    _|      _|    _|    _|
+_|      _|    _|      _|    _|    _|
+_|      _|  _|_|_|  _|_|_|    _|_|  
+JENKINS BUILD NUMBER: N/A
+BUILD TIME: Nov 27 2020,09:33:16
+BUILT BY: N/A
+MIIO APP VER: 2.0.6_0026
+MIIO MCU VER: 
+MIIO DID: 270166479
+MIIO WIFI MAC: 50ec5080095f
+MIIO MODEL: yeelink.light.ceiling15
+ARCH TYPE: esp32,0x0000a601
+ARCH VER: 732da80
+Coprocessor Version: 3.0 (0x07)
+Firmware Version: 1
+Authentication Protocol Version: 3.0
+Keystore initialised
+Accessory is not Paired with any controller
+Database initialised. Accessory Device ID: 29:05:98:58:32:14
+mDNS initialised
+HAP Initialization succeeded. Version : 2.3.r1-5e8ddaf
+Setup ID: I9QO
+Setup ID: I9QO
+Getting setup info from factory NVS
+Network is Configured
+Connecting to xxxxxxxx h**************h
+HAP Main Loop Started
+Registering HomeKit web handlers
+Announcing _hap._tcp mDNS service
+
+************************
+Wifi ip=192.168.xxx.xxx,mask=255.255.255.0,gw=192.168.xxx.xxx
+************************
+
+Value Changed
+08:00:04.460 [I] otu: Opened.
+08:00:05.090 [I] httpc: Content-Length 214
+08:00:05.090 [I] httpc: ==> 100%
+08:00:05.090 [I] httpc: GET Done(214bytes).
+08:00:05.090 [I] httpc: File Done(214bytes).
+08:00:05.100 [I] ots: ots connect 120.92.96.155::443...
+08:00:05.110 [I] tls: connect to server Mijia Cloud, domain is 120.92.96.155, port is 443.
+08:00:05.410 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.600 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.700 [W] tls: timeout[300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.800 [W] tls: timeout[400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:05.900 [W] tls: timeout[500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.020 [W] tls: timeout[600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.120 [W] tls: timeout[700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.220 [W] tls: timeout[800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.320 [W] tls: timeout[900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.420 [W] tls: timeout[1000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.520 [W] tls: timeout[1100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.620 [W] tls: timeout[1200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.720 [W] tls: timeout[1300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.820 [W] tls: timeout[1400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:06.920 [W] tls: timeout[1500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.020 [W] tls: timeout[1600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.120 [W] tls: timeout[1700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.220 [W] tls: timeout[1800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.320 [W] tls: timeout[1900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.420 [W] tls: timeout[2000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.520 [W] tls: timeout[2100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.620 [W] tls: timeout[2200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.720 [W] tls: timeout[2300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.820 [W] tls: timeout[2400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:07.920 [W] tls: timeout[2500]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.020 [W] tls: timeout[2600]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.120 [W] tls: timeout[2700]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.220 [W] tls: timeout[2800]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.320 [W] tls: timeout[2900]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.420 [W] tls: timeout[3000]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.580 [W] tls: timeout[3100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.680 [W] tls: timeout[3200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.780 [W] tls: timeout[3300]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.880 [W] tls: timeout[3400]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+08:00:08.900 [I] ots: Connected.
+08:00:08.900 [I] ots: -->sync sent.
+08:00:09.190 [I] ots: <--sync ack.
+18:36:13.900 [I] ots: -->login sent.
+18:36:14.110 [I] ots: <--login ack, code=0.
+18:36:14.120 [I] miio_ot: info(ots) will start in 0 ms...
+18:36:14.120 [I] miio_ot: -->info(ots).
+18:36:14.420 [I] miio_ot: <--info ack(ots).
+18:36:16.900 [I] ots: -->sync sent.
+18:36:17.090 [I] ots: <--sync ack.
+18:36:24.900 [I] ots: -->sync sent.
+18:36:25.090 [I] ots: <--sync ack.
+Value Changed
+18:36:40.900 [I] ots: -->sync sent.
+18:36:41.160 [I] ots: <--sync ack.
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+Value Changed
+18:37:12.900 [I] ots: -->sync sent.
+18:37:14.730 [I] ots: <--sync ack.
+18:37:16.240 [W] otu: Token private!!. (otu_packet_handle,706)
+Value Changed
+18:37:21.770 [W] otu: Token private!!. (otu_packet_handle,706)
+18:37:22.180 [W] otu: Token private!!. (otu_packet_handle,706)
+Value Changed
+Value Changed
+Value Changed
+Value Changed
