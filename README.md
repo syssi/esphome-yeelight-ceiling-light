@@ -99,7 +99,7 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 
 ## GPIOs
 
-# yeelink.light.ceil26
+### yeelink.light.ceil26
 
 | Name                | Label  | ESP32 GPIO   |
 | ------------------- | ------ | ------------ |
@@ -115,7 +115,7 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
 
 
-# yeelink.light.ceiling15
+### yeelink.light.ceiling15
 
 | Name                | Label  | ESP32 GPIO   |
 | ------------------- | ------ | ------------ |
