@@ -1,0 +1,90 @@
+INFO Running:  platformio run -d diningroom_yeelight -t upload --upload-port /dev/ttyUSB0
+Processing diningroom_yeelight (board: esp32doit-devkit-v1; framework: arduino; platform: espressif32@3.0.0)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
+PACKAGES: 
+ - framework-arduinoespressif32 0.0.0 
+ - tool-esptoolpy 1.30000.201119 (3.0.0) 
+ - tool-mkspiffs 2.230.0 (2.30) 
+ - toolchain-xtensa32 2.50200.97 (5.2.0)
+Library Manager: Installing Hash
+Library Manager: Already installed, built-in library
+Dependency Graph
+|-- <AsyncTCP-esphome> 1.1.1
+|-- <ESPmDNS> 1.0
+|   |-- <WiFi> 1.0
+|-- <Update> 1.0
+|-- <WiFi> 1.0
+Retrieving maximum program size .pioenvs/diningroom_yeelight/firmware.elf
+Checking size .pioenvs/diningroom_yeelight/firmware.elf
+RAM:   [=         ]  12.6% (used 41284 bytes from 327680 bytes)
+Flash: [=====     ]  47.2% (used 865750 bytes from 1835008 bytes)
+Configuring upload protocol...
+AVAILABLE: esp-prog, espota, esptool, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa
+CURRENT: upload_protocol = esptool
+Looking for upload port...
+Use manually specified: /dev/ttyUSB0
+Uploading .pioenvs/diningroom_yeelight/firmware.bin
+Serial port /dev/ttyUSB0
+Connecting........
+Chip is unknown ESP32 (revision 1)
+Features: WiFi, BT, Single Core, 240MHz, VRef calibration in efuse, Coding Scheme 3/4
+Crystal is 40MHz
+MAC: 5c:XX:XX:XX:XX:XX
+Uploading stub...
+Running stub...
+Stub running...
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Compressed 17072 bytes to 11184...
+Writing at 0x00001000... (100 %)
+Wrote 17072 bytes (11184 compressed) at 0x00001000 in 1.0 seconds (effective 137.8 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 144...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (144 compressed) at 0x00008000 in 0.0 seconds (effective 772.4 kbit/s)...
+Hash of data verified.
+Compressed 8192 bytes to 47...
+Writing at 0x0000e000... (100 %)
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.0 seconds (effective 4129.4 kbit/s)...
+Hash of data verified.
+Compressed 865872 bytes to 493302...
+Writing at 0x00010000... (3 %)
+Writing at 0x00014000... (6 %)
+Writing at 0x00018000... (9 %)
+Writing at 0x0001c000... (12 %)
+Writing at 0x00020000... (16 %)
+Writing at 0x00024000... (19 %)
+Writing at 0x00028000... (22 %)
+Writing at 0x0002c000... (25 %)
+Writing at 0x00030000... (29 %)
+Writing at 0x00034000... (32 %)
+Writing at 0x00038000... (35 %)
+Writing at 0x0003c000... (38 %)
+Writing at 0x00040000... (41 %)
+Writing at 0x00044000... (45 %)
+Writing at 0x00048000... (48 %)
+Writing at 0x0004c000... (51 %)
+Writing at 0x00050000... (54 %)
+Writing at 0x00054000... (58 %)
+Writing at 0x00058000... (61 %)
+Writing at 0x0005c000... (64 %)
+Writing at 0x00060000... (67 %)
+Writing at 0x00064000... (70 %)
+Writing at 0x00068000... (74 %)
+Writing at 0x0006c000... (77 %)
+Writing at 0x00070000... (80 %)
+Writing at 0x00074000... (83 %)
+Writing at 0x00078000... (87 %)
+Writing at 0x0007c000... (90 %)
+Writing at 0x00080000... (93 %)
+Writing at 0x00084000... (96 %)
+Writing at 0x00088000... (100 %)
+Wrote 865872 bytes (493302 compressed) at 0x00010000 in 43.8 seconds (effective 158.1 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+============================================================================= [SUCCESS] Took 52.00 seconds =============================================================================
+INFO Successfully uploaded program.
+INFO Starting log output from /dev/ttyUSB0 with baud rate 115200

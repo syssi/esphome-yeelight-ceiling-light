@@ -11,10 +11,13 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight XianYu C2001C550                        | yeelink.light.ceil26      | C2001C550   | AC220V, 50W, 2700K-6500K, 55.5cm        |
 | Yeelight XianYu C2001C450 (untested!)            | yeelink.light.ceil26(?)   | C2001C450   | AC220V, 50W, 2700K-6500K, 45.5cm        |
 | Yeelight XianYu C2001S500 (untested!)            | yeelink.light.ceil26(?)   | C2001S500   | AC220V, 50W, 2700K-6500K, 50.5x50.5cm   |
+| Yeelight Meteorite Ceiling Light                 | yeelink.light.ceiling10   | YLDL01YL    | AC220V, 33W, 2700K-6500K, 7W RGB ambient light, 90x7x4 cm  |
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 
 
 ## Features
+
+### yeelink.light.ceil26
 
 - Light (CCWW)
   - Brightness
@@ -24,6 +27,30 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - Sensor
   - Power supply voltage (ESP32 VCC)
 
+### yeelink.light.ceiling10
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (2700K)
+  - Brightness
+- Ambient light  (RGB)
+  - Brightness
+  - Color
+- Sensor
+  - ADC1
+  - ADC2
+
+### yeelink.light.ceiling15
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (2700K)
+  - Brightness
+- Sensor
+  - ADC1
+  - ADC2
 
 ## Known bugs
 
@@ -101,32 +128,49 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 
 ### yeelink.light.ceil26
 
-| Name                | Label  | ESP32 GPIO   |
-| ------------------- | ------ | ------------ |
-| Warm white PWM      | W      | GPIO19       |
-| Cold white PWM      | C      | GPIO21       |
-| Night light PWM     | NL     | GPIO23       |
-| Power supply GPIO   | STB    | GPIO23       |
-| VCC measurement     | ADC1   | GPIO35       |
-| TXD                 |        | GPIO1        |
-| RXD                 |        | GPIO3        |
-| GPIO0               | TP3    | GPIO0        |
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |           0.4V - 1.5V |
+| Cold white PWM      | C      | GPIO21       |           0.5V - 3.0V |
+| Night light PWM     | NL     | GPIO23       |                       |
+| Power supply GPIO   | STB    | GPIO23       |                       |
+| VCC measurement     | ADC1   | GPIO35       |                       |
+| TXD                 |        | GPIO1        |                       |
+| RXD                 |        | GPIO3        |                       |
+| GPIO0               | TP3    | GPIO0        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
+
+### yeelink.light.ceiling10
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |         0.42V - 2.55V |
+| Cold white PWM      | C      | GPIO21       |         0.41V - 2.51V |
+| Night light PWM     | NL     | GPIO23       |                   N/A |
+| Red PWM             | R      | GPIO33       |                       |
+| Green PWM           | G      | GPIO26       |                       |
+| Blue PWM            | B      | GPIO27       |                       |
+| Power supply GPIO   | ON/OFF | GPIO22       |            3.08V / 0V |
+| TXD                 | TX     | GPIO1        |                       |
+| RXD                 | RX     | GPIO3        |                       |
+| GPIO0               | IO0    | GPIO0        |                       |
+
+The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
 
 
 ### yeelink.light.ceiling15
 
-| Name                | Label  | ESP32 GPIO   |
-| ------------------- | ------ | ------------ |
-| Warm white PWM      | W      | GPIO19       |
-| Cold white PWM      | C      | GPIO21       |
-| Night light PWM     | NL     | GPIO23       |
-| VCC measurement     | ADC1   | GPIO36       |
-| VCC measurement     | ADC2   | GPIO32       |
-| TXD                 |        | GPIO1        |
-| RXD                 |        | GPIO3        |
-| GPIO0               | TP1    | GPIO0        |
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |         0.67V - 3.08V |
+| Cold white PWM      | C      | GPIO21       |         0.67V - 3.08V |
+| Night light PWM     | NL     | GPIO23       |          0.06V - 3.0V |
+| VCC measurement     | ADC1   | GPIO36       |                  2.0V |
+| VCC measurement     | ADC2   | GPIO32       |                 1.76V |
+| TXD                 |        | GPIO1        |                       |
+| RXD                 |        | GPIO3        |                       |
+| GPIO0               | TP1    | GPIO0        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the back) is held low (GND) on reset / power.
 
@@ -240,6 +284,49 @@ Remove the single safety screw on the back and rotate the cover counterclockwise
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/011.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/c2001c550/thumbnails/011.jpg" width="18%">
+</a>
+
+
+### YLDL01YL
+
+The grey plastic frame can easily be removed with a credit card between the outer white body and the grey frame. It is just clipped into place. Kudos to @fhloston.
+
+References, sources & inspiration:
+
+  * https://templates.blakadder.com/yeelight_YLDL01YL.html
+  * https://photos.app.goo.gl/T3F4aaXuYgvFXRmi7
+  * https://github.com/arendst/Tasmota/discussions/10762
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/004.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/005.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/006.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/006.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/007.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/007.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/008.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/008.jpg" width="18%">
 </a>
 
 
