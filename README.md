@@ -287,6 +287,49 @@ Remove the single safety screw on the back and rotate the cover counterclockwise
 </a>
 
 
+### YLDL01YL
+
+The grey plastic frame can easily be removed with a credit card between the outer white body and the grey frame. It is just clipped into place. Kudos to @fhloston.
+
+References, sources & inspiration:
+
+  * https://templates.blakadder.com/yeelight_YLDL01YL.html
+  * https://photos.app.goo.gl/T3F4aaXuYgvFXRmi7
+  * https://github.com/arendst/Tasmota/discussions/10762
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/004.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/005.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/006.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/006.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/007.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/007.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/008.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/yldl01yl/thumbnails/008.jpg" width="18%">
+</a>
+
+
 ### YLXD42YL
 
 Rotate the cover counterclockwise.
