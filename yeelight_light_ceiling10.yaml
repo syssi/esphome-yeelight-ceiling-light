@@ -23,13 +23,13 @@ output:
     pin: GPIO19
     id: output_warm
     power_supply: power
-    min_power: 0.13
+#    min_power: 0.13
     max_power: 0.82
   - platform: ledc
     pin: GPIO21
     id: output_cold
     power_supply: power
-    min_power: 0.13
+#    min_power: 0.13
     max_power: 0.82
 
   - platform: ledc
@@ -54,7 +54,7 @@ power_supply:
   - id: power
     pin: GPIO22
     enable_time: 0s
-    keep_on_time: 2s
+    keep_on_time: 0s
 
 light:
   - platform: monochromatic
