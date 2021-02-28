@@ -29,6 +29,8 @@ output:
     pin: GPIO19
     id: output_warm
     power_supply: power
+    # limit of the stock firmware (1.5V)
+    max_power: 0.50
   - platform: ledc
     pin: GPIO21
     id: output_cold
