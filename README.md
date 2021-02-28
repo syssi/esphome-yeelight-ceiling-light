@@ -128,49 +128,49 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 
 ### yeelink.light.ceil26
 
-| Name                | Label  | ESP32 GPIO   |
-| ------------------- | ------ | ------------ |
-| Warm white PWM      | W      | GPIO19       |
-| Cold white PWM      | C      | GPIO21       |
-| Night light PWM     | NL     | GPIO23       |
-| Power supply GPIO   | STB    | GPIO23       |
-| VCC measurement     | ADC1   | GPIO35       |
-| TXD                 |        | GPIO1        |
-| RXD                 |        | GPIO3        |
-| GPIO0               | TP3    | GPIO0        |
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |           0.4V - 1.5V |
+| Cold white PWM      | C      | GPIO21       |           0.5V - 3.0V |
+| Night light PWM     | NL     | GPIO23       |                       |
+| Power supply GPIO   | STB    | GPIO23       |                       |
+| VCC measurement     | ADC1   | GPIO35       |                       |
+| TXD                 |        | GPIO1        |                       |
+| RXD                 |        | GPIO3        |                       |
+| GPIO0               | TP3    | GPIO0        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
 
 ### yeelink.light.ceiling10
 
-| Name                | Label  | ESP32 GPIO   |
-| ------------------- | ------ | ------------ |
-| Warm white PWM      | W      | GPIO19       |
-| Cold white PWM      | C      | GPIO21       |
-| Night light PWM     | NL     | GPIO23       |
-| Red PWM             | R      | GPIO33       |
-| Green PWM           | G      | GPIO26       |
-| Blue PWM            | B      | GPIO27       |
-| Power supply GPIO   | ON/OFF | GPIO22       |
-| TXD                 | TX     | GPIO1        |
-| RXD                 | RX     | GPIO3        |
-| GPIO0               | IO0    | GPIO0        |
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |                       |
+| Cold white PWM      | C      | GPIO21       |                       |
+| Night light PWM     | NL     | GPIO23       |                       |
+| Red PWM             | R      | GPIO33       |                       |
+| Green PWM           | G      | GPIO26       |                       |
+| Blue PWM            | B      | GPIO27       |                       |
+| Power supply GPIO   | ON/OFF | GPIO22       |                       |
+| TXD                 | TX     | GPIO1        |                       |
+| RXD                 | RX     | GPIO3        |                       |
+| GPIO0               | IO0    | GPIO0        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
 
 
 ### yeelink.light.ceiling15
 
-| Name                | Label  | ESP32 GPIO   |
-| ------------------- | ------ | ------------ |
-| Warm white PWM      | W      | GPIO19       |
-| Cold white PWM      | C      | GPIO21       |
-| Night light PWM     | NL     | GPIO23       |
-| VCC measurement     | ADC1   | GPIO36       |
-| VCC measurement     | ADC2   | GPIO32       |
-| TXD                 |        | GPIO1        |
-| RXD                 |        | GPIO3        |
-| GPIO0               | TP1    | GPIO0        |
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |         0.67V - 3.08V |
+| Cold white PWM      | C      | GPIO21       |         0.67V - 3.08V |
+| Night light PWM     | NL     | GPIO23       |          0.06V - 3.0V |
+| VCC measurement     | ADC1   | GPIO36       |                  2.0V |
+| VCC measurement     | ADC2   | GPIO32       |                 1.76V |
+| TXD                 |        | GPIO1        |                       |
+| RXD                 |        | GPIO3        |                       |
+| GPIO0               | TP1    | GPIO0        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the back) is held low (GND) on reset / power.
 
