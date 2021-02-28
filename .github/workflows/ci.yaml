@@ -40,4 +40,5 @@ jobs:
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
       - run: esphome yeelight_light_ceil26.yaml compile
+      - run: esphome yeelight_light_ceiling10.yaml compile
       - run: esphome yeelight_light_ceiling15.yaml compile
