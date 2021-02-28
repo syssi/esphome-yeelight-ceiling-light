@@ -1,0 +1,76 @@
+substitutions:
+  name: yeelight_light_ceiling10
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp32doit-devkit-v1
+  platformio_options:
+    platform: espressif32@3.0.0
+    platform_packages: |-4
+          framework-arduinoespressif32 @ https://github.com/Jason2866/esp32-arduino-lib-builder/raw/framework-arduinoespressif32/framework-arduinoespressif32-release_v3.3-solo1-bd65eb8d1.tar.gz
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+api:
+logger:
+
+output:
+  - platform: ledc
+    pin: GPIO19
+    id: output_warm
+    power_supply: power
+  - platform: ledc
+    pin: GPIO21
+    id: output_cold
+    power_supply: power
+
+  - platform: ledc
+    pin: GPIO23
+    id: output_nightlight
+    power_supply: power
+
+  - platform: ledc
+    pin: GPIO33
+    id: output_red
+    power_supply: power
+  - platform: ledc
+    pin: GPIO26
+    id: output_green
+    power_supply: power
+  - platform: ledc
+    pin: GPIO27
+    id: output_blue
+    power_supply: power
+
+power_supply:
+  - id: power
+    pin: GPIO22
+    enable_time: 0s
+    keep_on_time: 2s
+
+light:
+  - platform: monochromatic
+    name: "${name} night light"
+    id: night_light
+    output: output_nightlight
+    on_turn_on:
+      - light.turn_off: ceiling_light
+  - platform: cwww
+    name: "${name} ceiling light"
+    id: ceiling_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    on_turn_on:
+      - light.turn_off: night_light
+  - platform: rgb
+    name: "${name} ambient light"
+    red: output_red
+    green: output_green
+    blue: output_blue

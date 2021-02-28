@@ -11,10 +11,13 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight XianYu C2001C550                        | yeelink.light.ceil26      | C2001C550   | AC220V, 50W, 2700K-6500K, 55.5cm        |
 | Yeelight XianYu C2001C450 (untested!)            | yeelink.light.ceil26(?)   | C2001C450   | AC220V, 50W, 2700K-6500K, 45.5cm        |
 | Yeelight XianYu C2001S500 (untested!)            | yeelink.light.ceil26(?)   | C2001S500   | AC220V, 50W, 2700K-6500K, 50.5x50.5cm   |
+| Yeelight Meteorite Ceiling Light                 | yeelink.light.ceiling10   | YLDL01YL    | AC220V, 33W, 2700K-6500K, 7W RGB ambient light, 90x7x4 cm  |
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 
 
 ## Features
+
+### yeelink.light.ceil26
 
 - Light (CCWW)
   - Brightness
@@ -24,6 +27,30 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - Sensor
   - Power supply voltage (ESP32 VCC)
 
+### yeelink.light.ceiling10
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (2700K)
+  - Brightness
+- Ambient light  (RGB)
+  - Brightness
+  - Color
+- Sensor
+  - ADC1
+  - ADC2
+
+### yeelink.light.ceiling15
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (2700K)
+  - Brightness
+- Sensor
+  - ADC1
+  - ADC2
 
 ## Known bugs
 
@@ -113,6 +140,23 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 | GPIO0               | TP3    | GPIO0        |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
+
+### yeelink.light.ceiling10
+
+| Name                | Label  | ESP32 GPIO   |
+| ------------------- | ------ | ------------ |
+| Warm white PWM      | W      | GPIO19       |
+| Cold white PWM      | C      | GPIO21       |
+| Night light PWM     | NL     | GPIO23       |
+| Red PWM             | R      | GPIO33       |
+| Green PWM           | G      | GPIO26       |
+| Blue PWM            | B      | GPIO27       |
+| Power supply GPIO   | ON/OFF | GPIO22       |
+| TXD                 | TX     | GPIO1        |
+| RXD                 | RX     | GPIO3        |
+| GPIO0               | IO0    | GPIO0        |
+
+The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
 
 
 ### yeelink.light.ceiling15
