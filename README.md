@@ -145,13 +145,13 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held l
 
 | Name                | Label  | ESP32 GPIO   | Stock firmware limits |
 | ------------------- | ------ | ------------ |-----------------------|
-| Warm white PWM      | W      | GPIO19       |                       |
-| Cold white PWM      | C      | GPIO21       |                       |
-| Night light PWM     | NL     | GPIO23       |                       |
+| Warm white PWM      | W      | GPIO19       |         0.42V - 2.55V |
+| Cold white PWM      | C      | GPIO21       |         0.41V - 2.51V |
+| Night light PWM     | NL     | GPIO23       |                   N/A |
 | Red PWM             | R      | GPIO33       |                       |
 | Green PWM           | G      | GPIO26       |                       |
 | Blue PWM            | B      | GPIO27       |                       |
-| Power supply GPIO   | ON/OFF | GPIO22       |                       |
+| Power supply GPIO   | ON/OFF | GPIO22       |            3.08V / 0V |
 | TXD                 | TX     | GPIO1        |                       |
 | RXD                 | RX     | GPIO3        |                       |
 | GPIO0               | IO0    | GPIO0        |                       |
