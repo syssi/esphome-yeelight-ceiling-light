@@ -1,0 +1,138 @@
+08:00:47.650 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:47.650 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:47.650 [W] miio_ot: ots reconnect will start in 569 ms... (ots_reconnect,101)
+08:00:48.230 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:48.230 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:48.230 [W] miio_ot: ots reconnect will start in 2443 ms... (ots_reconnect,101)
+08:00:50.690 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:50.690 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:50.690 [W] miio_ot: ots reconnect will start in 1594 ms... (ots_reconnect,101)
+08:00:52.300 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:52.300 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:52.300 [W] miio_ot: ots reconnect will start in 3729 ms... (ots_reconnect,101)
+08:00:53.640 [W] miio_ot: miio_ntp got address[de.ot.io.mi.com] failed! (miio_ntp,346)
+08:00:56.040 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:56.040 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:56.040 [W] miio_ot: ots reconnect will start in 377 ms... (ots_reconnect,101)
+08:00:56.430 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:56.430 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:56.430 [W] miio_ot: ots reconnect will start in 4182 ms... (ots_reconnect,101)
+08:01:00.630 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:01:00.630 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:01:00.630 [W] miio_ot: ots reconnect will start in 1073 ms... (ots_reconnect,101)
+08:01:01.720 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:01:01.720 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:01:01.720 [W] miio_ot: ots reconnect will start in 15630 ms... (ots_reconnect,101)
+
+Brownout detector was triggered
+
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:988
+load:0x40078000,len:0
+load:0x40078000,len:12024
+csum err:0xf0!=0x63
+ets_main.c 371 
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:988
+load:0x40078000,len:0
+load:0x40078000,len:12024
+entry 0x40078c5c
+I (28) boot: SPI Flash RID  : 0xB20B4
+I (28) boot: SPI Flash  MF  : 0xB4
+I (28) boot: SPI Flash  ID  : 0x200B
+08:00:00.090 [I] miio_ot: httpdns disabled
+08:00:00.090 [I] miio_ot: dlg disabled
+
+
+_|      _|  _|_|_|  _|_|_|    _|_|  
+_|_|  _|_|    _|      _|    _|    _|
+_|  _|  _|    _|      _|    _|    _|
+_|      _|    _|      _|    _|    _|
+_|      _|  _|_|_|  _|_|_|    _|_|  
+JENKINS BUILD NUMBER: N/A
+BUILD TIME: Apr 15 2020,18:28:48
+BUILT BY: N/A
+MIIO APP VER: 2.0.6_0049
+MIIO MCU VER: 
+MIIO DID: 305748866
+MIIO WIFI MAC: 5cXXXXXXXXXX
+MIIO MODEL: yeelink.light.ceiling10
+ARCH TYPE: esp32,0x0000a601
+ARCH VER: 1d54820
+
+Bøets Jun  8 2016 00:22:57
+
+rst:0x1 (ðets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:988
+load:0x40078000,len:0
+load:0x40078000,len:12024
+entry 0x40078c5c
+I (28) boot: SPI Flash RID  : 0xB20B4
+I (28) boot: SPI Flash  MF  : 0xB4
+I (28) boot: SPI Flash  ID  : 0x200B
+08:00:00.090 [I] miio_ot: httpdns disabled
+08:00:00.090 [I] miio_ot: dlg disabled
+
+
+_|      _|  _|_|_|  _|_|_|    _|_|  
+_|_|  _|_|    _|      _|    _|    _|
+_|  _|  _|    _|      _|    _|    _|
+_|      _|    _|      _|    _|    _|
+_|      _|  _|_|_|  _|_|_|    _|_|  
+JENKINS BUILD NUMBER: N/A
+BUILD TIME: Apr 15 2020,18:28:48
+BUILT BY: N/A
+MIIO APP VER: 2.0.6_0049
+MIIO MCU VER: 
+MIIO DID: 305748866
+MIIO WIFI MAC: 5cXXXXXXXXXX
+MIIO MODEL: yeelink.light.ceiling10
+ARCH TYPE: esp32,0x0000a601
+ARCH VER: 1d54820
+
+************************
+Wifi ip=192.168.xxx.xxx,mask=255.255.255.0,gw=192.168.xxx.xxx
+************************
+
+08:00:04.550 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+08:00:04.560 [I] otu: Opened.
+08:00:11.540 [E] ots: resolve failed. (ots_cloud_host_update,869)
+08:00:11.540 [W] miio_ot: ots reconnect will start in 8592 ms... (ots_reconnect,101)
+18:13:36.090 [W] otu: Token private!!. (otu_packet_handle,706)
+18:13:36.140 [W] ots: httpdns resolve start failed, -12 (ots_cloud_host_update,850)
+18:13:36.190 [I] ots: de.ots.io.mi.com resolved to 3.126.247.75.
+18:13:36.190 [I] ots: ots connect 3.126.247.75::443...
+18:13:36.200 [I] tls: connect to server Mijia Cloud, domain is 3.126.247.75, port is 443.
+18:13:36.400 [W] tls: timeout[100]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:13:36.600 [W] tls: timeout[200]! mbedtls_ssl_handshake returned -0x6800 (d0_tls_open,369)
+18:13:36.630 [I] ots: Connected.
+18:13:36.640 [I] ots: -->sync sent.
+18:13:36.700 [I] ots: <--sync ack.
+18:13:38.640 [I] ots: -->login sent.
+18:13:38.660 [I] ots: <--login ack, code=0.
+18:13:38.660 [I] miio_ot: info(ots) will start in 0 ms...
+18:13:38.660 [I] miio_ot: -->info(ots).
+18:13:38.740 [I] miio_ot: <--info ack(ots).
+18:13:41.640 [I] ots: -->sync sent.
+18:13:41.700 [I] ots: <--sync ack.
+18:13:45.080 [W] otu: Token private!!. (otu_packet_handle,706)
+18:13:49.640 [I] ots: -->sync sent.
+18:13:49.700 [I] ots: <--sync ack.
