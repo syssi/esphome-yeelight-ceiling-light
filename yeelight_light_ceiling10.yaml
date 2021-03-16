@@ -61,6 +61,7 @@ light:
     name: "${name} night light"
     id: night_light
     output: output_nightlight
+    gamma_correct: 0
     on_turn_on:
       - light.turn_off: ceiling_light
   - platform: cwww
@@ -71,6 +72,7 @@ light:
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
     constant_brightness: true
+    gamma_correct: 0
     on_turn_on:
       - light.turn_off: night_light
   - platform: rgb
@@ -78,3 +80,4 @@ light:
     red: output_red
     green: output_green
     blue: output_blue
+    gamma_correct: 0
