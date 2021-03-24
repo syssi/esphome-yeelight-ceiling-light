@@ -235,6 +235,37 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 </a>
 
 
+### YLXD41YL
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/004.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/005.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/006.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/006.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/007.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/thumbnails/007.jpg" width="18%">
+</a>
+
+
 ### C2001C550
 
 Remove the single safety screw on the back and rotate the cover counterclockwise.
