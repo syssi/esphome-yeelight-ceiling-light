@@ -15,7 +15,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceilingUNKNOWN  | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 
-# More esphome + yeelight projects
+### More esphome + yeelight projects
 
 - [Yeelight LED Screen Light Bar (YLTD001)](https://github.com/dckiller51/esphome-yeelight-led-screen-light-bar)
 - [Yeelight Ceiling Light YLXD41YL](https://github.com/jaddel/ESPHome-Configurations/tree/master/Devices/Ceiling%20Yeelight%20YLXD41YL)
