@@ -15,6 +15,14 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceilingUNKNOWN  | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 
+# More esphome + yeelight projects
+
+- [Yeelight LED Screen Light Bar (YLTD001)](https://github.com/dckiller51/esphome-yeelight-led-screen-light-bar)
+- [Yeelight Ceiling Light YLXD41YL](https://github.com/jaddel/ESPHome-Configurations/tree/master/Devices/Ceiling%20Yeelight%20YLXD41YL)
+- [Xiaomi Mi Desk Lamp 1S (ESP32 based)](https://www.reddit.com/r/Esphome/comments/j11ayw/working_configuration_for_xiaomi_mi_desk_lamp_1s/)
+- [Xiaomi Mi Desk Lamp (MJTD01YL, ESP8266 based)](https://github.com/syssi/esphome-mi-desk-lamp)
+- [Xiaomi Philips Light](https://github.com/syssi/esphome-xiaomi-philips-light)
+
 
 ## Features
 
