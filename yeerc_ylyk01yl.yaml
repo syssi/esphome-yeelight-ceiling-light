@@ -1,0 +1,43 @@
+substitutions:
+  name: yeerc_alpha
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp32doit-devkit-v1
+  platformio_options:
+    platform: espressif32@3.0.0
+    platform_packages: tasmota/framework-arduinoespressif32 @ 3.10006.210420
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+api:
+logger:
+
+esp32_ble_tracker:
+
+xiaomi_ylyk01yl:
+  mac_address: "FF:FF:FF:FF:FF:FF"
+  last_button_pressed:
+    name: "last button pressed"
+  on_button_on:
+    then:
+      - logger.log: "Button on pressed"
+  on_button_off:
+    then:
+      - logger.log: "Button off pressed"
+  on_button_sun:
+    then:
+      - logger.log: "Button sun pressed"
+  on_button_m:
+    then:
+      - logger.log: "Button m pressed"
+  on_button_plus:
+    then:
+      - logger.log: "Button plus pressed"
+  on_button_minus:
+    then:
+      - logger.log: "Button minus pressed"

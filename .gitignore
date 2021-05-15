@@ -7,3 +7,7 @@ secret.yaml
 **/src/
 **/platformio.ini
 **/partitions.csv
+
+__pycache__/
+*.py[cod]
+*$py.class
