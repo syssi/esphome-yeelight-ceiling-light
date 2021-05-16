@@ -72,8 +72,8 @@ light:
     output: led_output
 
 # A eeprom at address 0x10 should be found.
-#i2c:
-#  - id: i2c_bus
-#    sda: GPIO17
-#    scl: GPIO18
-#    scan: true
+# i2c:
+#   - id: i2c_bus
+#     sda: GPIO17
+#     scl: GPIO18
+#     scan: true
