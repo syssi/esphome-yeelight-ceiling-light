@@ -212,9 +212,9 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 
 | Name                | Label  | ESP32 GPIO   | Stock firmware limits |
 | ------------------- | ------ | ------------ |-----------------------|
-| Warm white PWM      |        | GPIO2        |                       |
-| Cold white PWM      |        | GPIO27       |                       |
-| Night light PWM     |        | GPIO12       |                       |
+| Warm white PWM      |        | GPIO2        |        0.226V - 3.28V |
+| Cold white PWM      |        | GPIO27       |        0.194V - 3.28V |
+| Night light PWM     |        | GPIO12       |        0.197V - 3.27V |
 | Power supply GPIO   |        | GPIO4        |                       |
 | Button              |        | GPIO14       |                       |
 | TXD                 |        | GPIO1        |                       |
