@@ -210,19 +210,21 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 
 ### yeelink.light.lamp9, yeelink.light.lampXX
 
-| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
-| ------------------- | ------ | ------------ |-----------------------|
-| Warm white PWM      |        | GPIO2        |        0.226V - 3.28V |
-| Cold white PWM      |        | GPIO27       |        0.194V - 3.28V |
-| Night light PWM     |        | GPIO12       |        0.197V - 3.27V |
-| Power supply GPIO   |        | GPIO4        |                       |
-| Button              |        | GPIO14       |                       |
-| TXD                 |        | GPIO1        |                       |
-| RXD                 |        | GPIO3        |                       |
-| GPIO0               |        | GPIO0        |                       |
-| SCL (I2C)           |        | GPIO18       |                       |
-| SDA (I2C)           |        | GPIO17       |                       |
-| LED (YLCT03YL only) |        | GPIO33       |                       |
+| Name                | Label           | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | --------------- | ------------ |-----------------------|
+| Warm white PWM      |                 | GPIO2        |        0.226V - 3.28V |
+| Cold white PWM      |                 | GPIO27       |        0.194V - 3.28V |
+| Night light PWM     |                 | GPIO12       |        0.197V - 3.27V |
+| Power supply GPIO   |                 | GPIO4        |                       |
+| Button              |                 | GPIO14       |                       |
+| TXD                 | TX, TP9         | GPIO1        |                       |
+| RXD                 | RX, TP10        | GPIO3        |                       |
+| GPIO0               | TP next to C37  | GPIO0        |                       |
+| SCL (I2C)           |                 | GPIO18       |                       |
+| SDA (I2C)           |                 | GPIO17       |                       |
+| LED (YLCT03YL only) |                 | GPIO33       |                       |
+| 3.3V                | +, TP7          | 3.3V         |                       |
+| GND                 | -, TP8          | GND          |                       |
 
 
 ## Disassembly
