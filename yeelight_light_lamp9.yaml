@@ -1,0 +1,72 @@
+substitutions:
+  name: yeelight_light_lamp9
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp32doit-devkit-v1
+  platformio_options:
+    platform: espressif32@3.0.0
+    platform_packages: tasmota/framework-arduinoespressif32 @ 3.10006.210420
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+api:
+logger:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO14
+    name: "${name} button"
+    on_press:
+      - light.toggle: bedside_light
+
+output:
+  - platform: ledc
+    pin: GPIO2
+    id: output_warm
+    power_supply: power
+  - platform: ledc
+    pin: GPIO27
+    id: output_cold
+    power_supply: power
+  - platform: ledc
+    pin: GPIO12
+    id: output_nightlight
+    power_supply: power
+  - platform: gpio
+    pin: GPIO33
+    id: led_output
+
+power_supply:
+  - id: power
+    pin: GPIO4
+    enable_time: 0s
+    keep_on_time: 2s
+
+light:
+  - platform: monochromatic
+    name: "${name} night light"
+    id: night_light
+    output: output_nightlight
+    gamma_correct: 0
+    on_turn_on:
+      - light.turn_off: bedside_light
+  - platform: cwww
+    name: "${name} bedside light"
+    id: bedside_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    gamma_correct: 0
+    on_turn_on:
+      - light.turn_off: night_light
+  - platform: binary
+    name: "${name} mainboard led"
+    output: led_output

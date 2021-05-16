@@ -222,7 +222,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 | GPIO0               |        | GPIO0        |                       |
 | SCL (I2C)           |        | GPIO18       |                       |
 | SDA (I2C)           |        | GPIO17       |                       |
-| LED??               |        | GPIO33       |                       |
+| LED (YLCT03YL only) |        | GPIO33       |                       |
 
 
 ## Disassembly
