@@ -23,8 +23,47 @@ binary_sensor:
       number: GPIO14
       inverted: true
     name: "${name} button"
+    id: button
+    on_click:
+      then:
+        - if:
+          condition:
+            light.is_off: bedside_light
+          then:
+            light.turn_on:
+              id: bedside_light
+              brightness: 1.0
+          else:
+            light.turn_off: bedside_light
     on_press:
-      - light.toggle: bedside_light
+      then:
+        - if:
+          condition:
+            light.is_off: bedside_light
+          then:
+            - delay: 0.5s
+            - while:
+                condition:
+                  binary_sensor.is_on: button
+                then:
+                  - light.dim_relative:
+                      id: bedside_light
+                      relative_brightness: 5%
+                      transition_length: 0.1s
+                  - delay: 0.1s
+          else:
+            - delay: 0.5s
+            - while:
+                condition:
+                  and:
+                    - binary_sensor.is_on: button
+                    - light.is_on: bedside_light
+                then:
+                  - light.dim_relative:
+                      id: bedside_light
+                      relative_brightness: -5%
+                      transition_length: 0.1s
+                  - delay: 0.1s
 
 output:
   - platform: ledc
