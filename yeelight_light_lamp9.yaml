@@ -21,6 +21,7 @@ binary_sensor:
   - platform: gpio
     pin:
       number: GPIO14
+      inverted: true
     name: "${name} button"
     on_press:
       - light.toggle: bedside_light
