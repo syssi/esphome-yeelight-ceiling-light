@@ -434,3 +434,19 @@ Rotate the cover counterclockwise.
 ### YLCT02YL
 
 Remove the 4 screws under the foot. The lower shell is held by 8 clips and can be separated with a plastic card and some force.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/004.jpg" width="18%">
+</a>
