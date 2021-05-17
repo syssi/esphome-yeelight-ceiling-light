@@ -63,7 +63,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
   - ADC1
   - ADC2
 
-### yeelink.light.lamp9, ### yeelink.light.lampX
+### yeelink.light.lamp9, yeelink.light.lampX
 
 - Power button
 - Light (CCWW)
