@@ -14,6 +14,8 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Meteorite Ceiling Light                 | yeelink.light.ceiling10   | YLDL01YL    | AC220V, 33W, 2700K-6500K, 7W RGB ambient light, 90x7x4 cm  |
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceilingUNKNOWN  | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
+| Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
+| Yeelight Staria Pro Bedside LED                  | yeelink.light.lampXX      | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
 
 ### More esphome + yeelight projects
 
@@ -60,6 +62,15 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - Sensor
   - ADC1
   - ADC2
+
+### yeelink.light.lamp9, ### yeelink.light.lampX
+
+- Power button
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (2700K)
+  - Brightness
 
 ## Known bugs
 
@@ -196,6 +207,24 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
    |   |   |   |
   3V3 ADC2 CW GND
 ```
+
+### yeelink.light.lamp9, yeelink.light.lampXX
+
+| Name                | Label           | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | --------------- | ------------ |-----------------------|
+| Warm white PWM      |                 | GPIO2        |        0.226V - 3.28V |
+| Cold white PWM      |                 | GPIO27       |        0.194V - 3.28V |
+| Night light PWM     |                 | GPIO12       |        0.197V - 3.27V |
+| Power supply GPIO   |                 | GPIO4        |                       |
+| Button              |                 | GPIO14       |                       |
+| TXD                 | TX, TP9         | GPIO1        |                       |
+| RXD                 | RX, TP10        | GPIO3        |                       |
+| GPIO0               | TP next to C37  | GPIO0        |                       |
+| SCL (I2C)           |                 | GPIO18       |                       |
+| SDA (I2C)           |                 | GPIO17       |                       |
+| LED (YLCT03YL only) |                 | GPIO33       |                       |
+| 3.3V                | +, TP7          | 3.3V         |                       |
+| GND                 | -, TP8          | GND          |                       |
 
 
 ## Disassembly
@@ -400,4 +429,24 @@ Rotate the cover counterclockwise.
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/007.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd42yl/thumbnails/007.jpg" width="18%">
+</a>
+
+### YLCT02YL
+
+Remove the 4 screws under the foot. The lower shell is held by 8 clips and can be separated with a plastic card and some force.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/004.jpg" width="18%">
 </a>
