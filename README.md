@@ -15,7 +15,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceilingUNKNOWN  | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
-| Yeelight Staria Pro Bedside LED                  | yeelink.light.lampXX      | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
+| Yeelight Staria Pro Bedside LED                  | yeelink.light.lampUNKNOWN | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
 
 ### More esphome + yeelight projects
 
@@ -208,7 +208,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
   3V3 ADC2 CW GND
 ```
 
-### yeelink.light.lamp9, yeelink.light.lampXX
+### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
 | Name                | Label           | ESP32 GPIO   | Stock firmware limits |
 | ------------------- | --------------- | ------------ |-----------------------|
