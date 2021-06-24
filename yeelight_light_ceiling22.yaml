@@ -1,0 +1,71 @@
+substitutions:
+  name: yeelight_light_ceiling22
+
+esphome:
+  name: ${name}
+  platform: ESP32
+  board: esp32doit-devkit-v1
+  platformio_options:
+    platform: espressif32@3.0.0
+    platform_packages: tasmota/framework-arduinoespressif32 @ 3.10006.210420
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+api:
+logger:
+
+sensor:
+  - platform: adc
+    pin: GPIO36
+    name: "${name} power supply"
+    attenuation: 11db
+
+output:
+  - platform: ledc
+    pin: GPIO19
+    id: output_warm
+    frequency: "2441Hz"
+    # min_power: 0.14
+    max_power: 0.50
+    power_supply: power_supply1
+  - platform: ledc
+    pin: GPIO21
+    id: output_cold
+    frequency: "2441Hz"
+    # min_power: 0.20
+    max_power: 0.88
+    power_supply: power_supply1
+  - platform: ledc
+    pin: GPIO23
+    id: output_nightlight
+    frequency: "19531Hz"
+    # min_power: 0.10
+    max_power: 1.00
+    power_supply: power_supply1
+
+power_supply:
+  - id: power_supply1
+    pin: GPIO22
+
+light:
+  - platform: monochromatic
+    name: "${name} night light"
+    id: night_light
+    output: output_nightlight
+    gamma_correct: 0
+    on_turn_on:
+      - light.turn_off: ceiling_light
+  - platform: cwww
+    name: "${name} ceiling light"
+    id: ceiling_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6000 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    gamma_correct: 0
+    on_turn_on:
+      - light.turn_off: night_light

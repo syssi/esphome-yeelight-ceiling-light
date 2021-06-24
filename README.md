@@ -16,6 +16,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceilingUNKNOWN  | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lampUNKNOWN | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
+| Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD01     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
 
 ### More esphome + yeelight projects
 
@@ -28,7 +29,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 
 ## Features
 
-### yeelink.light.ceil26
+### yeelink.light.ceil26, yeelink.light.ceiling22
 
 - Light (CCWW)
   - Brightness
@@ -207,6 +208,22 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
    |   |   |   |
   3V3 ADC2 CW GND
 ```
+
+### yeelink.light.ceiling22
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       | 14% - 50% duty cycle  |
+| Cold white PWM      | C      | GPIO21       | 20% - 88% duty cycle  |
+| Night light PWM     | NL     | GPIO23       | 10% - 100% duty cycle |
+| VCC measurement     | ADC1   | GPIO36       |                       |
+| 3.3V                | TP1    |              |                       |
+| GND                 | TP2    |              |                       |
+| GPIO0               | TP3    | GPIO0        |                       |
+| TXD                 | TP4    | GPIO1        |                       |
+| RXD                 | TP5    | GPIO3        |                       |
+
+The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the back) is held low (GND) on reset / power.
 
 ### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
