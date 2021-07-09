@@ -35,7 +35,8 @@ jobs:
       - name: 💣 Copy component into the esphome project
         run: |
           cp -r ../components/* esphome/components/
-          git config user.name "runner"
+          git config user.name "ci"
+          git config user.email "ci@github.com"
           git add .
           git commit -a -m "Add xiaomi_ble and xiaomi_ylyk01yl"
         working-directory: ${{ env.esphome_directory }}
@@ -67,7 +68,8 @@ jobs:
       - name: 💣 Copy component into the esphome project
         run: |
           cp -r ../components/* esphome/components/
-          git config user.name "runner"
+          git config user.name "ci"
+          git config user.email "ci@github.com"
           git add .
           git commit -a -m "Add xiaomi_ble and xiaomi_ylyk01yl"
         working-directory: ${{ env.esphome_directory }}
@@ -114,7 +116,8 @@ jobs:
       - name: 💣Copy component into the esphome project
         run: |
           cp -r ../components/* esphome/components/
-          git config user.name "runner"
+          git config user.name "ci"
+          git config user.email "ci@github.com"
           git add .
           git commit -a -m "Add xiaomi_ble and xiaomi_ylyk01yl"
         working-directory: ${{ env.esphome_directory }}
