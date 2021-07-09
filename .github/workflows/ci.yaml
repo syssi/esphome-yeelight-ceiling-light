@@ -161,9 +161,7 @@ jobs:
       - run: esphome yeelight_light_ceil26.yaml config
       - run: esphome yeelight_light_ceiling10.yaml config
       - run: esphome yeelight_light_ceiling15.yaml config
-      - run: |
-          sed -i 's#source: github://syssi/esphome-yeelight-ceiling-light@main#source: components#' yeerc_ylyk01yl.yaml
-          esphome yeerc_ylyk01yl.yaml compile
+      - run: esphome yeerc_ylyk01yl.yaml config
 
   esphome-compile:
     runs-on: ubuntu-latest
