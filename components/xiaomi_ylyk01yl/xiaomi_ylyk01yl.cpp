@@ -18,11 +18,7 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
     ESP_LOGVV(TAG, "parse_device(): unknown MAC address.");
     return false;
   }
-  ESP_LOGVV(
-TAG, 
-"parse_device(): MAC address %s found.", 
-device.address_str().c_str()
-  );
+  ESP_LOGVV(TAG, "parse_device(): MAC address %d found.", device.address_str().c_str());
 
   bool success = false;
   for (auto &service_data : device.get_service_datas()) {
