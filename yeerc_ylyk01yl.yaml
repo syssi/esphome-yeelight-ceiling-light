@@ -10,8 +10,9 @@ esphome:
     platform_packages: tasmota/framework-arduinoespressif32 @ 3.10006.210420
 
 external_components:
-  - source: github://syssi/esphome-yeelight-ceiling-light@main
-    refresh: 0s
+  - source: components
+#  - source: github://syssi/esphome-yeelight-ceiling-light@main
+#    refresh: 0s
 
 wifi:
   ssid: !secret wifi_ssid
