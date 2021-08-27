@@ -17,6 +17,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lampUNKNOWN | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
 | Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD01     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
+| Yeelight Ceiling Light YLXD50YL                  | yeelink.light.ceiling20   | YLXD50YL    | AC220V, 50W, 3100lm, 2700K-6500K, RGB ambient light, 47cm  |
 
 ### More esphome + yeelight projects
 
@@ -39,7 +40,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - Sensor
   - Power supply voltage (ESP32 VCC)
 
-### yeelink.light.ceiling10
+### yeelink.light.ceiling10, yeelink.light.ceiling20
 
 - Light (CCWW)
   - Brightness
@@ -224,6 +225,26 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 | RXD                 | TP5    | GPIO3        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the back) is held low (GND) on reset / power.
+
+### yeelink.light.ceiling20
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| 3.3V                | 3.3    | 3.3V         |                       |
+| GND                 | GND    | GND          |                       |
+| Red PWM             | R      | GPIO33       |                       |
+| Green PWM           | G      | GPIO26       |                       |
+| Blue PWM            | B      | GPIO27       |                       |
+| Night Light PWM     | NC     | GPIO22       |                       |
+| Power supply GPIO   | STA    | GPIO22       |             3.3V / 0V |
+| Cold white PWM      | C      | GPIO21       |                 3.16V |
+| Warm white PWM      | W      | GPIO19       |                 1.58V |
+| TXD                 | TP5    | GPIO1        |                       |
+| RXD                 | TP4    | GPIO3        |                       |
+| GPIO0               | TP3    | GPIO0        |                       |
+
+
+The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
 
 ### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
@@ -466,4 +487,34 @@ Remove the 4 screws under the foot. The lower shell is held by 8 clips and can b
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/004.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylct02yl/thumbnails/004.jpg" width="18%">
+</a>
+
+### YLXD50YL
+
+Remove the cover counterclockwise, disconnect from the AC (be safe!), pull out the RGB - C - W connectors (mark one of the last two). Unscrew the 2 screws from the base, and you can remove the controller box.
+Pick a flat screwdriver/plastic card and remove the plastic base from the box. Sometimes its harder, because the thermalpad. Pull out the PCB from the box, and you can remove the ESP module. Maybe some cleaning required from the glue.
+The test points are in the back of the ESP's PCB.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/004.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/005.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/006.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/006.jpg" width="18%">
 </a>
