@@ -495,26 +495,26 @@ Remove the cover counterclockwise, disconnect from the AC (be safe!), pull out t
 Pick a flat screwdriver/plastic card and remove the plastic base from the box. Sometimes its harder, because the thermalpad. Pull out the PCB from the box, and you can remove the ESP module. Maybe some cleaning required from the glue.
 The test points are in the back of the ESP's PCB.
 
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/001.jpg" target="_blank">
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/001.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/001.jpg" width="18%">
 </a>
 
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/002.jpg" target="_blank">
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/002.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/002.jpg" width="18%">
 </a>
 
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/003.jpg" target="_blank">
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/003.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/003.jpg" width="18%">
 </a>
 
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/004.jpg" target="_blank">
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/004.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/004.jpg" width="18%">
 </a>
 
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/005.jpg" target="_blank">
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/005.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/005.jpg" width="18%">
 </a>
 
-<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylylxd50yl/006.jpg" target="_blank">
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/006.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/006.jpg" width="18%">
 </a>
