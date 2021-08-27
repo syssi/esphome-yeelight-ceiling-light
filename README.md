@@ -235,6 +235,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the bac
 | Red PWM             | R      | GPIO33       |                       |
 | Green PWM           | G      | GPIO26       |                       |
 | Blue PWM            | B      | GPIO27       |                       |
+| Night Light PWM     | NC     | GPIO22       |                       |
 | Power supply GPIO   | STA    | GPIO22       |             3.3V / 0V |
 | Cold white PWM      | C      | GPIO21       |                 3.16V |
 | Warm white PWM      | W      | GPIO19       |                 1.58V |
