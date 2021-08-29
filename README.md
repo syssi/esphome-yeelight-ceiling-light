@@ -1,5 +1,11 @@
 # esphome-yeelight-ceiling-light
 
+![GitHub actions](https://github.com/syssi/esphome-yeelight-ceiling-light/actions/workflows/ci.yaml/badge.svg)
+![GitHub stars](https://img.shields.io/github/stars/syssi/esphome-yeelight-ceiling-light)
+![GitHub forks](https://img.shields.io/github/forks/syssi/esphome-yeelight-ceiling-light)
+![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-yeelight-ceiling-light)
+[!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
+
 Esphome custom firmware for some Yeelight Ceiling Lights.
 
 
