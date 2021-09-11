@@ -32,6 +32,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - [Xiaomi Mi Desk Lamp 1S (ESP32 based)](https://www.reddit.com/r/Esphome/comments/j11ayw/working_configuration_for_xiaomi_mi_desk_lamp_1s/)
 - [Xiaomi Mi Desk Lamp (MJTD01YL, ESP8266 based)](https://github.com/syssi/esphome-mi-desk-lamp)
 - [Xiaomi Philips Light](https://github.com/syssi/esphome-xiaomi-philips-light)
+- [Xiaomi Mijia Bedside Lamp 2](https://github.com/mmakaay/esphome-xiaomi_bslamp2)
 
 
 ## Features
