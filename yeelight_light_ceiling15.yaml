@@ -3,11 +3,17 @@ substitutions:
 
 esphome:
   name: ${name}
-  platform: ESP32
+
+esp32:
   board: esp32doit-devkit-v1
-  platformio_options:
-    platform: espressif32@3.0.0
-    platform_packages: tasmota/framework-arduinoespressif32 @ 3.10006.210420
+  framework:
+    # https://github.com/arendst/Tasmota/blob/development/platformio_tasmota32.ini:
+    # core32.platform = espressif32 @ 3.3.1
+    type: arduino
+    version: 3.3.1
+    # https://github.com/arendst/Tasmota/blob/development/platformio_tasmota_env32.ini:
+    # env:tasmota32solo1.platform_packages = framework-arduinoespressif32 @ https://github.com/tasmota/arduino-esp32/releases/download/1.0.7.5/tasmota-arduinoespressif32-solo1-release_v3.3.5.tar.gz
+    source: https://github.com/tasmota/arduino-esp32/releases/download/1.0.7.5/tasmota-arduinoespressif32-solo1-release_v3.3.5.tar.gz
 
 wifi:
   ssid: !secret wifi_ssid
