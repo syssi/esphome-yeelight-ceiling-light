@@ -195,6 +195,8 @@ jobs:
           pip install esphome
           pip list
           esphome version
+          # Downgrade cryptography to avoid https://github.com/espressif/esp-idf/issues/7631
+          python -m pip install --upgrade cryptography==3.4.8
       - name: Register problem matchers
         run: |
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
