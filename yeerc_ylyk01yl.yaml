@@ -1,5 +1,5 @@
 substitutions:
-  name: yeerc_alpha
+  name: yeerc
 
 esphome:
   name: ${name}

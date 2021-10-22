@@ -1,5 +1,5 @@
 substitutions:
-  name: yeelight_light_ceiling15
+  name: yeelight-light-ceiling15
 
 esphome:
   name: ${name}
