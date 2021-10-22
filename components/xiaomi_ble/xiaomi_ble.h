@@ -24,6 +24,7 @@ struct XiaomiParseResult {
     TYPE_WX08ZM,
     TYPE_MJYD02YLA,
     TYPE_MHOC401,
+    TYPE_CGPR1,
     TYPE_YLYK01YL
   } type;
   std::string name;
