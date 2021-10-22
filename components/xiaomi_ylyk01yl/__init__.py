@@ -102,18 +102,18 @@ CONFIG_SCHEMA = (
 )
 
 
-def to_code(config):
+async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    yield cg.register_component(var, config)
-    yield esp32_ble_tracker.register_ble_device(var, config)
+    await cg.register_component(var, config)
+    await esp32_ble_tracker.register_ble_device(var, config)
 
     cg.add(var.set_address(config[CONF_MAC_ADDRESS].as_hex))
 
     if CONF_LAST_BUTTON_PRESSED in config:
-        sens = yield sensor.new_sensor(config[CONF_LAST_BUTTON_PRESSED])
+        sens = await sensor.new_sensor(config[CONF_LAST_BUTTON_PRESSED])
         cg.add(var.set_keycode(sens))
 
     for action in ON_PRESS_ACTIONS:
         for conf in config.get(action, []):
             trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
-            yield automation.build_automation(trigger, [], conf)
+            await automation.build_automation(trigger, [], conf)

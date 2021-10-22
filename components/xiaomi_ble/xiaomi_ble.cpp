@@ -16,11 +16,11 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
   // remote control key code, 3 bytes
   if ((value_type == 0x01) && (value_length == 3)) {
     result.keycode = data[0];
-    result.is_long_press = (data[2] == 2) ? true : false;
+    result.is_long_press = data[2] == 2;
   }
   // motion detection, 1 byte, 8-bit unsigned integer
   else if ((value_type == 0x03) && (value_length == 1)) {
-    result.has_motion = (data[0]) ? true : false;
+    result.has_motion = data[0];
   }
   // temperature, 2 bytes, 16-bit signed integer (LE), 0.1 °C
   else if ((value_type == 0x04) && (value_length == 2)) {
@@ -36,7 +36,7 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
   else if (((value_type == 0x07) || (value_type == 0x0F)) && (value_length == 3)) {
     const uint32_t illuminance = uint32_t(data[0]) | (uint32_t(data[1]) << 8) | (uint32_t(data[2]) << 16);
     result.illuminance = illuminance;
-    result.is_light = (illuminance == 100) ? true : false;
+    result.is_light = illuminance == 100;
     if (value_type == 0x0F)
       result.has_motion = true;
   }
@@ -67,7 +67,7 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
   }
   // on/off state, 1 byte, 8-bit unsigned integer
   else if ((value_type == 0x12) && (value_length == 1)) {
-    result.is_active = (data[0]) ? true : false;
+    result.is_active = data[0];
   }
   // mosquito tablet, 1 byte, 8-bit unsigned integer, 1 %
   else if ((value_type == 0x13) && (value_length == 1)) {
@@ -77,7 +77,7 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
   else if ((value_type == 0x17) && (value_length == 4)) {
     const uint32_t idle_time = encode_uint32(data[3], data[2], data[1], data[0]);
     result.idle_time = idle_time / 60.0f;
-    result.has_motion = (idle_time) ? false : true;
+    result.has_motion = !idle_time;
   } else {
     return false;
   }
@@ -86,7 +86,7 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
 }
 
 bool parse_xiaomi_message(const std::vector<uint8_t> &message, XiaomiParseResult &result) {
-  result.has_encryption = (message[0] & 0x08) ? true : false;  // update encryption status
+  result.has_encryption = message[0] & 0x08;  // update encryption status
   if (result.has_encryption) {
     ESP_LOGVV(TAG, "parse_xiaomi_message(): payload is encrypted, stop reading message.");
     return false;
@@ -109,7 +109,7 @@ bool parse_xiaomi_message(const std::vector<uint8_t> &message, XiaomiParseResult
   }
 
   while (payload_length > 3) {
-    if (payload[payload_offset + 1] != 0x10) {
+    if (payload[payload_offset + 1] != 0x10 && payload[payload_offset + 1] != 0x00) {
       ESP_LOGVV(TAG, "parse_xiaomi_message(): fixed byte not found, stop parsing residual data.");
       break;
     }
@@ -141,9 +141,9 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
   }
 
   auto raw = service_data.data;
-  result.has_data = (raw[0] & 0x40) ? true : false;
-  result.has_capability = (raw[0] & 0x20) ? true : false;
-  result.has_encryption = (raw[0] & 0x08) ? true : false;
+  result.has_data = raw[0] & 0x40;
+  result.has_capability = raw[0] & 0x20;
+  result.has_encryption = raw[0] & 0x08;
 
   if (!result.has_data) {
     ESP_LOGVV(TAG, "parse_xiaomi_header(): service data has no DATA flag.");
@@ -208,6 +208,11 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
   } else if ((raw[2] == 0x87) && (raw[3] == 0x03)) {  // square body, e-ink display
     result.type = XiaomiParseResult::TYPE_MHOC401;
     result.name = "MHOC401";
+  } else if ((raw[2] == 0x83) && (raw[3] == 0x0A)) {  // Qingping-branded, motion & ambient light sensor
+    result.type = XiaomiParseResult::TYPE_CGPR1;
+    result.name = "CGPR1";
+    if (raw.size() == 19)
+      result.raw_offset -= 6;
   } else if ((raw[2] == 0x53) && (raw[3] == 0x01)) {  // Yeelight Remote Control YLYK01YL
     result.type = XiaomiParseResult::TYPE_YLYK01YL;
     result.name = "YLYK01YL";
@@ -352,9 +357,9 @@ bool report_xiaomi_results(const optional<XiaomiParseResult> &result, const std:
 bool XiaomiListener::parse_device(const esp32_ble_tracker::ESPBTDevice &device) {
   // Previously the message was parsed twice per packet, once by XiaomiListener::parse_device()
   // and then again by the respective device class's parse_device() function. Parsing the header
-  // here and then for each device seems to be unneccessary and complicates the duplicate packet filtering.
+  // here and then for each device seems to be unnecessary and complicates the duplicate packet filtering.
   // Hence I disabled the call to parse_xiaomi_header() here and the message parsing is done entirely
-  // in the respecive device instance. The XiaomiListener class is defined in __init__.py and I was not
+  // in the respective device instance. The XiaomiListener class is defined in __init__.py and I was not
   // able to remove it entirely.
 
   return false;  // with true it's not showing device scans

@@ -85,6 +85,9 @@ jobs:
         run: |
           echo "::add-matcher::.github/workflows/matchers/clang-tidy.json"
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
+      # Can be removed as soon as esphome-lint container is fixed
+      - name: Add missing pexpect
+        run: pip install pexpect
       - name: Run lint-cpp
         run: script/lint-cpp -c
         working-directory: ${{ env.esphome_directory }}
@@ -158,11 +161,11 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - run: esphome yeelight_light_ceil26.yaml config
-      - run: esphome yeelight_light_ceiling10.yaml config
-      - run: esphome yeelight_light_ceiling15.yaml config
-      - run: esphome yeerc_ylyk01yl.yaml config
-      - run: esphome yeelight_light_ceiling20.yaml config
+      - run: esphome config yeelight_light_ceil26.yaml
+      - run: esphome config yeelight_light_ceiling10.yaml
+      - run: esphome config yeelight_light_ceiling15.yaml
+      - run: esphome config yeelight_light_ceiling20.yaml
+      - run: esphome config yeerc_ylyk01yl.yaml
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -199,10 +202,10 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - run: esphome yeelight_light_ceil26.yaml compile
-      - run: esphome yeelight_light_ceiling10.yaml compile
-      - run: esphome yeelight_light_ceiling15.yaml compile
-      - run: esphome yeelight_light_ceiling20.yaml compile
+      - run: esphome compile yeelight_light_ceil26.yaml
+      - run: esphome compile yeelight_light_ceiling10.yaml
+      - run: esphome compile yeelight_light_ceiling15.yaml
+      - run: esphome compile yeelight_light_ceiling20.yaml
       - run: |
           sed -i 's#source: github://syssi/esphome-yeelight-ceiling-light@main#source: components#' yeerc_ylyk01yl.yaml
           esphome yeerc_ylyk01yl.yaml compile

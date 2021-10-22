@@ -6,7 +6,7 @@
 namespace esphome {
 namespace xiaomi_ylyk01yl {
 
-static const char *TAG = "xiaomi_ylyk01yl";
+static const char *const TAG = "xiaomi_ylyk01yl";
 
 void XiaomiYLYK01YL::dump_config() {
   ESP_LOGCONFIG(TAG, "Xiaomi YLYK01YL");
@@ -48,11 +48,7 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
     success = true;
   }
 
-  if (!success) {
-    return false;
-  }
-
-  return true;
+  return success;
 }
 
 void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(int)> &&callback) {
