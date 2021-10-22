@@ -16,7 +16,7 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
   // remote control key code, 3 bytes
   if ((value_type == 0x01) && (value_length == 3)) {
     result.keycode = data[0];
-    result.is_long_press = (data[2] == 2) ? true : false;
+    result.is_long_press = data[2] == 2;
   }
   // motion detection, 1 byte, 8-bit unsigned integer
   else if ((value_type == 0x03) && (value_length == 1)) {

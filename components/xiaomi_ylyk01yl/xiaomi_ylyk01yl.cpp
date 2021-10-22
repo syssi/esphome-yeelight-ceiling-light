@@ -48,11 +48,7 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
     success = true;
   }
 
-  if (!success) {
-    return false;
-  }
-
-  return true;
+  return success;
 }
 
 void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(int)> &&callback) {
