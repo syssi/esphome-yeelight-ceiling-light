@@ -1,0 +1,41 @@
+substitutions:
+  name: yeelight-light-strip6
+    
+esphome:
+  name: ${name}
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+    
+ota:
+api:
+logger:
+
+output:
+  - platform: ledc
+    pin: GPIO13
+    id: output_red
+  - platform: ledc
+    pin: GPIO14
+    id: output_green
+  - platform: ledc
+    pin: GPIO5
+    id: output_blue
+
+light:
+  - platform: rgb
+    name: "${name} rgb"
+    red: output_red
+    green: output_green
+    blue: output_blue
+    gamma_correct: 0
