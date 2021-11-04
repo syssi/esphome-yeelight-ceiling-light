@@ -1,6 +1,6 @@
 substitutions:
   name: yeelight-light-strip6
-    
+
 esphome:
   name: ${name}
 
@@ -16,7 +16,7 @@ esp32:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-    
+
 ota:
 api:
 logger:
