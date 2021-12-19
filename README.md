@@ -179,8 +179,21 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 | TXD                 |        | GPIO1        |                       |
 | RXD                 |        | GPIO3        |                       |
 | GPIO0               | TP3    | GPIO0        |                       |
+| GND                 |        | PIN1         |                       |
+| 3V3                 |        | PIN2         |                       |
 
-The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
+
+```
+# Pinout of the pin header at the bottom of the LED driver board
+
+   CW -->o o<-- WW
+  3V3 -->o o<-- NC
+  GND -->o o<-- NC
+  STB -->o o<-- NC
+ ADC1 -->o o<-- NL
+```
+
+Please use 3V3 and GND of the pin header to power the daugther board / the ESP32 if you flash the ESP32 the first time. The ESP32 will enter the serial bootloader when GPIO0 (test point TP3) is held low (GND) on reset / power.
 
 ### yeelink.light.ceiling10
 
@@ -328,6 +341,9 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/thumbnails/008.jpg" width="18%">
 </a>
 
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/013.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/thumbnails/013.jpg" width="18%">
+</a>
 
 ### YLXD41YL
 
