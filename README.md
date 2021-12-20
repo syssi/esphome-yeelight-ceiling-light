@@ -345,6 +345,10 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/thumbnails/013.jpg" width="18%">
 </a>
 
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/014.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd76yl/thumbnails/014.jpg" width="18%">
+</a>
+
 ### YLXD41YL
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd41yl/001.jpg" target="_blank">
