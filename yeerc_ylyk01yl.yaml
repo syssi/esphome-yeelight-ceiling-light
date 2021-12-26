@@ -20,12 +20,18 @@ external_components:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  fast_connect: true
 
 ota:
 api:
 logger:
 
 esp32_ble_tracker:
+  scan_parameters:
+    interval: 150ms
+    window: 150ms
+    duration: 1min
+    active: false
 
 xiaomi_ylyk01yl:
   mac_address: "FF:FF:FF:FF:FF:FF"
