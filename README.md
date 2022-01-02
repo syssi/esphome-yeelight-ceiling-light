@@ -24,7 +24,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight 1S YLDD05Y Lightstrip                   | yeelink.light.strip6      | YLDD05Y     | AC220V, 50W, RGB                        |
 | Yeelight Meteorite Ceiling Light                 | yeelink.light.ceiling10   | YLDL01YL    | AC220V, 33W, 2700K-6500K, 7W RGB ambient light, 90x7x4 cm  |
 | Yeelight Ceiling Light YLXD42YL                  | yeelink.light.ceiling15   | YLXD42YL    | AC220V, 32W, 2200lm, 2700K-6500K, 48cm  |
-| Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceilingUNKNOWN  | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
+| Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceiling11   | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lampUNKNOWN | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
 | Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD01     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
@@ -67,7 +67,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
   - ADC1
   - ADC2
 
-### yeelink.light.ceiling15, yeelink.light.ceilingUNKNOWN
+### yeelink.light.ceiling15, yeelink.light.ceiling11
 
 - Light (CCWW)
   - Brightness
@@ -210,6 +210,11 @@ Please use 3V3 and GND of the pin header to power the daugther board / the ESP32
 | RXD                 | RX     | GPIO3        |                       |
 | GPIO0               | IO0    | GPIO0        |                       |
 
+The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
+
+### yeelink.light.ceiling11
+
+see [Yeelight Ceiling Light YLXD41YL](https://github.com/jaddel/ESPHome-Configurations/tree/master/Devices/Ceiling%20Yeelight%20YLXD41YL)
 The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
 
 
