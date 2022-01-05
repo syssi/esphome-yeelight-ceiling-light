@@ -48,7 +48,7 @@ output:
     pin: GPIO23
     id: output_nightlight
     frequency: 19531Hz
-    
+
 light:
   - platform: monochromatic
     name: "${name}-nightlight"
