@@ -163,6 +163,7 @@ jobs:
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
       - run: esphome config yeelight_light_ceil26.yaml
       - run: esphome config yeelight_light_ceiling10.yaml
+      - run: esphome config yeelight_light_ceiling11.yaml
       - run: esphome config yeelight_light_ceiling15.yaml
       - run: esphome config yeelight_light_ceiling20.yaml
       - run: esphome config yeelight_light_strip6.yaml
@@ -207,6 +208,7 @@ jobs:
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
       - run: esphome compile yeelight_light_ceil26.yaml
       - run: esphome compile yeelight_light_ceiling10.yaml
+      - run: esphome compile yeelight_light_ceiling11.yaml
       - run: esphome compile yeelight_light_ceiling15.yaml
       - run: esphome compile yeelight_light_ceiling20.yaml
       - run: esphome compile yeelight_light_strip6.yaml
