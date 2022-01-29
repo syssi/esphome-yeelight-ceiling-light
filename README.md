@@ -19,7 +19,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | ------------------------------------------------ | ------------------------- | ----------- | --------------------------------------- |
 | Yeelight Ceiling Light YLXD76YL                  | yeelink.light.ceil26      | YLXD76YL    | AC220V, 23W, 1500lm, 2700K-6500K, 32cm  |
 | Yeelight XianYu C2001C550                        | yeelink.light.ceil26      | C2001C550   | AC220V, 50W, 2700K-6500K, 55.5cm        |
-| Yeelight XianYu C2001C450 (untested!)            | yeelink.light.ceil26(?)   | C2001C450   | AC220V, 50W, 2700K-6500K, 45.5cm        |
+| Yeelight XianYu C2001C450                        | yeelink.light.ceil26      | C2001C450   | AC220V, 50W, 2700K-6500K, 45.5cm        |
 | Yeelight XianYu C2001S500 (untested!)            | yeelink.light.ceil26(?)   | C2001S500   | AC220V, 50W, 2700K-6500K, 50.5x50.5cm   |
 | Yeelight 1S YLDD05Y Lightstrip                   | yeelink.light.strip6      | YLDD05Y     | AC220V, 50W, RGB                        |
 | Yeelight Meteorite Ceiling Light                 | yeelink.light.ceiling10   | YLDL01YL    | AC220V, 33W, 2700K-6500K, 7W RGB ambient light, 90x7x4 cm  |
