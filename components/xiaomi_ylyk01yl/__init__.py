@@ -57,6 +57,7 @@ OnButtonMinusTrigger = xiaomi_ylyk01yl_ns.class_(
     "OnButtonMinusTrigger", automation.Trigger.template()
 )
 
+# pylint: disable=too-many-function-args
 CONFIG_SCHEMA = (
     cv.Schema(
         {
