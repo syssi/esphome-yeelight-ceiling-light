@@ -64,7 +64,7 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(XiaomiYLYK01YL),
             cv.Required(CONF_MAC_ADDRESS): cv.mac_address,
             cv.Optional(CONF_LAST_BUTTON_PRESSED): sensor.sensor_schema(
-                UNIT_EMPTY, ICON_EMPTY, 1, DEVICE_CLASS_EMPTY
+                unit_of_measurement = UNIT_EMPTY, icon = ICON_EMPTY, accuracy_decimals = 1, device_class = DEVICE_CLASS_EMPTY
             ),
             cv.Optional(CONF_ON_BUTTON_ON): automation.validate_automation(
                 {
