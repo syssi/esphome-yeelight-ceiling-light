@@ -176,11 +176,11 @@ WARNING Decoded 0x4008e535: vPortTaskWrapper at /home/paul/src/esp32-arduino-lib
 | Night light PWM     | NL     | GPIO23       |                       |
 | Power supply GPIO   | STB    | GPIO23       |                       |
 | VCC measurement     | ADC1   | GPIO35       |                       |
-| TXD                 |        | GPIO1        |                       |
-| RXD                 |        | GPIO3        |                       |
+| TXD                 | TP5    | GPIO1        |                       |
+| RXD                 | TP4    | GPIO3        |                       |
 | GPIO0               | TP3    | GPIO0        |                       |
-| GND                 |        | PIN1         |                       |
-| 3V3                 |        | PIN2         |                       |
+| GND                 | TP2    | PIN1         |                       |
+| 3V3                 | TP1    | PIN2         |                       |
 
 
 ```
