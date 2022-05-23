@@ -166,6 +166,8 @@ jobs:
       - run: esphome config yeelight_light_ceiling11.yaml
       - run: esphome config yeelight_light_ceiling15.yaml
       - run: esphome config yeelight_light_ceiling20.yaml
+      - run: esphome config yeelight_light_ceilb.yaml
+      - run: esphome config yeelight_light_ceilc.yaml
       - run: esphome config yeelight_light_strip6.yaml
       - run: esphome config yeerc_ylyk01yl.yaml
 
@@ -211,6 +213,8 @@ jobs:
       - run: esphome compile yeelight_light_ceiling11.yaml
       - run: esphome compile yeelight_light_ceiling15.yaml
       - run: esphome compile yeelight_light_ceiling20.yaml
+      - run: esphome compile yeelight_light_ceilb.yaml
+      - run: esphome compile yeelight_light_ceilc.yaml
       - run: esphome compile yeelight_light_strip6.yaml
       - run: |
           sed -i 's#source: github://syssi/esphome-yeelight-ceiling-light@main#source: components#' yeerc_ylyk01yl.yaml
