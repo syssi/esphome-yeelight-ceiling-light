@@ -31,6 +31,8 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD50YL                  | yeelink.light.ceiling20   | YLXD50YL    | AC220V, 50W, 3100lm, 2700K-6500K, RGB ambient light, 47cm  |
 | Yeelight Arwen 450C                              | yeelight.light.ceilb?     | YLXD013-B   | AC220V, 50W, 4000lm, 2700K-6500K, RGB ambient light, 50cm  |
 | [Yeelight Arwen 550C](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilc      | YLXD013-C   | AC220V, 50W, 4500lm, 2700K-6500K, RGB ambient light, 60cm  |
+| Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
+| Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
 
 ### More esphome + yeelight projects
 
@@ -65,6 +67,17 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - Ambient light (RGB)
   - Brightness
   - Color
+- Sensor
+  - ADC1
+  - ADC2
+
+### yeelight.light.ceil29
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (2700K)
+  - Brightness
 - Sensor
   - ADC1
   - ADC2
