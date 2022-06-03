@@ -16,7 +16,8 @@ bool parse_xiaomi_value(uint8_t value_type, const uint8_t *data, uint8_t value_l
   // remote control key code, 3 bytes
   if ((value_type == 0x01) && (value_length == 3)) {
     result.keycode = data[0];
-    result.is_long_press = data[2] == 2;
+    result.encoder_value = data[1];
+    result.action_type = data[2];
   }
   // motion detection, 1 byte, 8-bit unsigned integer
   else if ((value_type == 0x03) && (value_length == 1)) {
@@ -214,6 +215,9 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
   } else if ((raw[2] == 0x53) && (raw[3] == 0x01)) {  // Yeelight Remote Control YLYK01YL
     result.type = XiaomiParseResult::TYPE_YLYK01YL;
     result.name = "YLYK01YL";
+  } else if ((raw[2] == 0xB6) && (raw[3] == 0x03)) {  // Yeelight Wireless Smart Dimmer YLKG07YL/YLKG08YL
+    result.type = XiaomiParseResult::TYPE_YLKG07YL;
+    result.name = "YLKG07YL";
   } else {
     ESP_LOGVV(TAG, "parse_xiaomi_header(): unknown device, no magic bytes.");
     return {};
@@ -222,6 +226,7 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
   return result;
 }
 
+// Decrypt MiBeacon V4/V5 payload
 bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
   if (!((raw.size() == 19) || ((raw.size() >= 22) && (raw.size() <= 24)))) {
     ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet has wrong size (%d)!", raw.size());

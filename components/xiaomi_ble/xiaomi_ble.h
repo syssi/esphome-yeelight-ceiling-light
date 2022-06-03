@@ -25,10 +25,13 @@ struct XiaomiParseResult {
     TYPE_MJYD02YLA,
     TYPE_MHOC401,
     TYPE_CGPR1,
-    TYPE_YLYK01YL
+    TYPE_YLYK01YL,
+    TYPE_YLKG07YL,
   } type;
   std::string name;
   optional<int> keycode;
+  optional<int> encoder_value;
+  optional<int> action_type;
   optional<float> temperature;
   optional<float> humidity;
   optional<float> moisture;
@@ -41,7 +44,6 @@ struct XiaomiParseResult {
   optional<bool> is_active;
   optional<bool> has_motion;
   optional<bool> is_light;
-  optional<bool> is_long_press;
   bool has_data;        // 0x40
   bool has_capability;  // 0x20
   bool has_encryption;  // 0x08
