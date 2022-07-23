@@ -30,7 +30,8 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
       continue;
     }
     if (res->has_encryption) {
-      ESP_LOGVV(TAG, "parse_device(): payload decryption is currently not supported on this device.");
+      ESP_LOGVV(TAG, "parse_device(): payload decryption is currently not "
+                     "supported on this device.");
       continue;
     }
     if (!(xiaomi_ble::parse_xiaomi_message(service_data.data, *res))) {
@@ -43,7 +44,7 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
       if (this->keycode_ != nullptr)
         this->keycode_->publish_state(*res->keycode);
 
-      this->receive_callback_.call(*res->keycode);
+      this->receive_callback_.call(*res->keycode, *res->is_long_press);
     }
     success = true;
   }
@@ -51,7 +52,7 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
   return success;
 }
 
-void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(int)> &&callback) {
+void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(uint8_t, bool)> &&callback) {
   this->receive_callback_.add(std::move(callback));
 }
 

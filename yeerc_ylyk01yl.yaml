@@ -35,24 +35,65 @@ esp32_ble_tracker:
     active: false
 
 xiaomi_ylyk01yl:
-  mac_address: "FF:FF:FF:FF:FF:FF"
+  mac_address: "A4:C1:38:6C:23:2D"
   last_button_pressed:
     name: "last button pressed"
-  on_button_on:
-    then:
-      - logger.log: "Button on pressed"
-  on_button_off:
-    then:
-      - logger.log: "Button off pressed"
-  on_button_sun:
-    then:
-      - logger.log: "Button sun pressed"
-  on_button_m:
-    then:
-      - logger.log: "Button m pressed"
-  on_button_plus:
-    then:
-      - logger.log: "Button plus pressed"
-  on_button_minus:
-    then:
-      - logger.log: "Button minus pressed"
+
+  # Button  Keycode (YLYK01YL Ceiling Lamp)
+  # on      0
+  # off     1
+  # sun     2
+  # +       3
+  # m       4
+  # -       5
+  on_press:
+    - keycode: 0
+      then:
+        - logger.log: "Button on pressed"
+    - keycode: 1
+      then:
+        - logger.log: "Button off pressed"
+    - keycode: 2
+      then:
+        - logger.log: "Button sun pressed"
+    - keycode: 3
+      then:
+        - logger.log: "Button + pressed"
+    - keycode: 4
+      then:
+        - logger.log: "Button m pressed"
+    - keycode: 5
+      then:
+        - logger.log: "Button - pressed"
+
+    # Trigger on any keycode
+    - then:
+        - logger.log:
+            format: 'Button with keycode %d pressed'
+            args: ['int(keycode)']
+
+  on_long_press:
+    - keycode: 0
+      then:
+        - logger.log: "Button on long pressed"
+    - keycode: 1
+      then:
+        - logger.log: "Button off long pressed"
+    - keycode: 2
+      then:
+        - logger.log: "Button sun long pressed"
+    - keycode: 3
+      then:
+        - logger.log: "Button + long pressed"
+    - keycode: 4
+      then:
+        - logger.log: "Button m long pressed"
+    - keycode: 5
+      then:
+        - logger.log: "Button - long pressed"
+
+    # Trigger on any keycode
+    - then:
+        - logger.log:
+            format: 'Button with keycode %d long pressed'
+            args: ['int(keycode)']
