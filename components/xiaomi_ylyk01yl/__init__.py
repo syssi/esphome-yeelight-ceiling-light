@@ -1,14 +1,15 @@
-import esphome.codegen as cg
-import esphome.config_validation as cv
-from esphome.components import sensor, esp32_ble_tracker
 from esphome import automation
+import esphome.codegen as cg
+from esphome.components import esp32_ble_tracker, sensor
+import esphome.config_validation as cv
 from esphome.const import (
-    CONF_MAC_ADDRESS,
-    UNIT_EMPTY,
-    ICON_EMPTY,
-    DEVICE_CLASS_EMPTY,
     CONF_ID,
+    CONF_MAC_ADDRESS,
+    CONF_ON_PRESS,
     CONF_TRIGGER_ID,
+    DEVICE_CLASS_EMPTY,
+    ICON_EMPTY,
+    UNIT_EMPTY,
 )
 
 AUTO_LOAD = ["xiaomi_ble", "sensor"]
@@ -17,20 +18,12 @@ DEPENDENCIES = ["esp32_ble_tracker"]
 MULTI_CONF = True
 
 CONF_LAST_BUTTON_PRESSED = "last_button_pressed"
-CONF_ON_BUTTON_ON = "on_button_on"
-CONF_ON_BUTTON_OFF = "on_button_off"
-CONF_ON_BUTTON_SUN = "on_button_sun"
-CONF_ON_BUTTON_M = "on_button_m"
-CONF_ON_BUTTON_PLUS = "on_button_plus"
-CONF_ON_BUTTON_MINUS = "on_button_minus"
+CONF_ON_LONG_PRESS = "on_long_press"
+CONF_KEYCODE = "keycode"
 
 ON_PRESS_ACTIONS = [
-    CONF_ON_BUTTON_ON,
-    CONF_ON_BUTTON_OFF,
-    CONF_ON_BUTTON_SUN,
-    CONF_ON_BUTTON_M,
-    CONF_ON_BUTTON_PLUS,
-    CONF_ON_BUTTON_MINUS,
+    CONF_ON_PRESS,
+    CONF_ON_LONG_PRESS,
 ]
 
 xiaomi_ylyk01yl_ns = cg.esphome_ns.namespace("xiaomi_ylyk01yl")
@@ -38,23 +31,12 @@ XiaomiYLYK01YL = xiaomi_ylyk01yl_ns.class_(
     "XiaomiYLYK01YL", esp32_ble_tracker.ESPBTDeviceListener, cg.Component
 )
 
-OnButtonOnTrigger = xiaomi_ylyk01yl_ns.class_(
-    "OnButtonOnTrigger", automation.Trigger.template()
+OnPressTrigger = xiaomi_ylyk01yl_ns.class_(
+    "OnPressTrigger", automation.Trigger.template(cg.uint8)
 )
-OnButtonOffTrigger = xiaomi_ylyk01yl_ns.class_(
-    "OnButtonOffTrigger", automation.Trigger.template()
-)
-OnButtonSunTrigger = xiaomi_ylyk01yl_ns.class_(
-    "OnButtonSunTrigger", automation.Trigger.template()
-)
-OnButtonMTrigger = xiaomi_ylyk01yl_ns.class_(
-    "OnButtonMTrigger", automation.Trigger.template()
-)
-OnButtonPlusTrigger = xiaomi_ylyk01yl_ns.class_(
-    "OnButtonPlusTrigger", automation.Trigger.template()
-)
-OnButtonMinusTrigger = xiaomi_ylyk01yl_ns.class_(
-    "OnButtonMinusTrigger", automation.Trigger.template()
+
+OnLongPressTrigger = xiaomi_ylyk01yl_ns.class_(
+    "OnLongPressTrigger", automation.Trigger.template(cg.uint8)
 )
 
 # pylint: disable=too-many-function-args
@@ -66,37 +48,19 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_LAST_BUTTON_PRESSED): sensor.sensor_schema(
                 unit_of_measurement=UNIT_EMPTY,
                 icon=ICON_EMPTY,
-                accuracy_decimals=1,
+                accuracy_decimals=0,
                 device_class=DEVICE_CLASS_EMPTY,
             ),
-            cv.Optional(CONF_ON_BUTTON_ON): automation.validate_automation(
+            cv.Optional(CONF_ON_PRESS): automation.validate_automation(
                 {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnButtonOnTrigger),
+                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnPressTrigger),
+                    cv.Optional(CONF_KEYCODE): cv.uint8_t,
                 }
             ),
-            cv.Optional(CONF_ON_BUTTON_OFF): automation.validate_automation(
+            cv.Optional(CONF_ON_LONG_PRESS): automation.validate_automation(
                 {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnButtonOffTrigger),
-                }
-            ),
-            cv.Optional(CONF_ON_BUTTON_SUN): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnButtonSunTrigger),
-                }
-            ),
-            cv.Optional(CONF_ON_BUTTON_M): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnButtonMTrigger),
-                }
-            ),
-            cv.Optional(CONF_ON_BUTTON_PLUS): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnButtonPlusTrigger),
-                }
-            ),
-            cv.Optional(CONF_ON_BUTTON_MINUS): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnButtonMinusTrigger),
+                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnLongPressTrigger),
+                    cv.Optional(CONF_KEYCODE): cv.uint8_t,
                 }
             ),
         }
@@ -120,4 +84,6 @@ async def to_code(config):
     for action in ON_PRESS_ACTIONS:
         for conf in config.get(action, []):
             trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
-            await automation.build_automation(trigger, [], conf)
+            if CONF_KEYCODE in conf:
+                cg.add(trigger.set_keycode(conf[CONF_KEYCODE]))
+            await automation.build_automation(trigger, [(cg.uint8, "keycode")], conf)

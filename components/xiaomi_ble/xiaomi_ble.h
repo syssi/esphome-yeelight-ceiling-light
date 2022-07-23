@@ -28,7 +28,7 @@ struct XiaomiParseResult {
     TYPE_YLYK01YL
   } type;
   std::string name;
-  optional<int> keycode;
+  optional<uint8_t> keycode;
   optional<float> temperature;
   optional<float> humidity;
   optional<float> moisture;
