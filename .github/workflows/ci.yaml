@@ -170,6 +170,7 @@ jobs:
       - run: esphome config yeelight_light_ceilc.yaml
       - run: esphome -s external_components_source components config yeelight_light_strip6.yaml
       - run: esphome -s external_components_source components config yeerc_ylyk01yl.yaml
+      - run: esphome -s external_components_source components config yeerc_ylyk01yl_fancl.yaml
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -218,3 +219,4 @@ jobs:
       - run: esphome compile yeelight_light_strip6.yaml
       - run: esphome -s external_components_source components compile yeelight_light_fancl5.yaml
       - run: esphome -s external_components_source components compile yeerc_ylyk01yl.yaml
+      # - run: esphome -s external_components_source components compile yeerc_ylyk01yl_fancl.yaml
