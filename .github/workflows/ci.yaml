@@ -216,5 +216,5 @@ jobs:
       - run: esphome compile yeelight_light_ceilb.yaml
       - run: esphome compile yeelight_light_ceilc.yaml
       - run: esphome compile yeelight_light_strip6.yaml
-      - run: esphome -s external_components_source components yeelight_light_fancl5.yaml
-      - run: esphome -s external_components_source components yeerc_ylyk01yl.yaml
+      - run: esphome -s external_components_source components compile yeelight_light_fancl5.yaml
+      - run: esphome -s external_components_source components compile yeerc_ylyk01yl.yaml
