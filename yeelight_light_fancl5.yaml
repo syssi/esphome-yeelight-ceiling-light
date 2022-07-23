@@ -7,6 +7,10 @@ substitutions:
 
 esphome:
   name: ${name}
+  # Workaround to fix the boot loop if BLE is enabled
+  # See https://github.com/syssi/esphome-yeelight-ceiling-light#known-bugs
+  on_loop:
+    - lambda: "vTaskDelay(10/portTICK_PERIOD_MS);"
 
 esp32:
   board: esp32doit-devkit-v1
@@ -38,6 +42,7 @@ uart:
 
 fan:
   - platform: yeelight_fan_controller
+    id: yeelight_ceiling_fan
     name: "${name} ceiling fan"
 
 output:
@@ -78,3 +83,61 @@ light:
     gamma_correct: 0
     on_turn_on:
       - light.turn_off: night_light
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 150ms
+    window: 150ms
+    duration: 1min
+    active: false
+
+xiaomi_ylyk01yl:
+  mac_address: "A4:C1:38:6E:85:0B"
+  last_button_pressed:
+    name: "last button pressed"
+
+  # Button             Keycode (YLYK01YL Ceiling Fan)
+  # fan toggle         0
+  # light toggle       1
+  # wind speed         2
+  # color temperature  3
+  # wind mode          4
+  # brightness         5
+  on_press:
+    - keycode: 0
+      then:
+        - switch.turn_on: buzzer_beep
+        - fan.toggle: yeelight_ceiling_fan
+    - keycode: 1
+      then:
+        - switch.turn_on: buzzer_beep
+        - light.toggle: ceiling_light
+    - keycode: 2
+      then:
+        - switch.turn_on: buzzer_beep
+        - logger.log: "Button wind speed pressed"
+    - keycode: 3
+      then:
+        - switch.turn_on: buzzer_beep
+        - logger.log: "Button color temperature pressed"
+    - keycode: 4
+      then:
+        - switch.turn_on: buzzer_beep
+        - logger.log: "Button wind mode pressed"
+    - keycode: 5
+      then:
+        - switch.turn_on: buzzer_beep
+        - logger.log: "Button brightness pressed"
+
+    # Trigger on any keycode
+    - then:
+        - logger.log:
+            format: 'Button with keycode %d pressed'
+            args: ['int(keycode)']
+
+  on_long_press:
+    # Trigger on any keycode
+    - then:
+        - logger.log:
+            format: 'Button with keycode %d long pressed'
+            args: ['int(keycode)']
