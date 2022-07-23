@@ -18,13 +18,9 @@ void YeelightFan::setup() {
   }
 }
 
-void YeelightFan::dump_config() {
-  LOG_FAN("", "YeelightFanController Fan", this);
-}
+void YeelightFan::dump_config() { LOG_FAN("", "YeelightFanController Fan", this); }
 
-fan::FanTraits YeelightFan::get_traits() {
-  return fan::FanTraits(false, true, true, 100);
-}
+fan::FanTraits YeelightFan::get_traits() { return fan::FanTraits(false, true, true, 100); }
 
 void YeelightFan::control(const fan::FanCall &call) {
   if (call.get_state().has_value()) {
@@ -43,9 +39,9 @@ void YeelightFan::control(const fan::FanCall &call) {
 void YeelightFan::write_state_() {
   if (this->state != this->last_state_) {
     if (this->state) {
-      this->parent_->send_command(FUNCTION_TURN_ON, this->speed);
+      this->parent_->send_command(FUNCTION_TURN_ON, 0x13);
     } else {
-      this->parent_->send_command(FUNCTION_TURN_OFF, this->speed);
+      this->parent_->send_command(FUNCTION_TURN_OFF, 0x11);
     }
   }
 
@@ -58,5 +54,5 @@ void YeelightFan::write_state_() {
   }
 }
 
-} // namespace yeelight_fan_controller
-} // namespace esphome
+}  // namespace yeelight_fan_controller
+}  // namespace esphome

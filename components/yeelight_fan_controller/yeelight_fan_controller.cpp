@@ -81,15 +81,13 @@ bool YeelightFanController::parse_yeelight_fan_controller_byte_(uint8_t byte) {
   uint8_t computed_crc = raw[1] + raw[2] + raw[4];
   uint8_t remote_crc = raw[3];
   if (computed_crc != remote_crc) {
-    ESP_LOGW(TAG, "YeelightFanController CRC Check failed! %04X != %04X",
-             computed_crc, remote_crc);
+    ESP_LOGW(TAG, "YeelightFanController CRC Check failed! %04X != %04X", computed_crc, remote_crc);
     return false;
   }
 
   ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(raw, at + 1).c_str());
 
-  std::vector<uint8_t> data(this->rx_buffer_.begin(),
-                            this->rx_buffer_.begin() + frame_len);
+  std::vector<uint8_t> data(this->rx_buffer_.begin(), this->rx_buffer_.begin() + frame_len);
 
   this->on_yeelight_fan_controller_data_(data);
 
@@ -97,9 +95,7 @@ bool YeelightFanController::parse_yeelight_fan_controller_byte_(uint8_t byte) {
   return false;
 }
 
-void YeelightFanController::on_yeelight_fan_controller_data_(
-    const std::vector<uint8_t> &data) {
-
+void YeelightFanController::on_yeelight_fan_controller_data_(const std::vector<uint8_t> &data) {
   if (data[1] == FAN_PKT_RESPONSE) {
     if (data[4] == FAN_PKT_INVALID) {
       ESP_LOGE(TAG, "Command failed");
@@ -110,12 +106,10 @@ void YeelightFanController::on_yeelight_fan_controller_data_(
     return;
   }
 
-  ESP_LOGW(TAG, "Unhandled response received: %s",
-           format_hex_pretty(&data.front(), data.size()).c_str());
+  ESP_LOGW(TAG, "Unhandled response received: %s", format_hex_pretty(&data.front(), data.size()).c_str());
 }
 
-void YeelightFanController::
-    dump_config() { // NOLINT(google-readability-function-size,readability-function-size)
+void YeelightFanController::dump_config() {  // NOLINT(google-readability-function-size,readability-function-size)
   ESP_LOGCONFIG(TAG, "YeelightFanController:");
 }
 
@@ -147,5 +141,5 @@ void YeelightFanController::send_command(uint8_t function, uint8_t speed) {
   this->flush();
 }
 
-} // namespace yeelight_fan_controller
-} // namespace esphome
+}  // namespace yeelight_fan_controller
+}  // namespace esphome
