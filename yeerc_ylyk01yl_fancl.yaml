@@ -1,0 +1,99 @@
+substitutions:
+  name: yeerc-fancl
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
+
+esphome:
+  name: ${name}
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+ota:
+api:
+logger:
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 150ms
+    window: 150ms
+    duration: 1min
+    active: false
+
+xiaomi_ylyk01yl:
+  mac_address: "A4:C1:38:6C:23:2D"
+  last_button_pressed:
+    name: "last button pressed"
+
+  # Button             Keycode (YLYK01YL Ceiling Fan)
+  # fan toggle         0
+  # light toggle       1
+  # wind speed         2
+  # color temperature  3
+  # wind mode          4
+  # brightness         5
+  on_press:
+    - keycode: 0
+      then:
+        - logger.log: "Button fan toggle pressed"
+    - keycode: 1
+      then:
+        - logger.log: "Button light toggle pressed"
+    - keycode: 2
+      then:
+        - logger.log: "Button wind speed pressed"
+    - keycode: 3
+      then:
+        - logger.log: "Button color temperature pressed"
+    - keycode: 4
+      then:
+        - logger.log: "Button wind mode pressed"
+    - keycode: 5
+      then:
+        - logger.log: "Button brightness pressed"
+
+    # Trigger on any keycode
+    - then:
+        - logger.log:
+            format: 'Button with keycode %d pressed'
+            args: ['int(keycode)']
+
+  on_long_press:
+    - keycode: 0
+      then:
+        - logger.log: "Button fan toggle long pressed"
+    - keycode: 1
+      then:
+        - logger.log: "Button light toggle long pressed"
+    - keycode: 2
+      then:
+        - logger.log: "Button wind speed long pressed"
+    - keycode: 3
+      then:
+        - logger.log: "Button color temperature long pressed"
+    - keycode: 4
+      then:
+        - logger.log: "Button wind mode long pressed"
+    - keycode: 5
+      then:
+        - logger.log: "Button brightness long pressed"
+
+    # Trigger on any keycode
+    - then:
+        - logger.log:
+            format: 'Button with keycode %d long pressed'
+            args: ['int(keycode)']

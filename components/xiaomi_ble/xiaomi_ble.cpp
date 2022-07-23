@@ -214,6 +214,9 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
   } else if ((raw[2] == 0x53) && (raw[3] == 0x01)) {  // Yeelight Remote Control YLYK01YL
     result.type = XiaomiParseResult::TYPE_YLYK01YL;
     result.name = "YLYK01YL";
+  } else if ((raw[2] == 0x8e) && (raw[3] == 0x06)) {  // Yeelight Remote Control YLYK01YL Ceiling Fan
+    result.type = XiaomiParseResult::TYPE_YLYK01YL_FANCL;
+    result.name = "YLYK01YL-FANCL";
   } else {
     ESP_LOGVV(TAG, "parse_xiaomi_header(): unknown device, no magic bytes.");
     return {};
