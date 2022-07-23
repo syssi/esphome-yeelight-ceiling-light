@@ -1,6 +1,7 @@
 #include "yeelight_fan_controller.h"
 #include "esphome/core/helpers.h"
 #include "esphome/core/log.h"
+#include "esphome/core/hal.h"
 
 namespace esphome {
 namespace yeelight_fan_controller {
@@ -139,6 +140,8 @@ void YeelightFanController::send_command(uint8_t function, uint8_t speed) {
 
   this->write_array(frame, 6);
   this->flush();
+
+  delay(55);
 }
 
 }  // namespace yeelight_fan_controller
