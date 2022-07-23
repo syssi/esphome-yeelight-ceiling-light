@@ -118,7 +118,7 @@ float YeelightFanController::get_setup_priority() const {
   return setup_priority::BUS - 1.0f;
 }
 
-void YeelightFanController::send_command(uint8_t function, uint8_t speed) {
+void YeelightFanController::send_command(uint8_t function, uint8_t value) {
   uint8_t frame[6];
 
   // Payload                          Description
@@ -131,8 +131,8 @@ void YeelightFanController::send_command(uint8_t function, uint8_t speed) {
   frame[0] = FAN_PKT_START;
   frame[1] = function;
   frame[2] = 0x01;
-  frame[3] = 0x00;
-  frame[4] = speed;
+  // frame[3] = 0x00;
+  frame[4] = value;
   frame[5] = FAN_PKT_END;
 
   frame[3] = frame[1] + frame[2] + frame[4];

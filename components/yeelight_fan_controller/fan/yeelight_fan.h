@@ -18,7 +18,6 @@ class YeelightFan : public fan::Fan, public Component {
   void control(const fan::FanCall &call) override;
   void write_state_();
 
-  bool last_state_{false};
   YeelightFanController *parent_;
 };
 

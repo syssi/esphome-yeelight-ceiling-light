@@ -13,7 +13,7 @@ class YeelightFanController : public uart::UARTDevice, public Component {
   void dump_config() override;
   float get_setup_priority() const override;
 
-  void send_command(uint8_t function, uint8_t speed);
+  void send_command(uint8_t function, uint8_t value);
 
  protected:
   std::vector<uint8_t> rx_buffer_;
