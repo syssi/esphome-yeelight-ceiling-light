@@ -92,6 +92,11 @@ bool parse_xiaomi_message(const std::vector<uint8_t> &message, XiaomiParseResult
     return false;
   }
 
+  if ((message[1] >> 1) & 1) {
+    ESP_LOGVV(TAG, "parse_xiaomi_message(): Discard register and bind request.");
+    return false;
+  }
+
   // Data point specs
   // Byte 0: type
   // Byte 1: fixed 0x10
