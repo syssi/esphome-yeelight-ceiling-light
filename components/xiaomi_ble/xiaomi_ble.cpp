@@ -215,9 +215,6 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
     result.type = XiaomiParseResult::TYPE_YLYK01YL;
     result.name = "YLYK01YL";
   } else if ((raw[2] == 0x8e) && (raw[3] == 0x06)) {  // Yeelight Remote Control YLYK01YL Ceiling Fan
-    // Keycode 1: 50.30.8E.06.1C.0B.85.6E.38.C1.A4.01.10.03.01.00.00 (17)
-    // Keycode 2: 51.32.8E.06.01.0B.85.6E.38.C1.A4.02.00.02.01.10 (16)
-    result.raw_offset = raw[0] & 0x01 ? 11 : 12;
     result.type = XiaomiParseResult::TYPE_YLYK01YL_FANCL;
     result.name = "YLYK01YL-FANCL";
   } else {
