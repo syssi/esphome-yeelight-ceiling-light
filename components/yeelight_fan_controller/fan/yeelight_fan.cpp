@@ -1,5 +1,6 @@
 #include "yeelight_fan.h"
 #include "esphome/core/log.h"
+#include "esphome/core/hal.h"
 
 namespace esphome {
 namespace yeelight_fan_controller {
@@ -50,6 +51,7 @@ void YeelightFan::write_state_() {
   }
 
   if (this->state) {
+    delay(500);  // NOLINT
     this->parent_->send_command(FUNCTION_SET_SPEED, this->speed);
   }
 }
