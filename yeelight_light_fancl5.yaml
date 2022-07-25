@@ -248,7 +248,7 @@ xiaomi_ylyk01yl:
 
     # color_temperature control，only support by ceiling light (154K-370K)
     # color_temperature minus
-    - keycode: 4
+    - keycode: 3
       then: 
         - if:
             condition: 
@@ -266,7 +266,7 @@ xiaomi_ylyk01yl:
                     return 370;
              - switch.turn_on: buzzer_beep          
     # color_temperature plus
-    - keycode: 4
+    - keycode: 5
       then: 
         - if:
             condition: 
