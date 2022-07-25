@@ -151,13 +151,13 @@ xiaomi_ylyk01yl:
               light.is_on: ceiling_light
             then:
               - light.turn_on:
-                id: ceiling_light
-                brightness: !lambda |-
-                  float brightness = id(ceiling_light).remote_values.get_brightness() - id(step_size);
-                  if(brightness > 0.05f)
-                    return brightness;
-                  else
-                    return 0.05f;
+                  id: ceiling_light
+                  brightness: !lambda |-
+                    float brightness = id(ceiling_light).remote_values.get_brightness() - id(step_size);
+                    if(brightness > 0.05f)
+                      return brightness;
+                    else
+                      return 0.05f;
               - switch.turn_on: buzzer_beep
         - if:
             condition:
