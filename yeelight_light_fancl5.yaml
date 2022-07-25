@@ -37,10 +37,10 @@ globals:
   - id: step_size
     type: float
     # update this for color_temperature and brightness update
-    initial_value: 0.15
+    initial_value: '0.15'
   - id: fan_speed_loop_flag
     type: int
-    initial_value: 0
+    initial_value: '0'
     restore_value: true
 
 uart:
