@@ -33,16 +33,16 @@ ota:
 api:
 logger:
 
-globals:     
-   - id: update_step
-     type: float
-     # update this for color_temperature and brightness update
-     initial_value: '0.15'
-   - id: fan_speed_loop_flag
-     type: int
-     initial_value: '0'
-     restore_value: yes
-     
+globals:
+  - id: step_size
+    type: float
+    # update this for color_temperature and brightness update
+    initial_value: 0.15
+  - id: fan_speed_loop_flag
+    type: int
+    initial_value: 0
+    restore_value: true
+
 uart:
   baud_rate: 9600
   rx_pin: GPIO16
@@ -99,8 +99,8 @@ esp32_ble_tracker:
     duration: 10min
     active: false
 
-# change mac_address here    
 xiaomi_ylyk01yl:
+  # change mac_address here
   mac_address: "A4:C1:38:6E:85:0B"
   last_button_pressed:
     name: "last button pressed"
@@ -118,106 +118,99 @@ xiaomi_ylyk01yl:
       then:
         - fan.toggle: yeelight_ceiling_fan
         - switch.turn_on: buzzer_beep
-        
+
     # toggle ceiling light
     - keycode: 1
       then:
         - light.toggle: ceiling_light
         - switch.turn_on: buzzer_beep
 
-    # three speed level control: 1 level = 1%(0x01), 2 level =50%(0x32), 3 level = 100%(0x64)  
+    # three speed level control: 1 level = 1%(0x01), 2 level =50%(0x32), 3 level = 100%(0x64)
     - keycode: 2
       then:
-       - fan.turn_on: 
-           id: yeelight_ceiling_fan
-           speed: !lambda |-
-              float speed;
-              speed = id(fan_speed_loop_flag) * 50;
+        - fan.turn_on:
+            id: yeelight_ceiling_fan
+            speed: !lambda |-
+              float speed = id(fan_speed_loop_flag) * 50.0f;
               id(fan_speed_loop_flag) += 1;
-              if(id(fan_speed_loop_flag) > 2){
+              if(id(fan_speed_loop_flag) > 2)
                 id(fan_speed_loop_flag) = 0;
-              }
-              if( speed <= 100 && speed > 1)
-                  return speed;
-              else 
-                  return 1;
-       - switch.turn_on: buzzer_beep
+              if(speed <= 100 && speed > 1)
+                return speed;
+              else
+                return 1;
+        - switch.turn_on: buzzer_beep
 
     # brightness and color_temperature control (value: 0.01-1f)
-    # color_temperature only support ceiling light，using update_step to userdefined update
-    # ceiling light and night light brightness minus             
+    # color_temperature only support ceiling light，using step_size to userdefined update
+    # ceiling light and night light brightness minus
     - keycode: 3
       then:
         - if:
-            condition: 
+            condition:
               light.is_on: ceiling_light
             then:
-             - light.turn_on: 
+              - light.turn_on:
                 id: ceiling_light
                 brightness: !lambda |-
-                  float brightness;
-                  brightness = id(ceiling_light).remote_values.get_brightness() - id(update_step);
-                  if( brightness > 0.05f )
-                      return brightness;
-                  else 
-                      return 0.05f;
-             - switch.turn_on: buzzer_beep
+                  float brightness = id(ceiling_light).remote_values.get_brightness() - id(step_size);
+                  if(brightness > 0.05f)
+                    return brightness;
+                  else
+                    return 0.05f;
+              - switch.turn_on: buzzer_beep
         - if:
-            condition: 
+            condition:
               light.is_on: night_light
             then:
-             - light.turn_on: 
-                id: night_light
-                brightness: !lambda |-
-                  float brightness;
-                  brightness = id(night_light).remote_values.get_brightness() - id(update_step);
-                  if( brightness > 0.05f )
+              - light.turn_on:
+                  id: night_light
+                  brightness: !lambda |-
+                    float brightness = id(night_light).remote_values.get_brightness() - id(step_size);
+                    if(brightness > 0.05f)
                       return brightness;
-                  else 
+                    else
                       return 0.05f;
-             - switch.turn_on: buzzer_beep           
-        
+              - switch.turn_on: buzzer_beep
+
     # fan mode FORWARD select for standord winds
     - keycode: 4
       then:
         - fan.turn_on:
-           id: yeelight_ceiling_fan
-           direction: forward
+            id: yeelight_ceiling_fan
+            direction: forward
         - switch.turn_on: buzzer_beep
- 
 
     # ceiling light and night light brightness plus
     - keycode: 5
       then:
         - if:
-            condition: 
+            condition:
               light.is_on: ceiling_light
             then:
-             - light.turn_on: 
-                id: ceiling_light
-                brightness: !lambda |-
-                  float brightness;
-                  brightness = id(ceiling_light).remote_values.get_brightness() + id(update_step);
-                  if( brightness < 1.0f )
+              - light.turn_on:
+                  id: ceiling_light
+                  brightness: !lambda |-
+                    float brightness = id(ceiling_light).remote_values.get_brightness() + id(step_size);
+                    if(brightness < 1.0f)
                       return brightness;
-                  else 
-                      return 1.0f;               
-             - switch.turn_on: buzzer_beep
-             
+                    else
+                      return 1.0f;
+              - switch.turn_on: buzzer_beep
+
         - if:
-            condition: 
+            condition:
               light.is_on: night_light
             then:
-             - light.turn_on: 
-                id: night_light
-                brightness: !lambda |-
-                  float brightness;
-                  brightness = id(night_light).remote_values.get_brightness() + id(update_step);
-                  if( brightness < 1.0f )
+              - light.turn_on:
+                  id: night_light
+                  brightness: !lambda |-
+                    float brightness = id(night_light).remote_values.get_brightness() + id(step_size);
+                    if(brightness < 1.0f)
                       return brightness;
-                  else 
-                      return 1.0f;               
-             - switch.turn_on: buzzer_beep
+                    else
+                      return 1.0f;
+              - switch.turn_on: buzzer_beep
 
     # Trigger on any keycode
     - then:
@@ -229,60 +222,58 @@ xiaomi_ylyk01yl:
     # night light
     - keycode: 1
       then:
-       - light.toggle: night_light
-       - switch.turn_on: buzzer_beep
-       
+        - light.toggle: night_light
+        - switch.turn_on: buzzer_beep
+
     # stepless cycle control speed
     - keycode: 2
       then:
         - fan.cycle_speed: yeelight_ceiling_fan
         - switch.turn_on: buzzer_beep
-       
+
     # fan mode REVERSE select for circle winds
     - keycode: 4
       then:
         - fan.turn_on:
-           id: yeelight_ceiling_fan
-           direction: reverse
+            id: yeelight_ceiling_fan
+            direction: reverse
         - switch.turn_on: buzzer_beep
 
     # color_temperature control，only support by ceiling light (154K-370K)
     # color_temperature minus
     - keycode: 3
-      then: 
+      then:
         - if:
-            condition: 
+            condition:
               light.is_on: ceiling_light
             then:
-             - light.turn_on: 
-                id: ceiling_light
-                color_mode: COLD_WARM_WHITE
-                color_temperature: !lambda |-
-                  float color_temperature;
-                  color_temperature = id(ceiling_light).remote_values.get_color_temperature() * (1 + id(update_step));
-                  if(color_temperature < 370.0f)
-                    return color_temperature;
-                  else
-                    return 370;
-             - switch.turn_on: buzzer_beep          
+              - light.turn_on:
+                  id: ceiling_light
+                  color_mode: COLD_WARM_WHITE
+                  color_temperature: !lambda |-
+                    float color_temperature = id(ceiling_light).remote_values.get_color_temperature() * (1 + id(step_size));
+                    if(color_temperature < 370.0f)
+                      return color_temperature;
+                    else
+                      return 370;
+              - switch.turn_on: buzzer_beep
     # color_temperature plus
     - keycode: 5
-      then: 
+      then:
         - if:
-            condition: 
+            condition:
               light.is_on: ceiling_light
-            then:   
-             - light.turn_on: 
-                id: ceiling_light
-                color_mode: COLD_WARM_WHITE
-                color_temperature: !lambda |-
-                  float color_temperature;
-                  color_temperature = id(ceiling_light).remote_values.get_color_temperature() * (1 - id(update_step));
-                  if(color_temperature > 154.0f)
-                     return color_temperature;
-                  else 
-                     return 154;
-             - switch.turn_on: buzzer_beep          
+            then:
+              - light.turn_on:
+                  id: ceiling_light
+                  color_mode: COLD_WARM_WHITE
+                  color_temperature: !lambda |-
+                    float color_temperature = id(ceiling_light).remote_values.get_color_temperature() * (1 - id(step_size));
+                    if(color_temperature > 154.0f)
+                      return color_temperature;
+                    else
+                      return 154;
+              - switch.turn_on: buzzer_beep
 
     - then:
         - logger.log:
