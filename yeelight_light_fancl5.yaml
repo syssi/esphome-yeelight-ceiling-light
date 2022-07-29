@@ -104,12 +104,12 @@ xiaomi_ylyk01yl:
   last_button_pressed:
     name: "last button pressed"
 
-  # Button             Keycode (YLYK01YL Ceiling Fan)
-  # fan toggle         0
+  # Button                                 Keycode (YLYK01YL Ceiling Fan)
+  # fan toggle                             0
   # ceiling or night toggle                1
   # wind speed minus or three level speed  2
   # color temperature or brightness minus  3
-  # wind speed plus or fan mode toggle    4
+  # wind speed plus or fan mode toggle     4
   # color temperature or brightness plus   5
   on_press:
     # toggle fan
@@ -129,10 +129,10 @@ xiaomi_ylyk01yl:
             id: yeelight_ceiling_fan
             speed: !lambda |-
               float speed = id(yeelight_ceiling_fan).speed - id(speed_step_size);
-              if( speed <= 100 && speed >= 1)
-                  return speed;
+              if(speed <= 100 && speed >= 1)
+                return speed;
               else
-                  return 1;
+                return 1;
 
     # brightness and color_temperature control (value: 0.01-1f)
     # color_temperature only support ceiling light，using step_size to userdefined update
@@ -171,10 +171,10 @@ xiaomi_ylyk01yl:
             id: yeelight_ceiling_fan
             speed: !lambda |-
               float speed = id(yeelight_ceiling_fan).speed + id(speed_step_size);
-              if( speed <= 100 && speed >= 1)
-                  return speed;
+              if(speed <= 100 && speed >= 1)
+                return speed;
               else
-                  return 100;
+                return 100;
 
     # ceiling light and night light brightness plus
     - keycode: 5
@@ -225,10 +225,10 @@ xiaomi_ylyk01yl:
             id: yeelight_ceiling_fan
             speed: !lambda |-
               float speed = id(yeelight_ceiling_fan).speed + 20.0f;
-              if( speed <= 100 && speed >= 1)
-                  return speed;
+              if(speed <= 100 && speed >= 1)
+                return speed;
               else
-                  return 1;
+                return 1;
 
     # fan mode toggle, standard winds cycle winds
     - keycode: 4
