@@ -38,10 +38,9 @@ globals:
     type: float
     # update this for color_temperature and brightness update
     initial_value: '0.15'
-  - id: fan_speed_loop_flag
+  - id: speed_step_size
     type: int
-    initial_value: '0'
-    restore_value: true
+    initial_value: '10'
 
 uart:
   baud_rate: 9600
@@ -105,13 +104,13 @@ xiaomi_ylyk01yl:
   last_button_pressed:
     name: "last button pressed"
 
-  # Button             Keycode (YLYK01YL Ceiling Fan)
-  # fan toggle         0
-  # light toggle       1
-  # wind speed         2
-  # color temperature or brightness minus 3
-  # wind mode          4
-  # color temperature or brightness plus  5
+  # Button                                 Keycode (YLYK01YL Ceiling Fan)
+  # fan toggle                             0
+  # ceiling or night toggle                1
+  # wind speed minus or three level speed  2
+  # color temperature or brightness minus  3
+  # wind speed plus or fan mode toggle     4
+  # color temperature or brightness plus   5
   on_press:
     # toggle fan
     - keycode: 0
@@ -123,17 +122,14 @@ xiaomi_ylyk01yl:
       then:
         - light.toggle: ceiling_light
 
-    # three speed level control: 1 level = 1%(0x01), 2 level =50%(0x32), 3 level = 100%(0x64)
+    # speed -
     - keycode: 2
       then:
         - fan.turn_on:
             id: yeelight_ceiling_fan
             speed: !lambda |-
-              float speed = id(fan_speed_loop_flag) * 50.0f;
-              id(fan_speed_loop_flag) += 1;
-              if(id(fan_speed_loop_flag) > 2)
-                id(fan_speed_loop_flag) = 0;
-              if(speed <= 100 && speed > 1)
+              float speed = id(yeelight_ceiling_fan).speed - id(speed_step_size);
+              if(speed <= 100 && speed >= 1)
                 return speed;
               else
                 return 1;
@@ -168,12 +164,17 @@ xiaomi_ylyk01yl:
                     else
                       return 0.05f;
 
-    # fan mode FORWARD select for standord winds
+    # speed +
     - keycode: 4
       then:
         - fan.turn_on:
             id: yeelight_ceiling_fan
-            direction: forward
+            speed: !lambda |-
+              float speed = id(yeelight_ceiling_fan).speed + id(speed_step_size);
+              if(speed <= 100 && speed >= 1)
+                return speed;
+              else
+                return 100;
 
     # ceiling light and night light brightness plus
     - keycode: 5
@@ -217,18 +218,29 @@ xiaomi_ylyk01yl:
       then:
         - light.toggle: night_light
 
-    # stepless cycle control speed
+    # stepless cycle control
     - keycode: 2
       then:
-        - fan.cycle_speed: yeelight_ceiling_fan
+        - fan.turn_on:
+            id: yeelight_ceiling_fan
+            speed: !lambda |-
+              float speed = id(yeelight_ceiling_fan).speed + 20.0f;
+              if(speed <= 100 && speed >= 1)
+                return speed;
+              else
+                return 1;
 
-    # fan mode REVERSE select for circle winds
+    # fan mode toggle, standard winds cycle winds
     - keycode: 4
       then:
         - fan.turn_on:
             id: yeelight_ceiling_fan
-            direction: reverse
-
+            direction: !lambda |-
+              fan::FanDirection direction = id(yeelight_ceiling_fan).direction;
+              if(direction == fan::FanDirection::REVERSE)
+                return fan::FanDirection::FORWARD;
+              else
+                return fan::FanDirection::REVERSE;
     # color_temperature control，only support by ceiling light (154K-370K)
     # color_temperature minus
     - keycode: 3
