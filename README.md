@@ -27,7 +27,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceiling11   | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lampUNKNOWN | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
-| Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD01     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
+| Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD001 / MJXDD01SYL     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
 | Yeelight Ceiling Light YLXD50YL                  | yeelink.light.ceiling20   | YLXD50YL    | AC220V, 50W, 3100lm, 2700K-6500K, RGB ambient light, 47cm  |
 | Yeelight Arwen 450C                              | yeelight.light.ceilb?     | YLXD013-B   | AC220V, 50W, 4000lm, 2700K-6500K, RGB ambient light, 50cm  |
 | [Yeelight Arwen 550C](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilc      | YLXD013-C   | AC220V, 50W, 4500lm, 2700K-6500K, RGB ambient light, 60cm  |
@@ -578,3 +578,45 @@ The test points are in the back of the ESP's PCB.
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/006.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxd50yl/thumbnails/006.jpg" width="18%">
 </a>
+
+### MJXDD01SYL
+The disassembly process is almost, if not exactly the same, as with YLXD50YL. MJXDD01SYL seems a re-labled YLXD50YL.
+
+Rotate the cover counterclockwise to remove the cover. Now you can see the outside of the board's housing.
+Unscrew the screws and unplug the two connectors. Now you can detach the housing from the base.
+On the back of the housing you need to remove the cover. Now you can take out the PCB from the housing.
+Unplug the ESP32 from the socket. Maybe you need to remove a bit of the glue between the PCM and the ESP32.
+
+The Test Points (TP) are on the back side of the ESP32 module. The font is very small, maybe you need a magnifying glass.
+
+To solder some wires to the TPs you need a bit of experience. Since other components are located very close to the TPs.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/004.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/005.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/005.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/006.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/006.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/007.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/007.jpg" width="18%">
+</a>
+
+
