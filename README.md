@@ -270,6 +270,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 | Cold white PWM      | C      | GPIO21       | 20% - 88% duty cycle  |
 | Night light PWM     | NL     | GPIO23       | 10% - 100% duty cycle |
 | VCC measurement     | ADC1   | GPIO36       |                       |
+| Power supply GPIO   | STA    | GPIO22       |             3.3V / 0V |
 | 3.3V                | TP1    |              |                       |
 | GND                 | TP2    |              |                       |
 | GPIO0               | TP3    | GPIO0        |                       |
@@ -287,7 +288,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the bac
 | Red PWM             | R      | GPIO33       |                       |
 | Green PWM           | G      | GPIO26       |                       |
 | Blue PWM            | B      | GPIO27       |                       |
-| Night Light PWM     | NC     | GPIO22       |                       |
+| Night Light PWM     | NC     | GPIO23       |                       |
 | Power supply GPIO   | STA    | GPIO22       |             3.3V / 0V |
 | Cold white PWM      | C      | GPIO21       |                 3.16V |
 | Warm white PWM      | W      | GPIO19       |                 1.58V |
