@@ -581,7 +581,15 @@ The test points are in the back of the ESP's PCB.
 
 ### MJXDD01SYL
 The disassembly process is almost, if not exactly the same, as with YLXD50YL. MJXDD01SYL seems a re-labled YLXD50YL.
-Rotate the cover counterclockwise.
+
+Rotate the cover counterclockwise to remove the cover. Now you can see the outside of the board's housing.
+Unscrew the screws and unplug the two connectors. Now you can detach the housing from the base.
+On the back of the housing you need to remove the cover. Now you can take out the PCB from the housing.
+Unplug the ESP32 from the socket. Maybe you need to remove a bit of the glue between the PCM and the ESP32.
+
+The Test Points (TP) are on the back side of the ESP32 module. The font is very small, maybe you need a magnifying glass.
+
+To solder some wires to the TPs you need a bit of experience. Since other components are located very close to the TPs.
 
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/001.jpg" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/001.jpg" width="18%">
