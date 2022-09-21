@@ -27,7 +27,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceiling11   | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lampUNKNOWN | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
-| Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD01     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
+| Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD001 / MJXDD01SYL     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
 | Yeelight Ceiling Light YLXD50YL                  | yeelink.light.ceiling20   | YLXD50YL    | AC220V, 50W, 3100lm, 2700K-6500K, RGB ambient light, 47cm  |
 | Yeelight Arwen 450C                              | yeelight.light.ceilb?     | YLXD013-B   | AC220V, 50W, 4000lm, 2700K-6500K, RGB ambient light, 50cm  |
 | [Yeelight Arwen 550C](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilc      | YLXD013-C   | AC220V, 50W, 4500lm, 2700K-6500K, RGB ambient light, 60cm  |
