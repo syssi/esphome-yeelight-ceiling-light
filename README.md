@@ -274,8 +274,8 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
 | 3.3V                | TP1    |              |                       |
 | GND                 | TP2    |              |                       |
 | GPIO0               | TP3    | GPIO0        |                       |
-| TXD                 | TP4    | GPIO1        |                       |
-| RXD                 | TP5    | GPIO3        |                       |
+| RXD                 | TP4    | GPIO1        |                       |
+| TXD                 | TP5    | GPIO3        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the back) is held low (GND) on reset / power.
 
