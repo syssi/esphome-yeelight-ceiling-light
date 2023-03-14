@@ -81,7 +81,7 @@ bool YeelightFanController::parse_yeelight_fan_controller_byte_(uint8_t byte) {
   uint8_t computed_crc = raw[1] + raw[2] + raw[4];
   uint8_t remote_crc = raw[3];
   if (computed_crc != remote_crc) {
-    ESP_LOGW(TAG, "YeelightFanController CRC Check failed! %04X != %04X", computed_crc, remote_crc);
+    ESP_LOGW(TAG, "CRC check failed! 0x%04X != 0x%04X", computed_crc, remote_crc);
     return false;
   }
 
