@@ -3,8 +3,10 @@ from esphome.components import uart
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
-DEPENDENCIES = ["uart", "fan"]
 CODEOWNERS = ["@syssi"]
+
+DEPENDENCIES = ["uart"]
+AUTO_LOAD = ["fan"]
 MULTI_CONF = True
 
 CONF_YEELIGHT_FAN_CONTROLLER_ID = "yeelight_fan_controller_id"

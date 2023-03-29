@@ -12,9 +12,10 @@ from esphome.const import (
     UNIT_EMPTY,
 )
 
-AUTO_LOAD = ["xiaomi_ble", "sensor"]
 CODEOWNERS = ["@syssi"]
+
 DEPENDENCIES = ["esp32_ble_tracker"]
+AUTO_LOAD = ["xiaomi_ble", "sensor"]
 MULTI_CONF = True
 
 CONF_LAST_BUTTON_PRESSED = "last_button_pressed"
