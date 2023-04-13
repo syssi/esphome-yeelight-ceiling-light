@@ -31,8 +31,11 @@ wifi:
   fast_connect: true
 
 ota:
-api:
+
 logger:
+  level: DEBUG
+
+api:
 
 esp32_ble_tracker:
   scan_parameters:

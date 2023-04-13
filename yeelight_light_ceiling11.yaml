@@ -29,8 +29,11 @@ wifi:
   password: !secret wifi_password
 
 ota:
-api:
+
 logger:
+  level: DEBUG
+
+api:
 
 sensor:
   - platform: adc

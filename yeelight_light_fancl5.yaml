@@ -33,8 +33,11 @@ wifi:
   password: !secret wifi_password
 
 ota:
-api:
+
 logger:
+  level: DEBUG
+
+api:
 
 globals:
   - id: step_size
