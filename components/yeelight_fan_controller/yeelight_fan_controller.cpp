@@ -59,20 +59,23 @@ bool YeelightFanController::parse_yeelight_fan_controller_byte_(uint8_t byte) {
   // >>> 01:03:01:68:64:03
   // <<< 01:F3:01:58:64:03
 
-  // Byte Len  Payload                Content              Coeff.      Unit
-  // Example value 0     1   0x01                   Start of frame 1     1 0xF3
-  // Frame type 2     1   0x01                   Unknown 3     1   0x07 Checksum
-  // 4     1   0x13                   Fan speed
-  // 5     1   0x03                   End of frame
+  // Byte Len  Payload   Content
+  // 0     1   0x01      Start of frame
+  // 1     1   0xF3      Frame type
+  // 2     1   0x01      Unknown
+  // 3     1   0x07      Checksum
+  // 4     1   0x13      Fan speed
+  // 5     1   0x03      End of frame
 
-  if (at == 0)
+  if (at == 0) {
+    if (raw[0] != FAN_PKT_START) {
+      ESP_LOGW(TAG, "Invalid header: 0x%02X", raw[0]);
+
+      // return false to reset buffer
+      return false;
+    }
+
     return true;
-
-  if (raw[0] != FAN_PKT_START) {
-    ESP_LOGW(TAG, "Invalid header");
-
-    // return false to reset buffer
-    return false;
   }
 
   if (at < frame_len - 1)
