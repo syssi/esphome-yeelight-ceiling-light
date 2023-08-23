@@ -35,6 +35,9 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilb      | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
 | Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
 | Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
+| Yeelight Ceiling Light 235C                      | yeelight.light.ceil20     | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 300C                      | yeelight.light.ceil20     | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 400C                      | yeelight.light.ceil20     | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
 
 ### More esphome + yeelight projects
 
@@ -621,4 +624,7 @@ To solder some wires to the TPs you need a bit of experience. Since other compon
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/mjxdd01syl/thumbnails/007.jpg" width="18%">
 </a>
 
+### YLXDD-0033
+To disasemble the unit, use a prying tool to un-clip the top part. There are no screws nor glue, only clips all around the ceiling light.
 
+When flashing the YLXDD-00XX series you'll need an external 3.3v power supply and pull the enable (EN) pin to 3.3v.
