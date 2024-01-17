@@ -72,9 +72,9 @@ jobs:
           restore-keys: |
             esphome-pip-3.9-
 
-      - name: Clone esphome project
-        run: git clone https://github.com/esphome/esphome.git       -
-        name: Copy component into the esphome project
+      - name: 💣Clone esphome project
+        run: git clone https://github.com/esphome/esphome.git
+      - name: 💣Copy component into the esphome project
         run: |
           cp -r ../components/* esphome/components/
           git config user.name "ci"
