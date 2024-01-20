@@ -24,6 +24,14 @@ logger:
 
 api:
 
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO19
+    name: "${name} button"
+    on_press:
+      - light.toggle: light0
+
 output:
   - platform: ledc
     pin: GPIO13
@@ -37,6 +45,7 @@ output:
 
 light:
   - platform: rgb
+    id: light0
     name: "${name} rgb"
     red: output_red
     green: output_green
