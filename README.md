@@ -627,4 +627,4 @@ To solder some wires to the TPs you need a bit of experience. Since other compon
 ### YLXDD-0033
 To disasemble the unit, use a prying tool to un-clip the top part. There are no screws nor glue, only clips all around the ceiling light.
 
-When flashing the YLXDD-00XX series you'll need an external 3.3v power supply and pull the enable (EN) pin to 3.3v.
+When flashing the YLXDD-00xx series you'll need an external 3.3V power supply and pull the enable (EN) pin to 3.3V.
