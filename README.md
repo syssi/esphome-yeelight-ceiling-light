@@ -628,3 +628,19 @@ To solder some wires to the TPs you need a bit of experience. Since other compon
 To disasemble the unit, use a prying tool to un-clip the top part. There are no screws nor glue, only clips all around the ceiling light.
 
 When flashing the YLXDD-00xx series you'll need an external 3.3V power supply and pull the enable (EN) pin to 3.3V.
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/001.webp" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/thumbnails/001.webp" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/002.webp" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/thumbnails/002.webp" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/003.webp" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/thumbnails/003.webp" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/004.webp" target="_blank">
+<img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/thumbnails/004.webp" width="18%">
+</a>
