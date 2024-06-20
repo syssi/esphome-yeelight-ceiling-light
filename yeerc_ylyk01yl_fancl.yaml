@@ -24,6 +24,7 @@ wifi:
   fast_connect: true
 
 ota:
+  platform: esphome
 
 logger:
   level: DEBUG
