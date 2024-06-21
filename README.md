@@ -10,7 +10,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 
 ## Requirements
 
-* [ESPHome 2021.10.0 or higher](https://github.com/esphome/esphome/releases).
+* [ESPHome 2024.6.0 or higher](https://github.com/esphome/esphome/releases).
 * TTL-to-USB module (FTDI/CH430/PL2303) and some wires to flash the device once
 
 ## Supported devices
