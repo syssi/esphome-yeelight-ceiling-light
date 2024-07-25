@@ -31,8 +31,12 @@ api:
   
 sensor:
   - platform: adc
-    pin: GPIO33
+    pin: GPIO32
     name: "${name} adc1"
+    attenuation: 12db
+  - platform: adc
+    pin: GPIO33
+    name: "${name} adc2"
     attenuation: 12db
 
 output:
