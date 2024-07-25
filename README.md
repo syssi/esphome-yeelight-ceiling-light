@@ -679,3 +679,19 @@ Now the PCB is completely exposed and unmounted from the base.
 To flash ESP32 you need to solder the wires onto that test points.
 
 
+<a href="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/001.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/thumbnails/001.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/002.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/thumbnails/002.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/003.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/thumbnails/003.jpg" width="18%">
+</a>
+
+<a href="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/004.jpg" target="_blank">
+<img src="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/thumbnails/004.jpg" width="18%">
+</a>
+
