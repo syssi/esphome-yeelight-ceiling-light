@@ -333,7 +333,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 | 3.3V                | +, TP7          | 3.3V         |                       |
 | GND                 | -, TP8          | GND          |                       |
 
-### yeelink.light.ceiling15
+### yeelink.light.ceiling24
 
 | Name                | Label  | ESP32 GPIO   | Stock firmware limits |
 | ------------------- | ------ | ------------ |-----------------------|
@@ -347,7 +347,6 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 | 3.3V                | 3.3V   | 3.3V         |                       |
 | GND                 | GND    | GND          |                       |
 
-3.3V, GND, TXD, RXD and IO0 Pads are clearly visible on the main board near ESP32 board. 
 The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
 
 
@@ -672,5 +671,11 @@ When flashing the YLXDD-00xx series you'll need an external 3.3V power supply an
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/004.webp" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/thumbnails/004.webp" width="18%">
 </a>
+
+### YLXD62YI
+Rotate the cover counterclockwise to remove the cover. Unscrew the 220VAC L and N Wires. Remove three screws on the transparent diffusor.
+Now the PCB is completely exposed and unmounted from the base. 
+3.3V, GND, TXD, RXD and IO0 Pads are clearly visible on the main PCB near ESP32 board.
+To flash ESP32 you need to solder the wires onto that test points.
 
 
