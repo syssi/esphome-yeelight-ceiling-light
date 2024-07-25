@@ -28,6 +28,12 @@ logger:
   level: DEBUG
 
 api:
+  
+sensor:
+  - platform: adc
+    pin: GPIO33
+    name: "${name} adc1"
+    attenuation: 12db
 
 output:
   - platform: ledc
