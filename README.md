@@ -38,6 +38,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | Yeelight Ceiling Light 235C                      | yeelight.light.ceil20     | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
 | Yeelight Ceiling Light 300C                      | yeelight.light.ceil20     | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
 | Yeelight Ceiling Light 400C                      | yeelight.light.ceil20     | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
+| Yeelight Jiaoyue 260 Ceiling Light               | yeelight.light.ceiling24  | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
 
 ### More esphome + yeelight projects
 
@@ -112,6 +113,16 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 - Light strip (RGB)
   - Brightness
   - Color
+ 
+### yeelink.light.ceiling24
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Sensor
+  - ADC1
+  - ADC2
+
 
 ## Known bugs
 
@@ -321,6 +332,23 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 | LED (YLCT03YL only) |                 | GPIO33       |                       |
 | 3.3V                | +, TP7          | 3.3V         |                       |
 | GND                 | -, TP8          | GND          |                       |
+
+### yeelink.light.ceiling15
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      |        | GPIO19       |                       |
+| Cold white PWM      |        | GPIO21       |                       |
+| VCC measurement     |        | GPIO36       |                       |
+| VCC measurement     |        | GPIO32       |                       |
+| TXD                 | TXD    | GPIO1        |                       |
+| RXD                 | RXD    | GPIO3        |                       |
+| GPIO0               | IO0    | GPIO0        |                       |
+| 3.3V                | 3.3V   | 3.3V         |                       |
+| GND                 | GND    | GND          |                       |
+
+3.3V, GND, TXD, RXD and IO0 Pads are clearly visible on the main board near ESP32 board. 
+The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
 
 
 ## Disassembly
@@ -644,3 +672,5 @@ When flashing the YLXDD-00xx series you'll need an external 3.3V power supply an
 <a href="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/004.webp" target="_blank">
 <img src="https://raw.githubusercontent.com/syssi/esphome-yeelight-ceiling-light/main/images/ylxdd0033/thumbnails/004.webp" width="18%">
 </a>
+
+
