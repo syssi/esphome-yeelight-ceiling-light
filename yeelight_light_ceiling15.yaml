@@ -30,11 +30,11 @@ sensor:
   - platform: adc
     pin: GPIO36
     name: "${name} adc1"
-    attenuation: 11db
+    attenuation: 12db
   - platform: adc
     pin: GPIO32
     name: "${name} adc2"
-    attenuation: 11db
+    attenuation: 12db
 
 output:
   - platform: ledc
