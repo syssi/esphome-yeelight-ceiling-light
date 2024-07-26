@@ -28,7 +28,7 @@ logger:
   level: DEBUG
 
 api:
-  
+
 sensor:
   - platform: adc
     pin: GPIO32
@@ -56,5 +56,5 @@ light:
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
     # disabling constant_brightness makes color temperature transition smooth without brightness dips
-    #constant_brightness: true
+    # constant_brightness: true
     gamma_correct: 0
