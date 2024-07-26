@@ -36,14 +36,14 @@ binary_sensor:
     on_click:
       then:
         - if:
-          condition:
-            light.is_off: bedside_light
-          then:
-            light.turn_on:
-              id: bedside_light
-              brightness: 1.0
-          else:
-            light.turn_off: bedside_light
+            condition:
+              light.is_off: bedside_light
+            then:
+              light.turn_on:
+                id: bedside_light
+                brightness: 1.0
+            else:
+              light.turn_off: bedside_light
     on_press:
       then:
         - if:
