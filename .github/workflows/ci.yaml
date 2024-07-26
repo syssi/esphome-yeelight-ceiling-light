@@ -189,14 +189,7 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - run: esphome config yeelight_light_ceil26.yaml
-      - run: esphome config yeelight_light_ceiling10.yaml
-      - run: esphome config yeelight_light_ceiling11.yaml
-      - run: esphome config yeelight_light_ceiling15.yaml
-      - run: esphome config yeelight_light_ceiling20.yaml
-      - run: esphome config yeelight_light_ceilb.yaml
-      - run: esphome config yeelight_light_ceilc.yaml
-      - run: esphome -s external_components_source components config yeelight_light_strip6.yaml
+      - run: esphome config yeelight_*.yaml
       - run: esphome -s external_components_source components config yeerc_ylyk01yl.yaml
       - run: esphome -s external_components_source components config yeerc_ylyk01yl_fancl.yaml
 
@@ -228,8 +221,6 @@ jobs:
           pip install esphome
           pip list
           esphome version
-          # Downgrade cryptography to avoid https://github.com/espressif/esp-idf/issues/7631
-          python -m pip install --upgrade cryptography==3.4.8
       - name: Register problem matchers
         run: |
           echo "::add-matcher::.github/workflows/matchers/gcc.json"
@@ -237,14 +228,6 @@ jobs:
       - name: Write secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > secrets.yaml'
-      - run: esphome compile yeelight_light_ceil26.yaml
-      - run: esphome compile yeelight_light_ceiling10.yaml
-      - run: esphome compile yeelight_light_ceiling11.yaml
-      - run: esphome compile yeelight_light_ceiling15.yaml
-      - run: esphome compile yeelight_light_ceiling20.yaml
-      - run: esphome compile yeelight_light_ceilb.yaml
-      - run: esphome compile yeelight_light_ceilc.yaml
-      - run: esphome compile yeelight_light_strip6.yaml
-      - run: esphome -s external_components_source components compile yeelight_light_fancl5.yaml
+      # Compile only a few examples as they are all very similar
+      - run: esphome -s external_components_source components compile yeelight_light_lamp9.yaml
       - run: esphome -s external_components_source components compile yeerc_ylyk01yl.yaml
-      # - run: esphome -s external_components_source components compile yeerc_ylyk01yl_fancl.yaml
