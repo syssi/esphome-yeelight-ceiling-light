@@ -47,32 +47,32 @@ binary_sensor:
     on_press:
       then:
         - if:
-          condition:
-            light.is_off: bedside_light
-          then:
-            - delay: 0.5s
-            - while:
-                condition:
-                  binary_sensor.is_on: button
-                then:
-                  - light.dim_relative:
-                      id: bedside_light
-                      relative_brightness: 5%
-                      transition_length: 0.1s
-                  - delay: 0.1s
-          else:
-            - delay: 0.5s
-            - while:
-                condition:
-                  and:
-                    - binary_sensor.is_on: button
-                    - light.is_on: bedside_light
-                then:
-                  - light.dim_relative:
-                      id: bedside_light
-                      relative_brightness: -5%
-                      transition_length: 0.1s
-                  - delay: 0.1s
+            condition:
+              light.is_off: bedside_light
+            then:
+              - delay: 0.5s
+              - while:
+                  condition:
+                    binary_sensor.is_on: button
+                  then:
+                    - light.dim_relative:
+                        id: bedside_light
+                        relative_brightness: 5%
+                        transition_length: 0.1s
+                    - delay: 0.1s
+            else:
+              - delay: 0.5s
+              - while:
+                  condition:
+                    and:
+                      - binary_sensor.is_on: button
+                      - light.is_on: bedside_light
+                  then:
+                    - light.dim_relative:
+                        id: bedside_light
+                        relative_brightness: -5%
+                        transition_length: 0.1s
+                    - delay: 0.1s
 
 output:
   - platform: ledc
