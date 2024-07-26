@@ -30,7 +30,7 @@ sensor:
   - platform: adc
     pin: GPIO35
     name: "${name} power supply"
-    attenuation: 11db
+    attenuation: 12db
 
 output:
   - platform: ledc
