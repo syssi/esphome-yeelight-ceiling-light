@@ -31,14 +31,16 @@ output:
     pin: GPIO19
     id: output_warm
     power_supply: power
-#    min_power: 0.13
-    max_power: 0.82
+    min_power: 0.13
+    max_power: 0.77
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
     power_supply: power
-#    min_power: 0.13
-    max_power: 0.82
+    min_power: 0.13
+    max_power: 0.76
+    zero_means_zero: true
 
   - platform: ledc
     pin: GPIO23
