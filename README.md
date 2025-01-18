@@ -35,9 +35,9 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilb      | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
 | Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
 | Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
-| Yeelight Ceiling Light 235C                      | yeelight.light.ceil20     | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
-| Yeelight Ceiling Light 300C                      | yeelight.light.ceil20     | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
-| Yeelight Ceiling Light 400C                      | yeelight.light.ceil20     | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 235C                      | yeelight.light.ceilb      | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 300C                      | yeelight.light.ceilb      | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 400C                      | yeelight.light.ceilb      | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
 | Yeelight Jiaoyue 260 Ceiling Light               | yeelight.light.ceiling24  | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
 
 ### More esphome + yeelight projects
