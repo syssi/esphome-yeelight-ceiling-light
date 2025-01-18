@@ -196,6 +196,13 @@ jobs:
           for YAML in yee*.yaml; do
             esphome -s external_components_source components config $YAML >/dev/null
           done
+      - name: Write tests/secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > tests/secrets.yaml'
+      - run: |
+          for YAML in *.yaml; do
+            esphome -s external_components_source ../components config $YAML >/dev/null
+          done
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -235,3 +242,7 @@ jobs:
       # Compile only a few examples as they are all very similar
       - run: esphome -s external_components_source components compile yeelight_light_lamp9.yaml
       - run: esphome -s external_components_source components compile yeerc_ylyk01yl.yaml
+      - name: Write tests/secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password" > tests/secrets.yaml'
+      - run: esphome compile tests/validate-sdkconfig-options.yaml
