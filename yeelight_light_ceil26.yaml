@@ -11,6 +11,10 @@ esp32:
     type: esp-idf
     sdkconfig_options:
       CONFIG_FREERTOS_UNICORE: y
+      # Please uncomment these parameters if fast booting is important to you
+      # CONFIG_BOOTLOADER_SKIP_VALIDATE_ON_POWER_ON: y
+      # CONFIG_BOOTLOADER_LOG_LEVEL_NONE: y
+      # CONFIG_LOG_DEFAULT_LEVEL_NONE: y
     advanced:
       ignore_efuse_mac_crc: true
       ignore_efuse_custom_mac: true
