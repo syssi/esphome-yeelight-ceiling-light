@@ -35,6 +35,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 | [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilb      | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
 | Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
 | Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
+| [Yeelight Ceiling Light A2001R900](#ylpw13yl)    | yeelight.light.ceila      | YLPW13YL    | AC220V, 95W, 6000lm, 2700K-6500K, 93x63 cm  |
 | Yeelight Ceiling Light 235C                      | yeelight.light.ceilb      | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
 | Yeelight Ceiling Light 300C                      | yeelight.light.ceilb      | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
 | Yeelight Ceiling Light 400C                      | yeelight.light.ceilb      | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
@@ -53,7 +54,7 @@ Esphome custom firmware for some Yeelight Ceiling Lights.
 
 ## Features
 
-### yeelink.light.ceil26, yeelink.light.ceiling22
+### yeelink.light.ceil26, yeelink.light.ceiling22, yeelink.light.ceila
 
 - Light (CCWW)
   - Brightness
@@ -278,7 +279,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP1 at the bac
   3V3 ADC2 CW GND
 ```
 
-### yeelink.light.ceiling22
+### yeelink.light.ceiling22, yeelink.light.ceila
 
 | Name                | Label  | ESP32 GPIO   | Stock firmware limits |
 | ------------------- | ------ | ------------ |-----------------------|
@@ -695,3 +696,34 @@ To flash ESP32 you need to solder the wires onto that test points.
 <img src="https://raw.githubusercontent.com/justr0st/esphome-yeelight-ceiling-light/main/images/ylxd62yi/thumbnails/004.jpg" width="18%">
 </a>
 
+### YLPW13YL
+
+Disconnect from power before removing the cover. The cover is held by multiple clips on two sides. Use something flat to
+completely unclip one side. The ESP32 is located on the main PCB and can be easily removed. Carefully remove the glue;
+this can be done with your fingers. The test points are on the back of the ESP32 module. You will need to solder some
+wires to the test points (TPs). Images are under [images/ylpw13yl](./images/ylpw13yl#readme).
+
+<a href="./images/ylpw13yl/001.jpg" target="_blank">
+<img src="./images/ylpw13yl/thumbnails/001.jpg">
+</a>
+
+<a href="./images/ylpw13yl/002.jpg" target="_blank">
+<img src="./images/ylpw13yl/thumbnails/002.jpg">
+</a>
+
+<a href="./images/ylpw13yl/003.jpg" target="_blank">
+<img src="./images/ylpw13yl/thumbnails/003.jpg">
+</a>
+
+<a href="./images/ylpw13yl/004.jpg" target="_blank">
+<img src="./images/ylpw13yl/thumbnails/004.jpg">
+</a>
+
+<a href="./images/ylpw13yl/005.jpg" target="_blank">
+<img src="./images/ylpw13yl/thumbnails/005.jpg">
+</a>
+
+* Reported firmware was `yeelink.light.ceila`. No RGB, only CW and WW.
+* Uses same module as `yeelink.light.ceil20` or `yeelink.light.ceiling22` (single-core ESP32-WROOM-32D).
+* Configuration file is [yeelight_light_ceila.yaml](./yeelight_light_ceila.yaml) that behaves a lot like original
+  (but no color temperature control yet). Remove remote config if you have problems with it, or don't plan to use it.

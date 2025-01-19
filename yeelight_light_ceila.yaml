@@ -1,0 +1,222 @@
+substitutions:
+  name: yeelight-light-ceila
+  warm_max_power: "0.75"
+  cold_max_power: "0.7"
+  cwww_gamma_correction: "1.6"
+  nl_gamma_correction: "1.6"
+  # Xiaomi YLYK01YL remote control settings - you must provide your own MAC address
+  xiaomi_ylyk01yl_mac_address: "00:00:00:00:00:00"
+  adjust_brightness_step: "0.1"
+  adjust_brightness_min: "0.1"
+  adjust_brightness_max: "1.0"
+
+esphome:
+  name: ${name}
+  min_version: 2024.10.0
+
+external_components:
+  - source: github://syssi/esphome-yeelight-ceiling-light
+
+esp32:
+  board: esp32doit-devkit-v1
+  flash_size: 4MB
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+      # Please uncomment these parameters if fast booting is important to you
+      # CONFIG_BOOTLOADER_SKIP_VALIDATE_ON_POWER_ON: y
+      # CONFIG_BOOTLOADER_LOG_LEVEL_NONE: y
+      # CONFIG_LOG_DEFAULT_LEVEL_NONE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+      ignore_efuse_custom_mac: true
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  # baud_rate: 0
+
+api:
+
+sensor:
+  - platform: adc
+    pin: GPIO36
+    name: "${name} power supply"
+    attenuation: 12db
+    disabled_by_default: true
+
+output:
+  - platform: ledc
+    pin: GPIO19
+    id: output_warm
+    power_supply: power
+    max_power: ${warm_max_power}
+    zero_means_zero: true
+  - platform: ledc
+    pin: GPIO21
+    id: output_cold
+    power_supply: power
+    max_power: ${cold_max_power}
+    zero_means_zero: true
+  - platform: ledc
+    pin: GPIO23
+    id: output_nightlight
+    power_supply: power
+    zero_means_zero: true
+
+power_supply:
+  - id: power
+    pin: GPIO22
+    enable_time: 0s
+    keep_on_time: 10s
+
+light:
+  - platform: cwww
+    name: "${name} ceiling light"
+    id: ceiling_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    gamma_correct: 1.6
+    on_turn_on:
+      then:
+        - light.turn_off: night_light
+        - script.execute: auto_off_timer
+    restore_mode: RESTORE_AND_ON
+  - platform: monochromatic
+    name: "${name} night light"
+    id: night_light
+    output: output_nightlight
+    gamma_correct: 1.6
+    on_turn_on:
+      then:
+        - light.turn_off: ceiling_light
+        - script.execute: auto_off_timer
+
+button:
+  - platform: template
+    id: toggle
+    on_press:
+      - if:
+          condition:
+            and:
+              - light.is_off: ceiling_light
+              - light.is_off: night_light
+          then:
+            - light.turn_on: ceiling_light
+          else:
+            - light.turn_off: ceiling_light
+            - light.turn_off: night_light
+
+number:
+  - platform: template
+    id: auto_off
+    name: "${name} auto off"
+    initial_value: 0  # Zero means disabled
+    min_value: 0
+    max_value: 1440  # 24h
+    icon: mdi:timer
+    unit_of_measurement: min
+    step: 5
+    restore_value: true
+    optimistic: true
+
+script:
+  - id: auto_off_timer
+    mode: restart
+    then:
+      - if:
+          condition:
+            - number.in_range:
+                id: auto_off
+                above: 0
+          then:
+            - logger.log: "Auto-off timer started"
+            - delay: !lambda |
+                return id(auto_off).state * 60000;
+            - logger.log: "Auto-off timer expired"
+            - light.turn_off: ceiling_light
+            - light.turn_off: night_light
+  - id: adjust_light_brightness
+    parameters:
+      step: float
+    then:
+      - lambda: !lambda |
+          const float b_min = ${adjust_brightness_min};
+          const float b_max = ${adjust_brightness_max};
+
+          esphome::light::LightState* l = nullptr;
+          if (id(ceiling_light).remote_values.is_on())
+            l = ceiling_light;
+          else if (id(night_light).remote_values.is_on())
+            l = night_light;
+
+          if (l != nullptr) {
+            float b = l->remote_values.get_brightness() + step;
+            b = (b > b_max) ? b_max : (b < b_min) ? b_min : b;
+            auto call = l->make_call();
+            call.set_brightness(b);
+            call.perform();
+          }
+
+# Remote YLYK01YL config, remove all below if you don't plan to use it
+esp32_ble_tracker:
+  setup_priority: -900  # This is important, otherwise single-core ESP won't boot
+  scan_parameters:
+    active: false
+
+xiaomi_ble:
+xiaomi_ylyk01yl:
+  mac_address: "${xiaomi_ylyk01yl_mac_address}"
+  on_press:
+    - keycode: 0  # on
+      then:
+        - logger.log: "BLE Remote press: ON"
+        - light.turn_on: ceiling_light
+    - keycode: 1  # off
+      then:
+        - logger.log: "BLE Remote press: OFF"
+        - light.turn_off: ceiling_light
+        - light.turn_off: night_light
+    - keycode: 2  # sun
+      then:
+        - logger.log: "BLE Remote press: SUN"
+        - light.turn_on: ceiling_light
+    - keycode: 4  # M
+      then:
+        - logger.log: "BLE Remote press: M"
+        - light.turn_on: night_light
+    - keycode: 3  # plus
+      then:
+        - logger.log: "BLE Remote press: PLUS"
+        - script.execute:
+            id: adjust_light_brightness
+            step: ${adjust_brightness_step}
+    - keycode: 5  # minus
+      then:
+        - logger.log: "BLE Remote press: MINUS"
+        - script.execute:
+            id: adjust_light_brightness
+            step: -${adjust_brightness_step}
+  on_long_press:
+    - keycode: 3  # plus
+      then:
+        - logger.log: "BLE Remote long-press: PLUS"
+        - script.execute:
+            id: adjust_light_brightness
+            step: 1
+    - keycode: 5  # minus
+      then:
+        - logger.log: "BLE Remote long-press: MINUS"
+        - script.execute:
+            id: adjust_light_brightness
+            step: -1
