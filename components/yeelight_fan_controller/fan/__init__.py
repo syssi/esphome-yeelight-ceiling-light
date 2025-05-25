@@ -13,14 +13,17 @@ AUTO_LOAD = ["yeelight_fan_controller"]
 
 YeelightFan = yeelight_fan_controller_ns.class_("YeelightFan", cg.Component, fan.Fan)
 
-CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
-    {
-        cv.GenerateID(): cv.declare_id(YeelightFan),
-        cv.GenerateID(CONF_YEELIGHT_FAN_CONTROLLER_ID): cv.use_id(
-            YeelightFanController
-        ),
-    }
-).extend(cv.COMPONENT_SCHEMA)
+CONFIG_SCHEMA = (
+    fan.fan_schema(YeelightFan)
+    .extend(
+        {
+            cv.GenerateID(CONF_YEELIGHT_FAN_CONTROLLER_ID): cv.use_id(
+                YeelightFanController
+            ),
+        }
+    )
+    .extend(cv.COMPONENT_SCHEMA)
+)
 
 
 async def to_code(config):
