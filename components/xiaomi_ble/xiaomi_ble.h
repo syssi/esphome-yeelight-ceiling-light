@@ -32,10 +32,13 @@ struct XiaomiParseResult {
     TYPE_CGPR1,
     TYPE_RTCGQ02LM,
     TYPE_YLYK01YL,
-    TYPE_YLYK01YL_FANCL
+    TYPE_YLYK01YL_FANCL,
+    TYPE_YLKG07YL
   } type;
   std::string name;
   optional<uint8_t> keycode;
+  optional<int> encoder_value;
+  optional<int> action_type;
   optional<float> temperature;
   optional<float> humidity;
   optional<float> moisture;

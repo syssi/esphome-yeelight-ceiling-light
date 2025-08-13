@@ -1,0 +1,80 @@
+substitutions:
+  name: yeedimmer
+  light_entity: light.office_desk
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
+
+esphome:
+  name: ${name}
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  baud_rate: 0
+
+api:
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 250ms
+    window: 250ms
+    duration: 1min
+    active: false
+
+xiaomi_ylkg07yl:
+  mac_address: "F8:24:41:C4:7B:BC"
+  bindkey: "ef3afd53f5c7853a080a3d52"
+  keycode:
+    name: "last keycode"
+    id: keycode
+#    internal: true
+  encoder_value:
+    name: "last encoder value"
+    id: encoder_value
+#    internal: true
+  action_type:
+    name: "last action type"
+    id: action_type
+#    internal: true
+  on_press:
+    then:
+      - logger.log: "Press event"
+      - homeassistant.service:
+          service: light.toggle
+          data:
+            entity_id: ${light_entity}
+  on_rotate:
+    then:
+      - logger.log: "Rotate event"
+      - homeassistant.service:
+          service: light.turn_on
+          data:
+            entity_id: ${light_entity}
+          data_template:
+            brightness_step_pct: "{{ step }}"
+          variables:
+            step: |-
+              if (id(encoder_value).state <= 127) {
+                return id(encoder_value).state * 2.5;
+              } else {
+                return (256 - id(encoder_value).state) * 2.5 * -1;
+              }
+
+  on_press_and_rotate:
+    then:
+      - logger.log: "Button press and rotate"
