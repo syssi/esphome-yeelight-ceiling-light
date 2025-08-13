@@ -1,0 +1,12 @@
+<<: !include yeedimmer_ylkg07yl.yaml
+
+logger:
+  level: VERY_VERBOSE
+  logs:
+    esp32_ble_tracker: INFO
+    xiaomi_ylkg07yl: VERY_VERBOSE
+    xiaomi_ble: VERY_VERBOSE
+    scheduler: DEBUG
+    component: DEBUG
+    api.service: INFO
+    api: INFO
