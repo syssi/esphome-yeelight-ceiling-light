@@ -1,16 +1,16 @@
-import esphome.codegen as cg
-import esphome.config_validation as cv
-from esphome.components import sensor, esp32_ble_tracker
 from esphome import automation
+import esphome.codegen as cg
+from esphome.components import esp32_ble_tracker, sensor
+import esphome.config_validation as cv
 from esphome.const import (
-    CONF_MAC_ADDRESS,
     CONF_BINDKEY,
-    CONF_ON_PRESS,
-    UNIT_EMPTY,
-    ICON_EMPTY,
-    DEVICE_CLASS_EMPTY,
     CONF_ID,
+    CONF_MAC_ADDRESS,
+    CONF_ON_PRESS,
     CONF_TRIGGER_ID,
+    DEVICE_CLASS_EMPTY,
+    ICON_EMPTY,
+    UNIT_EMPTY,
 )
 
 AUTO_LOAD = ["xiaomi_ble", "sensor"]
