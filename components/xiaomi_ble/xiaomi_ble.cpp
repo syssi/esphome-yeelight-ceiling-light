@@ -13,15 +13,8 @@ namespace xiaomi_ble {
 static const char *const TAG = "xiaomi_ble";
 
 bool parse_xiaomi_value(uint16_t value_type, const uint8_t *data, uint8_t value_length, XiaomiParseResult &result) {
-  // remote control key code, 3 bytes
-  if ((value_type == 0x0001) && (value_length == 3)) {
-    result.keycode = data[0];
-    result.encoder_value = data[1];
-    result.action_type = data[2];
-    return true;
-  }
   // button pressed, 3 bytes, only byte 3 is used for supported devices so far
-  else if ((value_type == 0x1001) && (value_length == 3)) {
+  if ((value_type == 0x1001) && (value_length == 3)) {
     result.button_press = data[2] == 0;
     result.keycode = data[0];
     result.is_long_press = data[2] == 2;
