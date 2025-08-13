@@ -280,11 +280,14 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
 
 // Decrypt MiBeacon V4/V5 payload
 bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
-  if ((raw.size() != 19) && ((raw.size() < 22) || (raw.size() > 24))) {
-    ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet has wrong size (%d)!", raw.size());
+  if (raw.size() < 15) {
+    ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet too small (%d)!", raw.size());
     ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());
     return false;
   }
+
+  uint8_t mibeacon_version = (raw[0] >> 4) & 0x0F;
+  ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): detected MiBeacon V%d", mibeacon_version);
 
   uint8_t mac_reverse[6] = {0};
   mac_reverse[5] = (uint8_t) (address >> 40);
@@ -306,8 +309,18 @@ bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, c
                          .tagsize = 4,
                          .ivsize = 12};
 
-  vector.datasize = (raw.size() == 19) ? raw.size() - 12 : raw.size() - 18;
-  int cipher_pos = (raw.size() == 19) ? 5 : 11;
+  // Determine cipher position based on packet structure
+  int cipher_pos;
+  bool has_mac = raw[0] & 0x10;
+  bool has_capability = raw[0] & 0x20;
+
+  cipher_pos = 5;
+  if (has_mac)
+    cipher_pos += 6;
+  if (has_capability)
+    cipher_pos += 1;
+
+  vector.datasize = raw.size() - cipher_pos - 7;
 
   const uint8_t *v = raw.data();
 
