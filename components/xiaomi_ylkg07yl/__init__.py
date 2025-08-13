@@ -5,6 +5,7 @@ from esphome import automation
 from esphome.const import (
     CONF_MAC_ADDRESS,
     CONF_BINDKEY,
+    CONF_ON_PRESS,
     UNIT_EMPTY,
     ICON_EMPTY,
     DEVICE_CLASS_EMPTY,
@@ -27,7 +28,7 @@ SENSORS = [
     CONF_ACTION_TYPE,
 ]
 
-CONF_ON_PRESS = "on_press"
+# CONF_ON_PRESS = "on_press"
 CONF_ON_PRESS_AND_ROTATE = "on_press_and_rotate"
 CONF_ON_ROTATE = "on_rotate"
 
