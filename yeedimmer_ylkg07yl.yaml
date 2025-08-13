@@ -1,6 +1,7 @@
 substitutions:
   name: yeedimmer
   light_entity: light.office_desk
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
 
 esphome:
   name: ${name}
@@ -10,26 +11,23 @@ esp32:
   framework:
     type: esp-idf
 
+
 external_components:
-  - source: components
-#  - source: github://syssi/esphome-yeelight-ceiling-light@main
-#    refresh: 0s
+  - source: ${external_components_source}
+    refresh: 0s
 
 wifi:
-  ssid: !secret wifi_ssid_back
-  password: !secret wifi_password_back
-  fast_connect: true
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 ota:
-api:
-  password: !secret api_password
+  platform: esphome
 
 logger:
-  level: VERY_VERBOSE
-  logs:
-    esp32_ble_tracker: WARN
-    xiaomi_ylkg07yl: DEBUG
-    api.service: WARN
+  level: DEBUG
+  baud_rate: 0
+
+api:
 
 esp32_ble_tracker:
   scan_parameters:
