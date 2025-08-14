@@ -1,0 +1,67 @@
+<<: !include ../yeedimmer_ylkg07yl-debug.yaml
+
+xiaomi_ylkg07yl:
+  id: dimmer
+  mac_address: "70:C9:12:50:D3:5C"
+  bindkey: "5ab9badac3b1becfc5ef5dcd"
+  keycode:
+    name: "test keycode"
+    id: test_keycode
+  encoder_value:
+    name: "test encoder value"
+    id: test_encoder_value
+  action_type:
+    name: "test action type"
+    id: test_action_type
+  on_press:
+    then:
+      - logger.log: "V4 Frame Press event detected"
+  on_rotate:
+    then:
+      - logger.log: "V4 Frame Rotate event detected"
+  on_press_and_rotate:
+    then:
+      - logger.log: "V4 Frame Button press and rotate detected"
+
+# Test configuration for V4 frame fallback decryption
+# Frame: 48.50.b6.03.4f.9e.d6.8b.74.be.06.0b.00.00.62.42.26.bb
+# This tests fallback from legacy v2/v3 to modern v4/v5 decryption
+
+interval:
+  - interval: 10s
+    then:
+      - lambda: |-
+          std::vector<uint8_t> v4_frame = {
+            0x48, 0x50, 0xb6, 0x03, 0x4f, 0x9e, 0xd6, 0x8b,
+            0x74, 0xbe, 0x06, 0x0b, 0x00, 0x00, 0x62, 0x42,
+            0x26, 0xbb
+          };
+
+          esphome::esp32_ble::BLEScanResult scan_result;
+          memset(&scan_result, 0, sizeof(scan_result));
+
+          // Set MAC address: 70:C9:12:50:D3:5C
+          scan_result.bda[0] = 0x70;
+          scan_result.bda[1] = 0xC9;
+          scan_result.bda[2] = 0x12;
+          scan_result.bda[3] = 0x50;
+          scan_result.bda[4] = 0xD3;
+          scan_result.bda[5] = 0x5C;
+          scan_result.ble_addr_type = 0;
+          scan_result.rssi = -60;
+
+          // Create service data advertisement: 0x95FE UUID + frame data
+          scan_result.ble_adv[0] = v4_frame.size() + 3;  // Length
+          scan_result.ble_adv[1] = 0x16;                 // Service Data AD Type
+          scan_result.ble_adv[2] = 0x95;                 // Xiaomi UUID LSB
+          scan_result.ble_adv[3] = 0xFE;                 // Xiaomi UUID MSB
+          memcpy(&scan_result.ble_adv[4], v4_frame.data(), v4_frame.size());
+          scan_result.adv_data_len = v4_frame.size() + 4;
+          scan_result.scan_rsp_len = 0;
+
+          esphome::esp32_ble_tracker::ESPBTDevice mock_device;
+          mock_device.parse_scan_rst(scan_result);
+
+          id(dimmer).parse_device(mock_device);
+
+          ESP_LOGI("test_frame", "V4 frame injection completed");
