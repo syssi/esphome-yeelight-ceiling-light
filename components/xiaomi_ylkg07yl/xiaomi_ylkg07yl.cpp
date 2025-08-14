@@ -36,9 +36,15 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
     if (res->is_duplicate) {
       continue;
     }
-    if (res->has_encryption && (!(this->decrypt_mibeacon_v23_(const_cast<std::vector<uint8_t> &>(service_data.data),
-                                                              this->bindkey_, this->address_)))) {
-      continue;
+    if (res->has_encryption) {
+      if (!(this->decrypt_mibeacon_v23_(const_cast<std::vector<uint8_t> &>(service_data.data), this->bindkey_,
+                                        this->address_))) {
+        // Try v4/v5 decryption if legacy fails
+        if (!(xiaomi_ble::decrypt_xiaomi_payload(const_cast<std::vector<uint8_t> &>(service_data.data), this->bindkey_,
+                                                 this->address_))) {
+          continue;
+        }
+      }
     }
     if (!(xiaomi_ble::parse_xiaomi_message(service_data.data, *res))) {
       continue;
