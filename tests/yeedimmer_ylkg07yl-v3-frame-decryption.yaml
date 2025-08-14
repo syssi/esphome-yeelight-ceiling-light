@@ -1,0 +1,106 @@
+<<: !include ../yeedimmer_ylkg07yl-debug.yaml
+
+xiaomi_ylkg07yl:
+  id: dimmer
+  mac_address: "F8:24:41:C4:7B:BC"
+  bindkey: "ef3afd53f5c7853a080a3d52"
+  keycode:
+    name: "test keycode"
+    id: test_keycode
+  encoder_value:
+    name: "test encoder value"
+    id: test_encoder_value
+  action_type:
+    name: "test action type"
+    id: test_action_type
+  on_press:
+    then:
+      - logger.log: "V3 Frame Press event detected"
+  on_rotate:
+    then:
+      - logger.log: "V3 Frame Rotate event detected"
+  on_press_and_rotate:
+    then:
+      - logger.log: "V3 Frame Button press and rotate detected"
+
+# Test configuration for V3 frame legacy decryption
+# Frame 1 (Press): 5830B60353BC7BC44124F8E2B6C4D5013A00000074
+# Frame 2 (Rotate): 5830B60356BC7BC44124F8A4AB1D680A050000005E
+# This tests legacy v2/v3 decryption with 21-byte frames
+
+interval:
+  - interval: 15s
+    then:
+      - lambda: |-
+          std::vector<uint8_t> v3_frame_press = {
+            0x58, 0x30, 0xB6, 0x03, 0x53, 0xBC, 0x7B, 0xC4,
+            0x41, 0x24, 0xF8, 0xE2, 0xB6, 0xC4, 0xD5, 0x01,
+            0x3A, 0x00, 0x00, 0x00, 0x74
+          };
+
+          esphome::esp32_ble::BLEScanResult scan_result;
+          memset(&scan_result, 0, sizeof(scan_result));
+
+          // Set MAC address: F8:24:41:C4:7B:BC
+          scan_result.bda[0] = 0xF8;
+          scan_result.bda[1] = 0x24;
+          scan_result.bda[2] = 0x41;
+          scan_result.bda[3] = 0xC4;
+          scan_result.bda[4] = 0x7B;
+          scan_result.bda[5] = 0xBC;
+          scan_result.ble_addr_type = 0;
+          scan_result.rssi = -64;
+
+          // Create service data advertisement: 0x95FE UUID + frame data
+          scan_result.ble_adv[0] = v3_frame_press.size() + 3;  // Length
+          scan_result.ble_adv[1] = 0x16;                       // Service Data AD Type
+          scan_result.ble_adv[2] = 0x95;                       // Xiaomi UUID LSB
+          scan_result.ble_adv[3] = 0xFE;                       // Xiaomi UUID MSB
+          memcpy(&scan_result.ble_adv[4], v3_frame_press.data(), v3_frame_press.size());
+          scan_result.adv_data_len = v3_frame_press.size() + 4;
+          scan_result.scan_rsp_len = 0;
+
+          esphome::esp32_ble_tracker::ESPBTDevice mock_device;
+          mock_device.parse_scan_rst(scan_result);
+
+          id(dimmer).parse_device(mock_device);
+
+          ESP_LOGI("test_frame", "V3 press frame injection completed");
+
+      - delay: 5s
+
+      - lambda: |-
+          std::vector<uint8_t> v3_frame_rotate = {
+            0x58, 0x30, 0xB6, 0x03, 0x56, 0xBC, 0x7B, 0xC4,
+            0x41, 0x24, 0xF8, 0xA4, 0xAB, 0x1D, 0x68, 0x0A,
+            0x05, 0x00, 0x00, 0x00, 0x5E
+          };
+
+          esphome::esp32_ble::BLEScanResult scan_result;
+          memset(&scan_result, 0, sizeof(scan_result));
+
+          // Set MAC address: F8:24:41:C4:7B:BC
+          scan_result.bda[0] = 0xF8;
+          scan_result.bda[1] = 0x24;
+          scan_result.bda[2] = 0x41;
+          scan_result.bda[3] = 0xC4;
+          scan_result.bda[4] = 0x7B;
+          scan_result.bda[5] = 0xBC;
+          scan_result.ble_addr_type = 0;
+          scan_result.rssi = -57;
+
+          // Create service data advertisement: 0x95FE UUID + frame data
+          scan_result.ble_adv[0] = v3_frame_rotate.size() + 3;  // Length
+          scan_result.ble_adv[1] = 0x16;                        // Service Data AD Type
+          scan_result.ble_adv[2] = 0x95;                        // Xiaomi UUID LSB
+          scan_result.ble_adv[3] = 0xFE;                        // Xiaomi UUID MSB
+          memcpy(&scan_result.ble_adv[4], v3_frame_rotate.data(), v3_frame_rotate.size());
+          scan_result.adv_data_len = v3_frame_rotate.size() + 4;
+          scan_result.scan_rsp_len = 0;
+
+          esphome::esp32_ble_tracker::ESPBTDevice mock_device;
+          mock_device.parse_scan_rst(scan_result);
+
+          id(dimmer).parse_device(mock_device);
+
+          ESP_LOGI("test_frame", "V3 rotate frame injection completed");

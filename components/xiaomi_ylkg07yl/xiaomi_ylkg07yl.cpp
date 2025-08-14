@@ -47,6 +47,8 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
                                                  this->address_))) {
           continue;
         }
+        // Adjust raw_offset for V4 frame parsing - encrypted payload starts at byte 5
+        res->raw_offset = 5;
       }
     }
     if (!(xiaomi_ble::parse_xiaomi_message(service_data.data, *res))) {
