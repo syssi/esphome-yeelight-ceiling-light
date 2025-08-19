@@ -59,7 +59,7 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
     }
     if (res->keycode.has_value()) {
       if(res->encoder_value.has_value())
-          res->encoder_value = res->encoder_value.value() - 128;
+          res->encoder_value = ((res->encoder_value.value() + 128) % 256 - 128);
 
       if (this->keycode_sensor_ != nullptr)
         this->keycode_sensor_->publish_state(*res->keycode);
