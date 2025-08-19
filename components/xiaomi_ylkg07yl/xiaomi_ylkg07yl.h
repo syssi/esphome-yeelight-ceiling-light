@@ -70,7 +70,7 @@ class OnPressAndRotateTrigger : public Trigger<int> {
     a_remote->add_on_receive_callback([this](int keycode, int encoder_value, int action_type) {
       if (action_type == ACTION_TYPE_ROTATE && keycode != KEYCODE_BUTTON) {
 
-        this->trigger(encoder_value);
+        this->trigger(keycode); //for press and rotate, encoder_value is a keycode
       }
     });
   }
