@@ -32,8 +32,8 @@ SENSORS = [
 CONF_ON_PRESS_AND_ROTATE = "on_press_and_rotate"
 CONF_ON_ROTATE = "on_rotate"
 
-
-ON_ROTATE_ACTIONS = [
+ON_PRESS_ACTIONS = [
+    CONF_ON_PRESS,
     CONF_ON_PRESS_AND_ROTATE,
     CONF_ON_ROTATE,
 ]
@@ -136,12 +136,7 @@ async def to_code(config):
             sens = await sensor.new_sensor(conf)
             cg.add(getattr(var, f"set_{key}_sensor")(sens))
 
-    if CONF_ON_PRESS in config:
-        for conf in config.get(CONF_ON_PRESS, []):
-            trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
-            await automation.build_automation(trigger, [(cg.int_, "x")], conf)
-
-    for action in ON_ROTATE_ACTIONS:
+    for action in ON_PRESS_ACTIONS:
         for conf in config.get(action, []):
             trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
             await automation.build_automation(trigger, [(cg.int_, "x")], conf)
