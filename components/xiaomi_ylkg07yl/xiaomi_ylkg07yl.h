@@ -41,34 +41,34 @@ class XiaomiYLKG07YL : public Component, public esp32_ble_tracker::ESPBTDeviceLi
   bool decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address);
 };
 
-class OnPressTrigger : public Trigger<> {
+class OnPressTrigger : public Trigger<int> {
  public:
   OnPressTrigger(XiaomiYLKG07YL *a_remote) {
     a_remote->add_on_receive_callback([this](int keycode, int encoder_value, int action_type) {
       if (action_type == ACTION_TYPE_PRESS && keycode == KEYCODE_BUTTON) {
-        this->trigger();
+        this->trigger(encoder_value);
       }
     });
   }
 };
 
-class OnRotateTrigger : public Trigger<> {
+class OnRotateTrigger : public Trigger<int> {
  public:
   OnRotateTrigger(XiaomiYLKG07YL *a_remote) {
     a_remote->add_on_receive_callback([this](int keycode, int encoder_value, int action_type) {
       if (action_type == ACTION_TYPE_ROTATE && keycode == KEYCODE_BUTTON) {
-        this->trigger();
+        this->trigger(encoder_value);
       }
     });
   }
 };
 
-class OnPressAndRotateTrigger : public Trigger<> {
+class OnPressAndRotateTrigger : public Trigger<int> {
  public:
   OnPressAndRotateTrigger(XiaomiYLKG07YL *a_remote) {
     a_remote->add_on_receive_callback([this](int keycode, int encoder_value, int action_type) {
       if (action_type == ACTION_TYPE_ROTATE && keycode != KEYCODE_BUTTON) {
-        this->trigger();
+        this->trigger(keycode);  // for press and rotate, encoder_value is a keycode
       }
     });
   }

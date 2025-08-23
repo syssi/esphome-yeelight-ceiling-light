@@ -139,4 +139,4 @@ async def to_code(config):
     for action in ON_PRESS_ACTIONS:
         for conf in config.get(action, []):
             trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
-            await automation.build_automation(trigger, [], conf)
+            await automation.build_automation(trigger, [(cg.int_, "x")], conf)

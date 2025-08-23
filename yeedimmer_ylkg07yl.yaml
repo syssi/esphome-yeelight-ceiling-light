@@ -68,11 +68,7 @@ xiaomi_ylkg07yl:
             brightness_step_pct: "{{ step }}"
           variables:
             step: |-
-              if (id(encoder_value).state <= 127) {
-                return id(encoder_value).state * 2.5;
-              } else {
-                return (256 - id(encoder_value).state) * 2.5 * -1;
-              }
+              return x * 2.5;
 
   on_press_and_rotate:
     then:
