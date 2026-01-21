@@ -88,7 +88,7 @@ bool YeelightFanController::parse_yeelight_fan_controller_byte_(uint8_t byte) {
     return false;
   }
 
-  ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(raw, at + 1).c_str());
+  ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(raw, at + 1).c_str());  // NOLINT
 
   std::vector<uint8_t> data(this->rx_buffer_.begin(), this->rx_buffer_.begin() + frame_len);
 
@@ -109,7 +109,7 @@ void YeelightFanController::on_yeelight_fan_controller_data_(const std::vector<u
     return;
   }
 
-  ESP_LOGW(TAG, "Unhandled response received: %s", format_hex_pretty(&data.front(), data.size()).c_str());
+  ESP_LOGW(TAG, "Unhandled response received: %s", format_hex_pretty(&data.front(), data.size()).c_str());  // NOLINT
 }
 
 void YeelightFanController::dump_config() {  // NOLINT(google-readability-function-size,readability-function-size)
