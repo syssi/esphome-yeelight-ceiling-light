@@ -14,7 +14,7 @@ static const char *const TAG = "xiaomi_ylkg07yl";
 
 void XiaomiYLKG07YL::dump_config() {
   ESP_LOGCONFIG(TAG, "Xiaomi YLKG07YL");
-  ESP_LOGCONFIG(TAG, "  Bindkey: %s", format_hex_pretty(this->bindkey_, 12).c_str());
+  ESP_LOGCONFIG(TAG, "  Bindkey: %s", format_hex_pretty(this->bindkey_, 12).c_str());  // NOLINT
   LOG_SENSOR("  ", "Keycode", this->keycode_sensor_);
   LOG_SENSOR("  ", "Encoder value", this->encoder_value_sensor_);
   LOG_SENSOR("  ", "Action type", this->action_type_sensor_);
@@ -98,7 +98,7 @@ void XiaomiYLKG07YL::add_on_receive_callback(std::function<void(int, int, int)> 
 bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
   if (raw.size() != 21) {
     ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): data packet has wrong size (%d)!", raw.size());
-    ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());
+    ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());  // NOLINT
     return false;
   }
 
@@ -189,11 +189,11 @@ bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint
     memcpy(mac_address + 4, mac_reverse + 1, 1);
     memcpy(mac_address + 5, mac_reverse, 1);
     ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): mbedtls_ccm_star_auth_decrypt failed.");
-    ESP_LOGVV(TAG, "  MAC address : %s", format_hex_pretty(mac_address, 6).c_str());
-    ESP_LOGVV(TAG, "       Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());
-    ESP_LOGVV(TAG, "          Key : %s", format_hex_pretty(vector.key, vector.keysize).c_str());
-    ESP_LOGVV(TAG, "           Iv : %s", format_hex_pretty(vector.iv, vector.ivsize).c_str());
-    ESP_LOGVV(TAG, "       Cipher : %s", format_hex_pretty(vector.ciphertext, vector.datasize).c_str());
+    ESP_LOGVV(TAG, "  MAC address : %s", format_hex_pretty(mac_address, 6).c_str());                      // NOLINT
+    ESP_LOGVV(TAG, "       Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());              // NOLINT
+    ESP_LOGVV(TAG, "          Key : %s", format_hex_pretty(vector.key, vector.keysize).c_str());          // NOLINT
+    ESP_LOGVV(TAG, "           Iv : %s", format_hex_pretty(vector.iv, vector.ivsize).c_str());            // NOLINT
+    ESP_LOGVV(TAG, "       Cipher : %s", format_hex_pretty(vector.ciphertext, vector.datasize).c_str());  // NOLINT
     mbedtls_ccm_free(&ctx);
     return false;
   }
@@ -209,7 +209,8 @@ bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint
   raw[0] &= ~0x08;
 
   ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): authenticated decryption passed.");
-  ESP_LOGVV(TAG, "  Plaintext : %s, Packet : %d", format_hex_pretty(raw.data() + cipher_pos, vector.datasize).c_str(),
+  ESP_LOGVV(TAG, "  Plaintext : %s, Packet : %d",
+            format_hex_pretty(raw.data() + cipher_pos, vector.datasize).c_str(),  // NOLINT
             static_cast<int>(raw[4]));
 
   mbedtls_ccm_free(&ctx);
