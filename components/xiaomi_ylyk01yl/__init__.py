@@ -7,8 +7,6 @@ from esphome.const import (
     CONF_MAC_ADDRESS,
     CONF_ON_PRESS,
     CONF_TRIGGER_ID,
-    DEVICE_CLASS_EMPTY,
-    ICON_EMPTY,
     UNIT_EMPTY,
 )
 
@@ -48,9 +46,9 @@ CONFIG_SCHEMA = (
             cv.Required(CONF_MAC_ADDRESS): cv.mac_address,
             cv.Optional(CONF_LAST_BUTTON_PRESSED): sensor.sensor_schema(
                 unit_of_measurement=UNIT_EMPTY,
-                icon=ICON_EMPTY,
+                icon=None,
                 accuracy_decimals=0,
-                device_class=DEVICE_CLASS_EMPTY,
+                device_class=None,
             ),
             cv.Optional(CONF_ON_PRESS): automation.validate_automation(
                 {

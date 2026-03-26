@@ -8,8 +8,6 @@ from esphome.const import (
     CONF_MAC_ADDRESS,
     CONF_ON_PRESS,
     CONF_TRIGGER_ID,
-    DEVICE_CLASS_EMPTY,
-    ICON_EMPTY,
     UNIT_EMPTY,
 )
 
@@ -82,21 +80,21 @@ CONFIG_SCHEMA = (
             cv.Required(CONF_BINDKEY): validate_short_bind_key,
             cv.Optional(CONF_KEYCODE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_EMPTY,
-                icon=ICON_EMPTY,
+                icon=None,
                 accuracy_decimals=0,
-                device_class=DEVICE_CLASS_EMPTY,
+                device_class=None,
             ),
             cv.Optional(CONF_ENCODER_VALUE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_EMPTY,
-                icon=ICON_EMPTY,
+                icon=None,
                 accuracy_decimals=0,
-                device_class=DEVICE_CLASS_EMPTY,
+                device_class=None,
             ),
             cv.Optional(CONF_ACTION_TYPE): sensor.sensor_schema(
                 unit_of_measurement=UNIT_EMPTY,
-                icon=ICON_EMPTY,
+                icon=None,
                 accuracy_decimals=0,
-                device_class=DEVICE_CLASS_EMPTY,
+                device_class=None,
             ),
             cv.Optional(CONF_ON_PRESS): automation.validate_automation(
                 {
