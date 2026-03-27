@@ -10,6 +10,7 @@ from .. import (
 )
 
 AUTO_LOAD = ["yeelight_fan_controller"]
+CODEOWNERS = ["@syssi"]
 
 YeelightFan = yeelight_fan_controller_ns.class_("YeelightFan", cg.Component, fan.Fan)
 
