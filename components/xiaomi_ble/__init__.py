@@ -4,6 +4,7 @@ import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
 DEPENDENCIES = ["esp32_ble_tracker"]
+CODEOWNERS = ["@syssi"]
 
 xiaomi_ble_ns = cg.esphome_ns.namespace("xiaomi_ble")
 XiaomiListener = xiaomi_ble_ns.class_(
