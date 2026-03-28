@@ -12,6 +12,7 @@ substitutions:
 
 esphome:
   name: ${name}
+  friendly_name: ${name}
   min_version: 2024.10.0
 
 external_components:
