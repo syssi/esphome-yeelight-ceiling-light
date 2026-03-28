@@ -70,7 +70,12 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
       if (this->action_type_sensor_ != nullptr)
         this->action_type_sensor_->publish_state(*res->action_type);
 
-      this->receive_callback_.call(*res->keycode, *res->encoder_value, *res->action_type);
+      if (*res->action_type == ACTION_TYPE_PRESS && *res->keycode == KEYCODE_BUTTON)
+        this->press_callback_.call(*res->encoder_value);
+      if (*res->action_type == ACTION_TYPE_ROTATE && *res->keycode == KEYCODE_BUTTON)
+        this->rotate_callback_.call(*res->encoder_value);
+      if (*res->action_type == ACTION_TYPE_ROTATE && *res->keycode != KEYCODE_BUTTON)
+        this->press_and_rotate_callback_.call(*res->keycode);
     }
     success = true;
   }
@@ -90,9 +95,6 @@ void XiaomiYLKG07YL::set_bindkey(const std::string &bindkey) {
   }
 }
 
-void XiaomiYLKG07YL::add_on_receive_callback(std::function<void(int, int, int)> &&callback) {
-  this->receive_callback_.add(std::move(callback));
-}
 
 // Decrypt MiBeacon V2/V3 payload
 bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
