@@ -70,8 +70,14 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
       if (this->action_type_sensor_ != nullptr && res->action_type.has_value())
         this->action_type_sensor_->publish_state(*res->action_type);
 
-      if (res->encoder_value.has_value() && res->action_type.has_value())
-        this->receive_callback_.call(*res->keycode, *res->encoder_value, *res->action_type);
+      if (res->encoder_value.has_value() && res->action_type.has_value()) {
+        if (*res->action_type == ACTION_TYPE_PRESS && *res->keycode == KEYCODE_BUTTON)
+          this->press_callback_.call(*res->encoder_value);
+        if (*res->action_type == ACTION_TYPE_ROTATE && *res->keycode == KEYCODE_BUTTON)
+          this->rotate_callback_.call(*res->encoder_value);
+        if (*res->action_type == ACTION_TYPE_ROTATE && *res->keycode != KEYCODE_BUTTON)
+          this->press_and_rotate_callback_.call(*res->keycode);
+      }
     }
     success = true;
   }
@@ -89,10 +95,6 @@ void XiaomiYLKG07YL::set_bindkey(const std::string &bindkey) {
     strncpy(temp, &(bindkey.c_str()[i * 2]), 2);
     bindkey_[i] = std::strtoul(temp, nullptr, 16);
   }
-}
-
-void XiaomiYLKG07YL::add_on_receive_callback(std::function<void(int, int, int)> &&callback) {
-  this->receive_callback_.add(std::move(callback));
 }
 
 // Decrypt MiBeacon V2/V3 payload
