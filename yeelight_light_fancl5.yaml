@@ -59,7 +59,7 @@ uart:
 fan:
   - platform: yeelight_fan_controller
     id: yeelight_ceiling_fan
-    name: "${name} ceiling fan"
+    name: "ceiling fan"
 
 output:
   - platform: ledc
@@ -82,14 +82,14 @@ switch:
 
 light:
   - platform: monochromatic
-    name: "${name} night light"
+    name: "night light"
     id: night_light
     output: output_nightlight
     gamma_correct: 0
     on_turn_on:
       - light.turn_off: ceiling_light
   - platform: cwww
-    name: "${name} ceiling light"
+    name: "ceiling light"
     id: ceiling_light
     cold_white: output_cold
     warm_white: output_warm

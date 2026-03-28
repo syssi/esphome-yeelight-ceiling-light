@@ -38,11 +38,11 @@ api:
 sensor:
   - platform: adc
     pin: GPIO32
-    name: "${name} adc1"
+    name: "adc1"
     attenuation: 12db
   - platform: adc
     pin: GPIO33
-    name: "${name} adc2"
+    name: "adc2"
     attenuation: 12db
 
 output:
@@ -55,7 +55,7 @@ output:
 
 light:
   - platform: cwww
-    name: "${name} ceiling light"
+    name: "ceiling light"
     id: ceiling_light
     cold_white: output_cold
     warm_white: output_warm
