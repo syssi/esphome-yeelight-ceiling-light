@@ -3,6 +3,7 @@ substitutions:
 
 esphome:
   name: ${name}
+  friendly_name: ${name}
   min_version: 2024.10.0
 
 esp32:
@@ -74,14 +75,14 @@ power_supply:
 
 light:
   - platform: monochromatic
-    name: "${name} night light"
+    name: "night light"
     id: night_light
     output: output_nightlight
     gamma_correct: 0
     on_turn_on:
       - light.turn_off: ceiling_light
   - platform: cwww
-    name: "${name} ceiling light"
+    name: "ceiling light"
     id: ceiling_light
     cold_white: output_cold
     warm_white: output_warm
@@ -92,7 +93,7 @@ light:
     on_turn_on:
       - light.turn_off: night_light
   - platform: rgb
-    name: "${name} ambient light"
+    name: "ambient light"
     red: output_red
     green: output_green
     blue: output_blue

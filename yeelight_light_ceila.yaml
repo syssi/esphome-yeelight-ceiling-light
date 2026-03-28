@@ -12,6 +12,7 @@ substitutions:
 
 esphome:
   name: ${name}
+  friendly_name: ${name}
   min_version: 2024.10.0
 
 external_components:
@@ -48,7 +49,7 @@ api:
 sensor:
   - platform: adc
     pin: GPIO36
-    name: "${name} power supply"
+    name: "power supply"
     attenuation: 12db
     disabled_by_default: true
 
@@ -79,7 +80,7 @@ power_supply:
 
 light:
   - platform: cwww
-    name: "${name} ceiling light"
+    name: "ceiling light"
     id: ceiling_light
     cold_white: output_cold
     warm_white: output_warm
@@ -93,7 +94,7 @@ light:
         - script.execute: auto_off_timer
     restore_mode: RESTORE_AND_ON
   - platform: monochromatic
-    name: "${name} night light"
+    name: "night light"
     id: night_light
     output: output_nightlight
     gamma_correct: 1.6
@@ -120,7 +121,7 @@ button:
 number:
   - platform: template
     id: auto_off
-    name: "${name} auto off"
+    name: "auto off"
     initial_value: 0  # Zero means disabled
     min_value: 0
     max_value: 1440  # 24h

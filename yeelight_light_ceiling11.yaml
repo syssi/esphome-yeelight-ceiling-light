@@ -7,6 +7,7 @@ substitutions:
 
 esphome:
   name: ${name}
+  friendly_name: ${name}
   min_version: 2024.10.0
 
 esp32:
@@ -39,11 +40,11 @@ api:
 sensor:
   - platform: adc
     pin: GPIO36
-    name: "${name} adc1"
+    name: "adc1"
     attenuation: 12db
   - platform: adc
     pin: GPIO32
-    name: "${name} adc2"
+    name: "adc2"
     attenuation: 12db
 
 output:

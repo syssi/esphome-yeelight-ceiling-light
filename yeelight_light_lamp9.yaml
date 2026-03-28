@@ -3,6 +3,7 @@ substitutions:
 
 esphome:
   name: ${name}
+  friendly_name: ${name}
   min_version: 2024.10.0
 
 esp32:
@@ -37,7 +38,7 @@ binary_sensor:
     pin:
       number: GPIO14
       inverted: true
-    name: "${name} button"
+    name: "button"
     id: button
     on_click:
       then:
@@ -105,14 +106,14 @@ power_supply:
 
 light:
   - platform: monochromatic
-    name: "${name} night light"
+    name: "night light"
     id: night_light
     output: output_nightlight
     gamma_correct: 0
     on_turn_on:
       - light.turn_off: bedside_light
   - platform: cwww
-    name: "${name} bedside light"
+    name: "bedside light"
     id: bedside_light
     cold_white: output_cold
     warm_white: output_warm
@@ -123,7 +124,7 @@ light:
     on_turn_on:
       - light.turn_off: night_light
   - platform: binary
-    name: "${name} mainboard led"
+    name: "mainboard led"
     output: led_output
 
 # A eeprom at address 0x10 should be found.
