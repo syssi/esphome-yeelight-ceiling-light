@@ -28,12 +28,15 @@ void YeelightFan::dump_config() { LOG_FAN("", "YeelightFanController Fan", this)
 fan::FanTraits YeelightFan::get_traits() { return fan::FanTraits(false, true, true, 100); }
 
 void YeelightFan::control(const fan::FanCall &call) {
-  if (call.get_state().has_value())
-    this->state = *call.get_state();
-  if (call.get_speed().has_value())
-    this->speed = *call.get_speed();
-  if (call.get_direction().has_value())
-    this->direction = *call.get_direction();
+  auto state = call.get_state();
+  if (state.has_value())
+    this->state = *state;
+  auto speed = call.get_speed();
+  if (speed.has_value())
+    this->speed = *speed;
+  auto direction = call.get_direction();
+  if (direction.has_value())
+    this->direction = *direction;
 
   this->write_state_();
   this->publish_state();

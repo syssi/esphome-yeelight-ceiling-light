@@ -64,13 +64,14 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
       if (this->keycode_sensor_ != nullptr)
         this->keycode_sensor_->publish_state(*res->keycode);
 
-      if (this->encoder_value_sensor_ != nullptr)
+      if (this->encoder_value_sensor_ != nullptr && res->encoder_value.has_value())
         this->encoder_value_sensor_->publish_state(*res->encoder_value);
 
-      if (this->action_type_sensor_ != nullptr)
+      if (this->action_type_sensor_ != nullptr && res->action_type.has_value())
         this->action_type_sensor_->publish_state(*res->action_type);
 
-      this->receive_callback_.call(*res->keycode, *res->encoder_value, *res->action_type);
+      if (res->encoder_value.has_value() && res->action_type.has_value())
+        this->receive_callback_.call(*res->keycode, *res->encoder_value, *res->action_type);
     }
     success = true;
   }

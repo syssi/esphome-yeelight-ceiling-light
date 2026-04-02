@@ -44,7 +44,8 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
       if (this->keycode_ != nullptr)
         this->keycode_->publish_state(*res->keycode);
 
-      this->receive_callback_.call(*res->keycode, *res->is_long_press);
+      if (res->is_long_press.has_value())
+        this->receive_callback_.call(*res->keycode, *res->is_long_press);
     }
     success = true;
   }
