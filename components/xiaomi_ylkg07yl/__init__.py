@@ -7,7 +7,6 @@ from esphome.const import (
     CONF_ID,
     CONF_MAC_ADDRESS,
     CONF_ON_PRESS,
-    CONF_TRIGGER_ID,
     DEVICE_CLASS_EMPTY,
     ICON_EMPTY,
     UNIT_EMPTY,
@@ -41,18 +40,6 @@ ON_PRESS_ACTIONS = [
 xiaomi_ylkg07yl_ns = cg.esphome_ns.namespace("xiaomi_ylkg07yl")
 XiaomiYLKG07YL = xiaomi_ylkg07yl_ns.class_(
     "XiaomiYLKG07YL", esp32_ble_tracker.ESPBTDeviceListener, cg.Component
-)
-
-OnPressTrigger = xiaomi_ylkg07yl_ns.class_(
-    "OnPressTrigger", automation.Trigger.template()
-)
-
-OnPressAndRotateTrigger = xiaomi_ylkg07yl_ns.class_(
-    "OnPressAndRotateTrigger", automation.Trigger.template()
-)
-
-OnRotateTrigger = xiaomi_ylkg07yl_ns.class_(
-    "OnRotateTrigger", automation.Trigger.template()
 )
 
 
@@ -98,23 +85,9 @@ CONFIG_SCHEMA = (
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_EMPTY,
             ),
-            cv.Optional(CONF_ON_PRESS): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnPressTrigger),
-                }
-            ),
-            cv.Optional(CONF_ON_PRESS_AND_ROTATE): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(
-                        OnPressAndRotateTrigger
-                    ),
-                }
-            ),
-            cv.Optional(CONF_ON_ROTATE): automation.validate_automation(
-                {
-                    cv.GenerateID(CONF_TRIGGER_ID): cv.declare_id(OnRotateTrigger),
-                }
-            ),
+            cv.Optional(CONF_ON_PRESS): automation.validate_automation({}),
+            cv.Optional(CONF_ON_PRESS_AND_ROTATE): automation.validate_automation({}),
+            cv.Optional(CONF_ON_ROTATE): automation.validate_automation({}),
         }
     )
     .extend(esp32_ble_tracker.ESP_BLE_DEVICE_SCHEMA)
@@ -136,7 +109,13 @@ async def to_code(config):
             sens = await sensor.new_sensor(conf)
             cg.add(getattr(var, f"set_{key}_sensor")(sens))
 
-    for action in ON_PRESS_ACTIONS:
+    callback_map = {
+        CONF_ON_PRESS: ("add_on_press_callback", cg.int_),
+        CONF_ON_ROTATE: ("add_on_rotate_callback", cg.int_),
+        CONF_ON_PRESS_AND_ROTATE: ("add_on_press_and_rotate_callback", cg.int_),
+    }
+    for action, (callback_name, arg_type) in callback_map.items():
         for conf in config.get(action, []):
-            trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
-            await automation.build_automation(trigger, [(cg.int_, "x")], conf)
+            await automation.build_callback_automation(
+                var, callback_name, [(arg_type, "x")], conf
+            )
