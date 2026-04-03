@@ -13,10 +13,10 @@ https://docs.platformio.org/page/faq.html#multiple-pio-cores-in-a-system
 Processing yeelight_light_ceiling15 (board: esp32doit-devkit-v1; framework: arduino; platform: espressif32@1.11.0)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 HARDWARE: ESP32 240MHz, 320KB RAM, 4MB Flash
-PACKAGES: 
- - framework-arduinoespressif32 49b5f52 
- - tool-esptoolpy 1.20600.0 (2.6.0) 
- - tool-mkspiffs 2.230.0 (2.30) 
+PACKAGES:
+ - framework-arduinoespressif32 49b5f52
+ - tool-esptoolpy 1.20600.0 (2.6.0)
+ - tool-mkspiffs 2.230.0 (2.30)
  - toolchain-xtensa32 2.50200.80 (5.2.0)
 Dependency Graph
 |-- <AsyncTCP-esphome> 1.1.1

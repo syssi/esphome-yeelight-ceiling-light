@@ -37,7 +37,7 @@ load:0x3fff001c,len:988
 load:0x40078000,len:0
 load:0x40078000,len:12024
 csum err:0xf0!=0x63
-ets_main.c 371 
+ets_main.c 371
 ets Jun  8 2016 00:22:57
 
 rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
@@ -56,16 +56,16 @@ I (28) boot: SPI Flash  ID  : 0x200B
 08:00:00.090 [I] miio_ot: dlg disabled
 
 
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 _|_|  _|_|    _|      _|    _|    _|
 _|  _|  _|    _|      _|    _|    _|
 _|      _|    _|      _|    _|    _|
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 JENKINS BUILD NUMBER: N/A
 BUILD TIME: Apr 15 2020,18:28:48
 BUILT BY: N/A
 MIIO APP VER: 2.0.6_0049
-MIIO MCU VER: 
+MIIO MCU VER:
 MIIO DID: 305748866
 MIIO WIFI MAC: 5cXXXXXXXXXX
 MIIO MODEL: yeelink.light.ceiling10
@@ -92,16 +92,16 @@ I (28) boot: SPI Flash  ID  : 0x200B
 08:00:00.090 [I] miio_ot: dlg disabled
 
 
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 _|_|  _|_|    _|      _|    _|    _|
 _|  _|  _|    _|      _|    _|    _|
 _|      _|    _|      _|    _|    _|
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 JENKINS BUILD NUMBER: N/A
 BUILD TIME: Apr 15 2020,18:28:48
 BUILT BY: N/A
 MIIO APP VER: 2.0.6_0049
-MIIO MCU VER: 
+MIIO MCU VER:
 MIIO DID: 305748866
 MIIO WIFI MAC: 5cXXXXXXXXXX
 MIIO MODEL: yeelink.light.ceiling10

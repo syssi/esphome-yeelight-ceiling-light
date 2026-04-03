@@ -114,7 +114,7 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 - Light strip (RGB)
   - Brightness
   - Color
- 
+
 ### yeelink.light.ceiling24
 
 - Light (CCWW)
@@ -675,7 +675,7 @@ When flashing the YLXDD-00xx series you'll need an external 3.3V power supply an
 
 ### YLXD62YI
 Rotate the cover counterclockwise to remove the cover. Unscrew the 220VAC L and N Wires. Remove three screws on the transparent diffusor.
-Now the PCB is completely exposed and unmounted from the base. 
+Now the PCB is completely exposed and unmounted from the base.
 3.3V, GND, TXD, RXD and IO0 Pads are clearly visible on the main PCB near ESP32 board.
 To flash ESP32 you need to solder the wires onto that test points.
 
