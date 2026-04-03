@@ -30,16 +30,16 @@ entry 0x40078c08
 08:00:00.270 [I] miio_ot: dlg enabled
 
 
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 _|_|  _|_|    _|      _|    _|    _|
 _|  _|  _|    _|      _|    _|    _|
 _|      _|    _|      _|    _|    _|
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 JENKINS BUILD NUMBER: N/A
 BUILD TIME: Nov 27 2020,09:33:16
 BUILT BY: N/A
 MIIO APP VER: 2.0.6_0026
-MIIO MCU VER: 
+MIIO MCU VER:
 MIIO DID: 270166479
 MIIO WIFI MAC: 50XXXXXXXXXX
 MIIO MODEL: yeelink.light.ceiling15
@@ -411,16 +411,16 @@ entry 0x40078c08
 08:00:00.470 [I] miio_ot: dlg enabled
 
 
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 _|_|  _|_|    _|      _|    _|    _|
 _|  _|  _|    _|      _|    _|    _|
 _|      _|    _|      _|    _|    _|
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 JENKINS BUILD NUMBER: N/A
 BUILD TIME: Nov 27 2020,09:33:16
 BUILT BY: N/A
 MIIO APP VER: 2.0.6_0026
-MIIO MCU VER: 
+MIIO MCU VER:
 MIIO DID: 270166479
 MIIO WIFI MAC: 50XXXXXXXXXX
 MIIO MODEL: yeelink.light.ceiling15
@@ -480,16 +480,16 @@ entry 0x40078c08
 08:00:00.160 [I] miio_ot: dlg enabled
 
 
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 _|_|  _|_|    _|      _|    _|    _|
 _|  _|  _|    _|      _|    _|    _|
 _|      _|    _|      _|    _|    _|
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 JENKINS BUILD NUMBER: N/A
 BUILD TIME: Nov 27 2020,09:33:16
 BUILT BY: N/A
 MIIO APP VER: 2.0.6_0026
-MIIO MCU VER: 
+MIIO MCU VER:
 MIIO DID: 270166479
 MIIO WIFI MAC: 50XXXXXXXXXX
 MIIO MODEL: yeelink.light.ceiling15
@@ -554,16 +554,16 @@ entry 0x40078c08
 08:00:00.170 [I] miio_ot: dlg enabled
 
 
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 _|_|  _|_|    _|      _|    _|    _|
 _|  _|  _|    _|      _|    _|    _|
 _|      _|    _|      _|    _|    _|
-_|      _|  _|_|_|  _|_|_|    _|_|  
+_|      _|  _|_|_|  _|_|_|    _|_|
 JENKINS BUILD NUMBER: N/A
 BUILD TIME: Nov 27 2020,09:33:16
 BUILT BY: N/A
 MIIO APP VER: 2.0.6_0026
-MIIO MCU VER: 
+MIIO MCU VER:
 MIIO DID: 270166479
 MIIO WIFI MAC: 50XXXXXXXXXX
 MIIO MODEL: yeelink.light.ceiling15
