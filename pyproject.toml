@@ -31,6 +31,7 @@ disable = [
   "useless-object-inheritance",
   "stop-iteration-return",
   "import-outside-toplevel",
+  "no-member",
   # Broken
   "no-name-in-module",
   "unsupported-membership-test",
