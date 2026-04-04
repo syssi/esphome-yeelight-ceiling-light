@@ -16,11 +16,15 @@ YeelightFanController = yeelight_fan_controller_ns.class_(
     "YeelightFanController", cg.Component, uart.UARTDevice
 )
 
-CONFIG_SCHEMA = cv.Schema(
-    {
-        cv.GenerateID(): cv.declare_id(YeelightFanController),
-    }
-).extend(uart.UART_DEVICE_SCHEMA)
+CONFIG_SCHEMA = (
+    cv.Schema(
+        {
+            cv.GenerateID(): cv.declare_id(YeelightFanController),
+        }
+    )
+    .extend(uart.UART_DEVICE_SCHEMA)
+    .extend(cv.COMPONENT_SCHEMA)
+)
 
 
 async def to_code(config):
