@@ -1,0 +1,127 @@
+substitutions:
+  name: yeelight-light-arwen-d600
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  min_version: 2024.10.0
+  on_boot:
+    priority: -100
+    then:
+      - delay: 500ms
+      - switch.turn_on: light_power
+      - delay: 300ms
+      - light.turn_on:
+          id: ceiling_light
+          brightness: 55%
+          color_temperature: 4000 K
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+      CONFIG_ESP_BROWNOUT_DET: n
+      CONFIG_ESP32_UNIVERSAL_MAC_ADDRESSES_FOUR: y
+      CONFIG_ESP32_EMBEDDED_ANT_ROM_BOOTLOADER: n
+    advanced:
+      ignore_efuse_mac_crc: true
+      ignore_efuse_custom_mac: true
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  output_power: 10dBm
+  power_save_mode: LIGHT
+  fast_connect: true
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  baud_rate: 0
+
+api:
+  reboot_timeout: 0s
+
+# LED driver power supply (safe non-strapping pin).
+switch:
+  - platform: gpio
+    pin: GPIO22
+    id: light_power
+    name: "light power supply"
+    restore_mode: ALWAYS_OFF
+
+# Main light and ambient light channels (safe pins).
+output:
+  - platform: ledc
+    pin: GPIO19
+    id: output_warm
+  - platform: ledc
+    pin: GPIO21
+    id: output_cold
+  - platform: ledc
+    pin: GPIO33
+    id: output_ambient_red
+  - platform: ledc
+    pin: GPIO27
+    id: output_ambient_green
+  - platform: ledc
+    pin: GPIO26
+    id: output_ambient_blue
+
+light:
+  - platform: cwww
+    name: "ceiling light"
+    id: ceiling_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    on_turn_on:
+      - switch.turn_on: light_power
+    on_turn_off:
+      - script.execute: turn_off_light_power_if_unused
+
+  - platform: rgb
+    name: "ambient light"
+    id: ambient_light
+    red: output_ambient_red
+    green: output_ambient_green
+    blue: output_ambient_blue
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - switch.turn_on: light_power
+    on_turn_off:
+      - script.execute: turn_off_light_power_if_unused
+
+  - platform: esp32_rmt_led_strip
+    name: "rgbic test"
+    id: rgbic_test
+    pin: GPIO13
+    num_leds: 60
+    chipset: WS2811
+    rgb_order: RGB
+    default_transition_length: 0s
+    color_correct: [70%, 70%, 70%]
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - switch.turn_on: light_power
+    on_turn_off:
+      - script.execute: turn_off_light_power_if_unused
+
+script:
+  - id: turn_off_light_power_if_unused
+    mode: restart
+    then:
+      - delay: 100ms
+      - if:
+          condition:
+            and:
+              - light.is_off: ceiling_light
+              - light.is_off: ambient_light
+              - light.is_off: rgbic_test
+          then:
+            - switch.turn_off: light_power

@@ -35,6 +35,7 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilb      | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
 | Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
 | Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
+| Yeelight Arwen D600                              | unknown                   | YLXDD-0150  | AC220V, 50W, 4800lm, 2700K-6500K, RGB/RGBIC ambient light, 60cm  |
 | [Yeelight Ceiling Light A2001R900](#ylpw13yl)    | yeelight.light.ceila      | YLPW13YL    | AC220V, 95W, 6000lm, 2700K-6500K, 93x63 cm  |
 | Yeelight Ceiling Light 235C                      | yeelight.light.ceilb      | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
 | Yeelight Ceiling Light 300C                      | yeelight.light.ceilb      | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
@@ -88,6 +89,18 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 - Sensor
   - ADC1
   - ADC2
+
+### Yeelight Arwen D600
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Ambient light (RGB)
+  - Brightness
+  - Color
+- RGBIC test light (WS2811)
+  - Brightness
+  - Color
 
 ### yeelink.light.ceiling15, yeelink.light.ceiling11
 
@@ -315,6 +328,23 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the bac
 
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
+
+### Yeelight Arwen D600
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |                       |
+| Cold white PWM      | C      | GPIO21       |                       |
+| Red ambient PWM     | R      | GPIO33       |                       |
+| Green ambient PWM   | G      | GPIO27       |                       |
+| Blue ambient PWM    | B      | GPIO26       |                       |
+| RGBIC data          |        | GPIO13       |                       |
+| Power supply GPIO   |        | GPIO22       |                       |
+| TXD                 | TXD    | GPIO1        |                       |
+| RXD                 | RXD    | GPIO3        |                       |
+| GPIO0               | IO0    | GPIO0        |                       |
+
+The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
 
 ### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
