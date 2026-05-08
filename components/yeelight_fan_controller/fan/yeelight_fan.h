@@ -3,8 +3,7 @@
 #include "../yeelight_fan_controller.h"
 #include "esphome/components/fan/fan.h"
 
-namespace esphome {
-namespace yeelight_fan_controller {
+namespace esphome::yeelight_fan_controller {
 
 class YeelightFanController;
 class YeelightFan : public fan::Fan, public Component {
@@ -21,5 +20,4 @@ class YeelightFan : public fan::Fan, public Component {
   YeelightFanController *parent_;
 };
 
-}  // namespace yeelight_fan_controller
-}  // namespace esphome
+}  // namespace esphome::yeelight_fan_controller

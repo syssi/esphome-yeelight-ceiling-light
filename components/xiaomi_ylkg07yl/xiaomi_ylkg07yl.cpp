@@ -7,8 +7,7 @@
 
 #ifdef USE_ESP32
 
-namespace esphome {
-namespace xiaomi_ylkg07yl {
+namespace esphome::xiaomi_ylkg07yl {
 
 static const char *const TAG = "xiaomi_ylkg07yl";
 
@@ -220,7 +219,6 @@ bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint
   return true;
 }
 
-}  // namespace xiaomi_ylkg07yl
-}  // namespace esphome
+}  // namespace esphome::xiaomi_ylkg07yl
 
 #endif

@@ -8,8 +8,7 @@
 
 #ifdef USE_ESP32
 
-namespace esphome {
-namespace xiaomi_ylyk01yl {
+namespace esphome::xiaomi_ylyk01yl {
 
 // static const uint8_t BUTTON_ON = 0;
 // static const uint8_t BUTTON_OFF = 1;
@@ -79,7 +78,6 @@ class OnLongPressTrigger : public Trigger<uint8_t> {
   uint8_t keycode_ = 255;
 };
 
-}  // namespace xiaomi_ylyk01yl
-}  // namespace esphome
+}  // namespace esphome::xiaomi_ylyk01yl
 
 #endif
