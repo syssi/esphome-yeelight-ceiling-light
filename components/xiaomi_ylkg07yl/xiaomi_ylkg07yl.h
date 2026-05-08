@@ -13,8 +13,7 @@ static const uint8_t KEYCODE_BUTTON = 0;
 static const uint8_t ACTION_TYPE_PRESS = 3;
 static const uint8_t ACTION_TYPE_ROTATE = 4;
 
-namespace esphome {
-namespace xiaomi_ylkg07yl {
+namespace esphome::xiaomi_ylkg07yl {
 
 class XiaomiYLKG07YL : public Component, public esp32_ble_tracker::ESPBTDeviceListener {
  public:
@@ -47,7 +46,6 @@ class XiaomiYLKG07YL : public Component, public esp32_ble_tracker::ESPBTDeviceLi
   bool decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address);
 };
 
-}  // namespace xiaomi_ylkg07yl
-}  // namespace esphome
+}  // namespace esphome::xiaomi_ylkg07yl
 
 #endif

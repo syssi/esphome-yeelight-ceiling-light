@@ -2,8 +2,7 @@
 #include "esphome/core/log.h"
 #include "esphome/core/hal.h"
 
-namespace esphome {
-namespace yeelight_fan_controller {
+namespace esphome::yeelight_fan_controller {
 
 static const char *const TAG = "yeelight_fan_controller.fan";
 
@@ -59,5 +58,4 @@ void YeelightFan::write_state_() {
   }
 }
 
-}  // namespace yeelight_fan_controller
-}  // namespace esphome
+}  // namespace esphome::yeelight_fan_controller

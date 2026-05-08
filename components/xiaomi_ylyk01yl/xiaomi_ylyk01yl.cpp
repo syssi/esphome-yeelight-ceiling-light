@@ -3,8 +3,7 @@
 
 #ifdef USE_ESP32
 
-namespace esphome {
-namespace xiaomi_ylyk01yl {
+namespace esphome::xiaomi_ylyk01yl {
 
 static const char *const TAG = "xiaomi_ylyk01yl";
 
@@ -57,7 +56,6 @@ void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(uint8_t, bool)> 
   this->receive_callback_.add(std::move(callback));
 }
 
-}  // namespace xiaomi_ylyk01yl
-}  // namespace esphome
+}  // namespace esphome::xiaomi_ylyk01yl
 
 #endif

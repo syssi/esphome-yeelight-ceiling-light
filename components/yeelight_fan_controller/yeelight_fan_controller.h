@@ -4,8 +4,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/component.h"
 
-namespace esphome {
-namespace yeelight_fan_controller {
+namespace esphome::yeelight_fan_controller {
 
 class YeelightFanController : public uart::UARTDevice, public Component {
  public:
@@ -24,5 +23,4 @@ class YeelightFanController : public uart::UARTDevice, public Component {
   bool parse_yeelight_fan_controller_byte_(uint8_t byte);
 };
 
-}  // namespace yeelight_fan_controller
-}  // namespace esphome
+}  // namespace esphome::yeelight_fan_controller
