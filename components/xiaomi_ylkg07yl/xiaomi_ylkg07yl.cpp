@@ -99,7 +99,7 @@ void XiaomiYLKG07YL::set_bindkey(const std::string &bindkey) {
 // Decrypt MiBeacon V2/V3 payload
 bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
   if (raw.size() != 21) {
-    ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): data packet has wrong size (%d)!", raw.size());
+    ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): data packet has wrong size (%zu)!", raw.size());
     ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());  // NOLINT
     return false;
   }
