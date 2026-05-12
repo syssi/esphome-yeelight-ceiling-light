@@ -176,7 +176,7 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
 
   auto raw = service_data.data;
   if (raw.size() < 5) {
-    ESP_LOGVV(TAG, "parse_xiaomi_header(): service data too short (%d).", raw.size());
+    ESP_LOGVV(TAG, "parse_xiaomi_header(): service data too short (%zu).", raw.size());
     return {};
   }
   result.has_data = raw[0] & 0x40;
@@ -289,7 +289,7 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
 // Decrypt MiBeacon V4/V5 payload
 bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
   if (raw.size() < 15) {
-    ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet too small (%d)!", raw.size());
+    ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet too small (%zu)!", raw.size());
     ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());  // NOLINT
     return false;
   }
