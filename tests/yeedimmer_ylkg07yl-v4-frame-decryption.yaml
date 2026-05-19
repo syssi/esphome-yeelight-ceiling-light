@@ -2,7 +2,7 @@
 
 xiaomi_ylkg07yl:
   id: dimmer
-  mac_address: "70:C9:12:50:D3:5C"
+  mac_address: !secret ylkg07yl_mac_address
   bindkey: "5ab9badac3b1becfc5ef5dcd"
   keycode:
     name: "test keycode"

@@ -4,8 +4,6 @@ substitutions:
   cold_max_power: "0.7"
   cwww_gamma_correction: "1.6"
   nl_gamma_correction: "1.6"
-  # Xiaomi YLYK01YL remote control settings - you must provide your own MAC address
-  xiaomi_ylyk01yl_mac_address: "00:00:00:00:00:00"
   adjust_brightness_step: "0.1"
   adjust_brightness_min: "0.1"
   adjust_brightness_max: "1.0"
@@ -178,7 +176,7 @@ esp32_ble_tracker:
 
 xiaomi_ble:
 xiaomi_ylyk01yl:
-  mac_address: "${xiaomi_ylyk01yl_mac_address}"
+  mac_address: !secret xiaomi_ylyk01yl_mac_address
   on_press:
     - keycode: 0  # on
       then:
