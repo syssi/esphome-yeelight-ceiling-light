@@ -442,7 +442,7 @@ jobs:
       - name: Validate example configurations
         run: |
           . venv/bin/activate
-          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml
+          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password\nylyk01yl_mac_address: AA:BB:CC:DD:EE:FF\nxiaomi_ylyk01yl_mac_address: AA:BB:CC:DD:EE:FF\nylkg07yl_mac_address: AA:BB:CC:DD:EE:FF" > secrets.yaml
           for YAML in yee*.yaml; do
             esphome -s external_components_source components config $YAML
           done
@@ -450,7 +450,7 @@ jobs:
       - name: Validate test configurations
         run: |
           . venv/bin/activate
-          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > tests/secrets.yaml
+          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password\nylkg07yl_mac_address: AA:BB:CC:DD:EE:FF" > tests/secrets.yaml
           for YAML in tests/*.yaml; do
             esphome -s external_components_source ../components config $YAML
           done
@@ -493,7 +493,7 @@ jobs:
       - name: Compile example configurations
         run: |
           . venv/bin/activate
-          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml
+          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password\nylyk01yl_mac_address: AA:BB:CC:DD:EE:FF\nxiaomi_ylyk01yl_mac_address: AA:BB:CC:DD:EE:FF\nylkg07yl_mac_address: AA:BB:CC:DD:EE:FF" > secrets.yaml
           # Compile only a few examples as they are all very similar
           for YAML in yeelight_light_lamp9.yaml yeerc_ylyk01yl.yaml; do
             esphome -s external_components_source components compile $YAML
@@ -504,7 +504,7 @@ jobs:
       - name: Compile test configurations
         run: |
           . venv/bin/activate
-          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > tests/secrets.yaml
+          echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password\nylkg07yl_mac_address: AA:BB:CC:DD:EE:FF" > tests/secrets.yaml
           esphome -s external_components_source ../components compile tests/validate-sdkconfig-options.yaml
         env:
           PLATFORMIO_LIBDEPS_DIR: ~/.platformio/libdeps
