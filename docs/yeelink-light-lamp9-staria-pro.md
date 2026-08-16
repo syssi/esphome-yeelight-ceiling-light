@@ -161,3 +161,16 @@ bootloader and partition table stay in place. ESPHome reports:
 
 Harmless in practice, but it costs around 40KB of IRAM and there is no OTA
 rollback protection. Only a UART flash replaces the bootloader.
+
+## Transition length
+
+`default_transition_length` is a compile-time setting in ESPHome, so the config
+also exposes a `transition length` number entity that calls
+`set_default_transition_length()` on both lights at runtime. The value is stored
+on the device and reapplied on boot - restoring a template number does not re-run
+its `set_action`, so without that the entity would show a value the lights were
+not using.
+
+Home Assistant can also override the fade per call with the `transition`
+parameter of `light.turn_on` / `light.turn_off`, which takes precedence over the
+default.

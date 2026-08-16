@@ -18,9 +18,11 @@
 substitutions:
   name: yeelight-light-lamp9-pro
 
-  # Fade applied when the light turns on or off. The stock firmware fades over
-  # roughly a second; set to 0s for instant switching.
-  transition_length: 1000ms
+  # Fade applied when the light turns on or off, in milliseconds. The stock
+  # firmware fades over roughly a second. This is the power-on default; it is
+  # also adjustable at runtime from the "transition length" number entity, whose
+  # value is stored on the device and survives a reboot.
+  transition_ms: "1000"
 
   # Lowest PWM duty at which the white channels conduct reliably. Measured per
   # unit by driving the raw outputs and finding where the LEDs light without
@@ -39,6 +41,13 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   min_version: 2024.10.0
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          uint32_t ms = (uint32_t) id(transition_number).state;
+          id(bedside_light).set_default_transition_length(ms);
+          id(night_light).set_default_transition_length(ms);
 
 esp32:
   board: esp32doit-devkit-v1
@@ -131,7 +140,7 @@ light:
     id: night_light
     output: output_nightlight
     gamma_correct: 0
-    default_transition_length: ${transition_length}
+    default_transition_length: ${transition_ms}ms
     on_turn_on:
       - light.turn_off: bedside_light
 
@@ -144,7 +153,7 @@ light:
     warm_white_color_temperature: 2700 K
     constant_brightness: true
     gamma_correct: 0
-    default_transition_length: ${transition_length}
+    default_transition_length: ${transition_ms}ms
     on_turn_on:
       - light.turn_off: night_light
 
@@ -205,3 +214,26 @@ binary_sensor:
                         relative_brightness: -5%
                         transition_length: 0.1s
                     - delay: 0.1s
+
+number:
+  # Runtime control over the on/off fade. Applies to both lights. Home Assistant
+  # can also override it per call with the `transition` parameter of
+  # light.turn_on / light.turn_off; this sets the default used when no
+  # transition is given.
+  - platform: template
+    name: "transition length"
+    id: transition_number
+    entity_category: config
+    unit_of_measurement: ms
+    min_value: 0
+    max_value: 5000
+    step: 100
+    initial_value: ${transition_ms}
+    restore_value: true
+    optimistic: true
+    mode: box
+    set_action:
+      - lambda: |-
+          uint32_t ms = (uint32_t) x;
+          id(bedside_light).set_default_transition_length(ms);
+          id(night_light).set_default_transition_length(ms);
