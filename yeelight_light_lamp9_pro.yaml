@@ -1,0 +1,207 @@
+# Yeelight Staria Bedside Lamp Pro (YLCT03YL, yeelink.light.lamp9)
+#
+# Variant of yeelight_light_lamp9.yaml for the Pro model, which adds a Qi
+# wireless charger and its status LED. Differences from the base config are
+# documented in docs/yeelink-light-lamp9-staria-pro.md; in short:
+#
+#   * The white channels will not conduct below roughly 6% PWM duty. The base
+#     config drives them straight from the light component, which makes low
+#     brightness drop out entirely and flicker as the colour temperature moves
+#     off the extremes. The template outputs below apply a floor with a deadband.
+#   * GPIO33 is not the status LED drive - it is an ENABLE for the LED's supply
+#     rail. The Qi charger drives the other half of the circuit and decides the
+#     pattern. Both must be active for the LED to light.
+#
+# Verified on a unit with production date 2020-10, ESP32-WROOM-32D. Other
+# revisions may differ - see the hardware notes before assuming the GPIO map.
+
+substitutions:
+  name: yeelight-light-lamp9-pro
+
+  # Fade applied when the light turns on or off. The stock firmware fades over
+  # roughly a second; set to 0s for instant switching.
+  transition_length: 1000ms
+
+  # Lowest PWM duty at which the white channels conduct reliably. Measured per
+  # unit by driving the raw outputs and finding where the LEDs light without
+  # flicker. 6% on the reference unit.
+  min_duty: "0.06"
+
+  # Requests below this are treated as off rather than being lifted to min_duty.
+  # Needed because the light component does not produce an exact zero at the
+  # colour temperature extremes: mired rounding leaves the opposite channel at
+  # ~0.17%, which a plain min_power would raise to full floor and visibly
+  # contaminate the colour. Must sit above that residual and below the duty a
+  # channel receives at the lowest usable brightness.
+  deadband: "0.004"
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  min_version: 2024.10.0
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+      ignore_efuse_custom_mac: true
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  min_auth_mode: WPA2
+  # Strongly recommended, especially when flashing over the network: a typo in
+  # the credentials otherwise leaves the lamp unreachable and only recoverable
+  # over UART, which means opening the device.
+  # Keep the suffix short: an AP SSID cannot exceed 32 characters, and it is
+  # built from ${name}.
+  ap:
+    ssid: "${name}-ap"
+
+captive_portal:
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  baud_rate: 0
+
+api:
+
+output:
+  # Raw PWM channels. The floor is applied by the wrappers below rather than by
+  # min_power, so that a true zero stays a true zero.
+  - platform: ledc
+    pin: GPIO2
+    id: pwm_warm
+    power_supply: power
+  - platform: ledc
+    pin: GPIO27
+    id: pwm_cold
+    power_supply: power
+
+  - platform: template
+    id: output_warm
+    type: float
+    write_action:
+      - lambda: |-
+          if (state < ${deadband}f) {
+            id(pwm_warm).set_level(0.0f);
+          } else {
+            id(pwm_warm).set_level(${min_duty}f + state * (1.0f - ${min_duty}f));
+          }
+  - platform: template
+    id: output_cold
+    type: float
+    write_action:
+      - lambda: |-
+          if (state < ${deadband}f) {
+            id(pwm_cold).set_level(0.0f);
+          } else {
+            id(pwm_cold).set_level(${min_duty}f + state * (1.0f - ${min_duty}f));
+          }
+
+  # The night light uses a separate driver and dims cleanly to well under 1%,
+  # so it needs no floor.
+  - platform: ledc
+    pin: GPIO12
+    id: output_nightlight
+    power_supply: power
+
+  # Status LED ENABLE - see the hardware notes. This drives a transistor that
+  # powers the LED's supply rail; it does not drive the LED itself.
+  - platform: gpio
+    pin: GPIO33
+    id: led_output
+
+power_supply:
+  - id: power
+    pin: GPIO4
+    enable_time: 0s
+    keep_on_time: 2s
+
+light:
+  - platform: monochromatic
+    name: "night light"
+    id: night_light
+    output: output_nightlight
+    gamma_correct: 0
+    default_transition_length: ${transition_length}
+    on_turn_on:
+      - light.turn_off: bedside_light
+
+  - platform: cwww
+    name: "bedside light"
+    id: bedside_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    gamma_correct: 0
+    default_transition_length: ${transition_length}
+    on_turn_on:
+      - light.turn_off: night_light
+
+  # Enabling this permits the charger to light the status LED; it does not light
+  # it, and it cannot change the pattern (steady while charging, blinking when
+  # the phone is not aligned). Defaults to on so the lamp behaves like stock.
+  # Turning it off suppresses the charge indicator, e.g. at night.
+  - platform: binary
+    name: "charger status LED enable"
+    id: led_enable
+    output: led_output
+    restore_mode: RESTORE_DEFAULT_ON
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO14
+      inverted: true
+    name: "button"
+    id: button
+    on_click:
+      then:
+        - if:
+            condition:
+              light.is_off: bedside_light
+            then:
+              light.turn_on:
+                id: bedside_light
+                brightness: 1.0
+            else:
+              light.turn_off: bedside_light
+    on_press:
+      then:
+        - if:
+            condition:
+              light.is_off: bedside_light
+            then:
+              - delay: 0.5s
+              - while:
+                  condition:
+                    binary_sensor.is_on: button
+                  then:
+                    - light.dim_relative:
+                        id: bedside_light
+                        relative_brightness: 5%
+                        transition_length: 0.1s
+                    - delay: 0.1s
+            else:
+              - delay: 0.5s
+              - while:
+                  condition:
+                    and:
+                      - binary_sensor.is_on: button
+                      - light.is_on: bedside_light
+                  then:
+                    - light.dim_relative:
+                        id: bedside_light
+                        relative_brightness: -5%
+                        transition_length: 0.1s
+                    - delay: 0.1s
