@@ -29,6 +29,23 @@ substitutions:
   # flicker. 6% on the reference unit.
   min_duty: "0.06"
 
+  # --- button behaviour ---------------------------------------------------
+  # Brightness and colour temperature form one continuous ramp axis:
+  #
+  #   1% @ warmest  <-->  100% @ warmest  <-->  100% @ mid colour temperature
+  #
+  # Holding the button travels along it. Mid CT is the top end because both LED
+  # channels run at full duty there, which is the brightest the lamp gets.
+  button_min_brightness_pct: "1"
+  button_step_pct: "5"
+  button_ct_step_mireds: "8"
+  button_step_interval_ms: "100"
+  button_hold_time: 500ms
+
+  # Whether the ramp continues past 100% brightness into colour temperature.
+  # false stops it at full brightness.
+  button_ramp_ct: "true"
+
   # Requests below this are treated as off rather than being lifted to min_duty.
   # Needed because the light component does not produce an exact zero at the
   # colour temperature extremes: mired rounding leaves the opposite channel at
@@ -128,6 +145,21 @@ output:
     pin: GPIO33
     id: led_output
 
+globals:
+  # Direction the next hold travels. Flips after every hold, so a hold that
+  # dimmed down is followed by one that brightens.
+  - id: ramp_up
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+  # True while the ramp is running, so its own light changes are distinguishable
+  # from external ones.
+  - id: button_active
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
 power_supply:
   - id: power
     pin: GPIO4
@@ -151,7 +183,16 @@ light:
     warm_white: output_warm
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
-    constant_brightness: true
+    # Remember brightness and colour temperature across a power cycle but
+    # come back off - this is what makes 'restore last state' work.
+    restore_mode: RESTORE_AND_OFF
+    # false, not true. With constant_brightness the channel sum is normalised to
+    # a constant, so both channels can never run at full: mid colour temperature
+    # gives 50%/50% instead of 100%/100%, and the lamp tops out at one channel's
+    # worth of output. With it off, the mired midpoint drives both channels at
+    # 100% - twice the light, and what the stock firmware does. Brightness then
+    # varies with colour temperature, which is the stock behaviour too.
+    constant_brightness: false
     gamma_correct: 0
     default_transition_length: ${transition_ms}ms
     on_turn_on:
@@ -174,46 +215,113 @@ binary_sensor:
       inverted: true
     name: "button"
     id: button
+
+    # A click toggles. max_length keeps a hold from also firing this on release,
+    # which would otherwise undo whatever the ramp just did.
     on_click:
+      min_length: 20ms
+      max_length: ${button_hold_time}
       then:
         - if:
             condition:
               light.is_off: bedside_light
             then:
-              light.turn_on:
-                id: bedside_light
-                brightness: 1.0
+              - if:
+                  condition:
+                    switch.is_on: restore_on_turn_on
+                  then:
+                    # No values given, so the light returns as it was left.
+                    - light.turn_on:
+                        id: bedside_light
+                  else:
+                    - light.turn_on:
+                        id: bedside_light
+                        brightness: !lambda "return id(preset_brightness).state / 100.0f;"
+                        color_temperature: !lambda |-
+                          auto tr = id(bedside_light).get_traits();
+                          float warmest = tr.get_max_mireds();
+                          float coldest = tr.get_min_mireds();
+                          return warmest - (id(preset_color_temp).state / 100.0f) *
+                                           (warmest - coldest);
             else:
-              light.turn_off: bedside_light
+              - light.turn_off: bedside_light
+
+    # Anything longer than button_hold_time is a hold, and ramps.
     on_press:
       then:
+        - delay: ${button_hold_time}
         - if:
             condition:
-              light.is_off: bedside_light
+              binary_sensor.is_on: button
             then:
-              - delay: 0.5s
+              - lambda: "id(button_active) = true;"
+              - if:
+                  condition:
+                    light.is_off: bedside_light
+                  then:
+                    # From off we start at the bottom of the axis - minimum
+                    # brightness at the warmest setting - and ramp up.
+                    - lambda: "id(ramp_up) = true;"
+                    - light.turn_on:
+                        id: bedside_light
+                        brightness: !lambda "return ${button_min_brightness_pct} / 100.0f;"
+                        color_temperature: !lambda |-
+                          return id(bedside_light).get_traits().get_max_mireds();
+                        transition_length: 0s
               - while:
                   condition:
                     binary_sensor.is_on: button
                   then:
-                    - light.dim_relative:
-                        id: bedside_light
-                        relative_brightness: 5%
-                        transition_length: 0.1s
-                    - delay: 0.1s
-            else:
-              - delay: 0.5s
-              - while:
-                  condition:
-                    and:
-                      - binary_sensor.is_on: button
-                      - light.is_on: bedside_light
-                  then:
-                    - light.dim_relative:
-                        id: bedside_light
-                        relative_brightness: -5%
-                        transition_length: 0.1s
-                    - delay: 0.1s
+                    - lambda: |-
+                        auto *lt = id(bedside_light);
+                        auto tr = lt->get_traits();
+                        const float coldest = tr.get_min_mireds();
+                        const float warmest = tr.get_max_mireds();
+                        const float mid = (coldest + warmest) / 2.0f;
+                        const float min_br = ${button_min_brightness_pct} / 100.0f;
+                        const float d_br = ${button_step_pct} / 100.0f;
+                        const float d_ct = ${button_ct_step_mireds};
+                        const bool use_ct = ${button_ramp_ct};
+
+                        float br = lt->remote_values.get_brightness();
+                        float ct = lt->remote_values.get_color_temperature();
+
+                        auto call = lt->make_call();
+                        uint32_t iv = (uint32_t)(1000.0f * ${button_step_pct} /
+                                                 id(ramp_speed).state);
+                        call.set_transition_length(iv);
+
+                        if (id(ramp_up)) {
+                          if (br < 0.999f) {
+                            call.set_brightness(fminf(br + d_br, 1.0f));
+                          } else if (use_ct && ct > mid + 0.5f) {
+                            call.set_color_temperature(fmaxf(ct - d_ct, mid));
+                          } else {
+                            return;
+                          }
+                        } else {
+                          if (use_ct && ct < warmest - 0.5f) {
+                            call.set_color_temperature(fminf(ct + d_ct, warmest));
+                          } else if (br > min_br) {
+                            call.set_brightness(fmaxf(br - d_br, min_br));
+                          } else {
+                            return;
+                          }
+                        }
+                        call.perform();
+                    - delay: !lambda "return (uint32_t)(1000.0f * ${button_step_pct} / id(ramp_speed).state);"
+              # Flip for next time, so successive holds alternate direction.
+              - lambda: |-
+                  id(ramp_up) = !id(ramp_up);
+                  id(button_active) = false;
+
+switch:
+  - platform: template
+    name: "restore state on turn on"
+    id: restore_on_turn_on
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
 
 number:
   # Runtime control over the on/off fade. Applies to both lights. Home Assistant
@@ -237,3 +345,49 @@ number:
           uint32_t ms = (uint32_t) x;
           id(bedside_light).set_default_transition_length(ms);
           id(night_light).set_default_transition_length(ms);
+
+
+  # Used when "restore state on turn on" is off. Colour temperature is a
+  # percentage of the lamp's range: 0% warmest, 100% coldest, so 50% is the
+  # midpoint where both channels run at full duty.
+  - platform: template
+    name: "preset brightness"
+    id: preset_brightness
+    entity_category: config
+    unit_of_measurement: "%"
+    min_value: 1
+    max_value: 100
+    step: 1
+    initial_value: 100
+    restore_value: true
+    optimistic: true
+    mode: box
+
+  - platform: template
+    name: "preset color temperature"
+    id: preset_color_temp
+    entity_category: config
+    unit_of_measurement: "%"
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: 50
+    restore_value: true
+    optimistic: true
+    mode: box
+
+
+  # Brightness percent per second while the button is held. The colour
+  # temperature stage of the ramp scales with it.
+  - platform: template
+    name: "ramp speed"
+    id: ramp_speed
+    entity_category: config
+    unit_of_measurement: "%/s"
+    min_value: 10
+    max_value: 200
+    step: 5
+    initial_value: 50
+    restore_value: true
+    optimistic: true
+    mode: box

@@ -174,3 +174,30 @@ not using.
 Home Assistant can also override the fade per call with the `transition`
 parameter of `light.turn_on` / `light.turn_off`, which takes precedence over the
 default.
+
+## Brightness across colour temperature
+
+ESPHome normalises the two channel fractions so `max(cw, ww) == 1`, then
+`constant_brightness` decides how they are combined. At 100% brightness:
+
+| Colour temp | `constant_brightness: true` | `constant_brightness: false` |
+| ----------- | --------------------------- | ---------------------------- |
+| 2700K warm  | one channel 100%, sum 100%  | one channel 100%, sum 100%   |
+| 3815K       | each 50%, sum 100%          | **both 100%, sum 200%**      |
+| 6500K cold  | one channel 100%, sum 100%  | one channel 100%, sum 100%   |
+
+With `constant_brightness: true` the sum is held constant across the whole
+range, so both channels can never run at full and the lamp tops out at one
+channel's worth of light. This config uses **false**, which makes the mired
+midpoint the maximum-output point - both channels at 100% - matching the stock
+firmware. The cost is that brightness varies as colour temperature moves, which
+the stock lamp also does.
+
+That midpoint is 3815K, and it is worth knowing where it appears in Home
+Assistant: mireds are reciprocal to Kelvin, and the HA slider is linear in
+Kelvin, so the mired midpoint sits at about **29%** of a 2700-6500K slider
+rather than halfway along it.
+
+`constant_brightness: true` is also what made the low-brightness dropout worse:
+splitting the requested brightness across both channels at mid colour
+temperature put each one under the driver's conduction floor.
