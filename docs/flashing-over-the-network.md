@@ -159,10 +159,13 @@ work an SSID picked up a trailing `\r` from a CRLF file, the lamp came up on
 ESPHome unable to join, and the fallback AP turned a teardown into a two-minute
 captive-portal fix.
 
-Worth knowing: credentials entered through the captive portal are stored in NVS
-and **replace** the compiled-in ones (`set_sta`, not `add_sta`). They survive
-subsequent OTA updates, so a device can keep working on portal-saved credentials
-even while the firmware carries a wrong SSID.
+Worth knowing how portal-saved credentials behave, because it is easy to get
+wrong. They are stored in NVS and **replace** the compiled-in ones (`set_sta`, not
+`add_sta`) - so a device can keep running on them while the firmware carries a
+wrong SSID. But the preference is keyed on `App.get_config_version_hash()`, so
+**any configuration change orphans them** and the device falls back to whatever is
+compiled in. They persist across a plain re-flash of the same config, not across
+an edited one.
 
 ## What is safe and what is not
 

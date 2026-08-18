@@ -201,3 +201,22 @@ rather than halfway along it.
 `constant_brightness: true` is also what made the low-brightness dropout worse:
 splitting the requested brightness across both channels at mid colour
 temperature put each one under the driver's conduction floor.
+
+## How the device is identified in Home Assistant
+
+Without help, Home Assistant labels the device *esp32doit-devkit-v1 by Espressif*.
+The API reports `ESPHOME_BOARD` as the model and a hardcoded per-platform string
+as the manufacturer, and neither is configurable.
+
+Home Assistant does, however, split `project.name` on its single dot and use the
+halves, so the config sets:
+
+```yaml
+esphome:
+  project:
+    name: "Yeelight.Staria Bedside Lamp Pro"
+    version: "1.0"
+```
+
+which yields `manufacturer=Yeelight`, `model=Staria Bedside Lamp Pro`, and a
+`sw_version` of `1.0 (ESPHome <version>)`.
