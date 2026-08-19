@@ -35,20 +35,32 @@ Usage:
 import argparse
 import json
 import os
+import pathlib
 import sys
 import time
 
 
-def load_connector(extractor_path: str):
-    sys.path.insert(0, extractor_path)
-    try:
-        import token_extractor as te  # noqa: PLC0415
-    except ImportError:
-        print(f"could not import token_extractor from {extractor_path}\n"
-              f"clone Xiaomi-cloud-tokens-extractor and pass --extractor",
-              file=sys.stderr)
-        raise SystemExit(2)
-    return te
+def _ensure_venv() -> None:
+    """Re-exec into the local venv if started with a bare python3.
+
+    Compare sys.prefix, not the interpreter path: venv/bin/python3 is a symlink to
+    the system python, so resolving both compares equal and this never fires.
+    """
+    from pathlib import Path
+
+    venv_dir = Path(__file__).resolve().parent.parent / "venv"
+    venv_py = venv_dir / "bin" / "python3"
+    if venv_py.is_file() and Path(sys.prefix) != venv_dir:
+        os.execv(str(venv_py), [str(venv_py), *sys.argv])
+
+
+# Unconditional: a bare python3 may well have some of the dependencies (Crypto
+# lives in ~/.local here) but not all of them, so "can I import one of them" is
+# not a usable test for being in the right interpreter.
+_ensure_venv()
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import mi_session  # noqa: E402
 
 
 def find_device(connector, server: str, ip: str):
@@ -77,12 +89,21 @@ def main() -> int:
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--ip", required=True, help="device LAN address, used to identify it")
     p.add_argument("--url", help="firmware URL to hand the device")
+    p.add_argument("--qr", action="store_true",
+                   help="log in by QR code scanned in the Mi Home app: no captcha "
+                        "and no emailed 2FA code")
     p.add_argument("--server", default="de",
                    help="Xiaomi cloud region: cn, de, us, ru, tw, sg, i2 (default: de)")
-    p.add_argument("--extractor", default="./Xiaomi-cloud-tokens-extractor",
+    p.add_argument("--extractor",
+                   default=str(pathlib.Path(__file__).resolve().parent
+                               / "Xiaomi-cloud-tokens-extractor"),
                    help="path to a Xiaomi-cloud-tokens-extractor checkout")
     p.add_argument("--state", action="store_true",
                    help="only read OTA state and exit")
+    p.add_argument("--md5", help="md5 of the served file, for the fuller payloads")
+    p.add_argument("--sweep", action="store_true",
+                   help="try several miIO.ota payload shapes in one login, stopping "
+                        "as soon as the device leaves the idle state")
     p.add_argument("--poll", type=int, default=40,
                    help="how many 5s polls to run after sending (default: 40)")
     args = p.parse_args()
@@ -90,19 +111,21 @@ def main() -> int:
     if not args.state and not args.url:
         p.error("--url is required unless --state is given")
 
-    for var in ("MI_USERNAME", "MI_PASSWORD"):
-        if not os.environ.get(var):
-            print(f"{var} is not set", file=sys.stderr)
-            return 2
+    # QR login never touches the password, so only demand credentials without it.
+    if not args.qr:
+        for var in ("MI_USERNAME", "MI_PASSWORD"):
+            if not os.environ.get(var):
+                print(f"{var} is not set", file=sys.stderr)
+                return 2
 
     sys.argv = ["token_extractor.py",
-                "-u", os.environ["MI_USERNAME"].strip(),
-                "-p", os.environ["MI_PASSWORD"].strip(),
+                "-u", os.environ.get("MI_USERNAME", "").strip(),
+                "-p", os.environ.get("MI_PASSWORD", "").strip(),
                 "-l", "CRITICAL"]
-    te = load_connector(args.extractor)
+    te = mi_session.load_extractor(args.extractor, qr=args.qr)
 
-    connector = te.PasswordXiaomiCloudConnector()
-    if not connector.login():
+    connector = mi_session.get_connector(te, args.server, qr=args.qr)
+    if connector is None:
         print("login failed", file=sys.stderr)
         return 1
 
@@ -132,7 +155,51 @@ def main() -> int:
     if args.state:
         return 0
 
-    relay("miIO.ota", {"app_url": args.url})
+    # `{"app_url": ...}` alone is what the newer lamp9 firmware accepted. This
+    # device runs miio_ver 0.0.6 and answered "ok" to that shape without ever
+    # fetching the file, so try the fuller shapes documented by python-miio too.
+    # Ordered most-complete first; the bare shape repeats last as a control.
+    def payloads():
+        # Bare shape first: it is the one confirmed working on lamp9, so trying it
+        # against the only other changed variable - the Xiaomi-style filename -
+        # isolates that variable in a single request. Fuller shapes follow only if
+        # it stays idle.
+        yield ("url only", {"app_url": args.url})
+        m = args.md5
+        if m:
+            yield ("python-miio classic",
+                   {"mode": "normal", "install": "1", "app_url": args.url,
+                    "file_md5": m, "proc": "dnld install"})
+            yield ("url+md5", {"app_url": args.url, "file_md5": m})
+            yield ("url+md5+install",
+                   {"mode": "normal", "install": "1", "app_url": args.url,
+                    "file_md5": m})
+
+    def left_idle(rounds=6, gap=4):
+        """True once the device reports anything other than idle."""
+        for _ in range(rounds):
+            time.sleep(gap)
+            r = relay("miIO.get_ota_state", [])
+            state = ((r or {}).get("result") or [None])[0]
+            if state and state != "idle":
+                print(f"*** state changed to {state!r} ***", flush=True)
+                return True
+        return False
+
+    if args.sweep:
+        started = False
+        for label, payload in payloads():
+            print(f"\n=== trying payload: {label} ===", flush=True)
+            relay("miIO.ota", payload)
+            if left_idle():
+                started = True
+                break
+            print(f"    {label}: device stayed idle", flush=True)
+        if not started:
+            print("\nno payload shape moved the device off idle", file=sys.stderr)
+            return 1
+    else:
+        relay("miIO.ota", {"app_url": args.url})
 
     # `installed` means the image was written; the device then reboots and stops
     # answering miIO entirely, which is the real success signal.
