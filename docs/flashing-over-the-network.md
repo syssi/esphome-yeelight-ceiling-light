@@ -141,6 +141,26 @@ logs what the device actually requests.
    installed`, the server logs one full-size `GET`, and the device reboots into
    ESPHome. The stock protocols (TCP 55443, UDP 54321) go silent.
 
+## It does not work on every device
+
+Confirmed working on `yeelink.light.lamp9`, which reports `miio_ver 0.0.9`.
+
+On a `yeelink.light.ceiling10` reporting `miio_ver 0.0.6`, the same relayed
+`miIO.ota` is answered `["ok"]`, `miIO.get_ota_state` stays `idle`, and **the
+device never requests the file** - no connection reaches the HTTP server at all.
+The device is left untouched, so this fails safe, but it does fail.
+
+Ruled out on that unit: the network path, since it answers ICMP from the server's
+address, and the working `lamp9` flash was served from the same host and subnet.
+Not yet established: whether the difference is the payload shape, the URL, or the
+firmware generation.
+
+The practical lesson is about the success signal. `["ok"]` is the cloud
+acknowledging the relay, not the device agreeing to do anything. **Watch the HTTP
+server log for a GET from the device**; that is the only evidence the transfer
+started. `tools/cloud_ota.py --sweep` tries several documented payload shapes in
+one login and stops as soon as the device leaves `idle`.
+
 ## Always include a fallback AP
 
 ```yaml
