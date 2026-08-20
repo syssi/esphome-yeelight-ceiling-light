@@ -1,13 +1,15 @@
 # Yeelight Staria Bedside Lamp Pro (YLCT03YL, yeelink.light.lamp9)
 #
 # Variant of yeelight_light_lamp9.yaml for the Pro model, which adds a Qi
-# wireless charger and its status LED. Differences from the base config are
-# documented in docs/yeelink-light-lamp9-staria-pro.md; in short:
+# wireless charger and its status LED. Differences from
+# yeelight_light_lamp9.yaml are documented in
+# docs/yeelink-light-lamp9-staria-pro.md; in short:
 #
-#   * The white channels will not conduct below roughly 6% PWM duty. The base
-#     config drives them straight from the light component, which makes low
-#     brightness drop out entirely and flicker as the colour temperature moves
-#     off the extremes. The template outputs below apply a floor with a deadband.
+#   * The white channels will not conduct below roughly 6% PWM duty.
+#     yeelight_light_lamp9.yaml drives them straight from the light component,
+#     which makes low brightness drop out entirely and flicker as the colour
+#     temperature moves off the extremes. The template outputs below apply a
+#     floor with a deadband.
 #   * GPIO33 is not the status LED drive - it is an ENABLE for the LED's supply
 #     rail. The Qi charger drives the other half of the circuit and decides the
 #     pattern. Both must be active for the LED to light.
@@ -201,13 +203,25 @@ light:
     # Remember brightness and colour temperature across a power cycle but
     # come back off - this is what makes 'restore last state' work.
     restore_mode: RESTORE_AND_OFF
-    # false, not true. With constant_brightness the channel sum is normalised to
-    # a constant, so both channels can never run at full: mid colour temperature
-    # gives 50%/50% instead of 100%/100%, and the lamp tops out at one channel's
-    # worth of output. With it off, the mired midpoint drives both channels at
-    # 100% - twice the light, and what the stock firmware does. Brightness then
-    # varies with colour temperature, which is the stock behaviour too.
-    constant_brightness: false
+    # true, and this is measured rather than reasoned. Two lamps were compared
+    # side by side at 100%, one on stock firmware and one converted, with a lux
+    # meter against the diffuser:
+    #
+    #                       2700 K / 6500 K      3815 K (mired midpoint)
+    #   stock                   ~14,450                16,000   (1.11x)
+    #   constant_brightness off ~14,550                28,000   (1.92x)
+    #
+    # Both lamps agree within 1% at either extreme, where this setting has no
+    # effect, so the midpoint difference is the setting and not the hardware.
+    # Stock rises only 11% across the range - it holds output roughly constant.
+    # With it off the converted lamp ran 1.75x brighter than stock ever drives
+    # it, which means both LED sets at full duty on a shared heatsink.
+    #
+    # The cost of true is at the bottom of the range: mid colour temperature
+    # splits the requested brightness across both channels, so each one reaches
+    # the driver's conduction floor sooner. That is what the deadband and
+    # ${min_duty} mapping on the outputs above exist to handle.
+    constant_brightness: true
     gamma_correct: 0
     default_transition_length: ${transition_ms}ms
     on_turn_on:

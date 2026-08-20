@@ -13,7 +13,7 @@ which board is inside.
 
 ## Status LED is an AND gate across two boards
 
-The base `yeelink.light.lamp9` config lists GPIO33 as `LED (YLCT03YL only)` and
+`yeelight_light_lamp9.yaml` lists GPIO33 as `LED (YLCT03YL only)` and
 drives it as a plain output. That is correct as far as it goes, but it will not
 light the LED on its own, and the reason is not obvious from software.
 
@@ -138,6 +138,13 @@ usable output is around 6%. Mid-range both channels run, so it is roughly 12%
 combined. The night light uses a different driver, dims cleanly below 1%, and is
 the right output for very low light.
 
+The configured `min_duty` is the value at which output was verified steady, and
+there is still a little room below it before the driver actually gives up - so
+the floor is not set knife-edge on this unit's exact threshold. A unit whose
+driver conducts slightly differently should therefore still be fine; a unit that
+needs a *higher* floor would show flicker at the bottom of the range, which is a
+cosmetic fault rather than a damaging one, and is fixed by raising `min_duty`.
+
 Measuring the floor on your own unit: drive `pwm_warm` and `pwm_cold` directly
 with `output.set_level` and raise the value until the LED lights without flicker.
 Note that `output.set_level` on a wrapped output goes through the same mapping as
@@ -188,19 +195,94 @@ ESPHome normalises the two channel fractions so `max(cw, ww) == 1`, then
 
 With `constant_brightness: true` the sum is held constant across the whole
 range, so both channels can never run at full and the lamp tops out at one
-channel's worth of light. This config uses **false**, which makes the mired
-midpoint the maximum-output point - both channels at 100% - matching the stock
-firmware. The cost is that brightness varies as colour temperature moves, which
-the stock lamp also does.
+channel's worth of light.
+
+This config uses **true**, and that is a measured choice. Two lamps were compared
+side by side, one left on stock firmware and one converted, with a phone lux
+meter held against the diffuser:
+
+| Condition | stock | `constant_brightness: false` |
+| --------- | ----- | ---------------------------- |
+| 100% @ 2700K | 14,500 | 14,500 |
+| 100% @ 6500K | 14,400 | 14,600 |
+| 100% @ 3815K | **16,000** | **28,000** |
+
+The two lamps agree within 1% at either extreme, where the setting has no effect
+because only one channel runs, so the midpoint difference is the setting and not
+the hardware. Stock rises only **1.11x** from the extremes to the midpoint - it
+holds output roughly constant. With `false` the converted lamp reached **1.92x**,
+so **1.75x brighter than stock ever drives it**, with both LED sets at full duty
+on a shared heatsink. Optical output nearly doubling means input power and
+therefore heat roughly double as well.
+
+With `true` the converted lamp matches stock at all three points.
+
+An earlier version of these notes claimed `false` matched the stock firmware.
+That was reasoning from how the component works, not measurement, and it was
+wrong.
 
 That midpoint is 3815K, and it is worth knowing where it appears in Home
 Assistant: mireds are reciprocal to Kelvin, and the HA slider is linear in
 Kelvin, so the mired midpoint sits at about **29%** of a 2700-6500K slider
 rather than halfway along it.
 
-`constant_brightness: true` is also what made the low-brightness dropout worse:
-splitting the requested brightness across both channels at mid colour
-temperature put each one under the driver's conduction floor.
+### What `true` costs at the bottom of the range
+
+Splitting the requested brightness across both channels at mid colour temperature
+sends each one closer to the driver's conduction floor, which is what the deadband
+and `min_duty` mapping on the outputs exist to handle. Measured at 1% brightness:
+
+| Condition | stock | this config (`true`) |
+| --------- | ----- | -------------------- |
+| 1% @ 2700K | 1,200 | 480 |
+| 1% @ 6500K | 1,100 | 500 |
+| 1% @ 3815K | 1,600 | 820 |
+
+Two things fall out of that.
+
+The lamp gets **brighter** toward mid colour temperature at low brightness -
+1.67x the extremes here - because `min_duty` is a floor applied *per channel*, so
+lighting both doubles it. Stock does the same thing, 1.39x, so the shape is not an
+artefact of this config; it is milder on stock because its floor is lower.
+
+At the same slider position this config sits at roughly **0.4-0.5x** stock's
+output, and that is about the brightness *curve* rather than about
+`constant_brightness`.
+
+Measured at 1%, stock delivers about **8%** of its full output while this config
+delivers about **3.3%**. That is the extent of what was measured - two brightness
+settings, 1% and 100%, so the shape of stock's curve between them is unknown and
+no exponent is claimed for it.
+
+On this side the chain is known: both this config and `yeelight_light_lamp9.yaml` set
+`gamma_correct: 0`, which in ESPHome means gamma correction is **disabled** -
+`gamma <= 0` returns the value unchanged - so a 1% request stays 1%, is lifted by
+the `${min_duty}` floor to about 6.9% duty, and the driver turns that into roughly
+3.3% of full light. Note that last step: the driver's own duty-to-light response
+is non-linear, so lux readings measure the slider, the curve and the driver
+together, not the curve alone.
+
+The practical effect is that this config reaches a *dimmer* minimum than stock
+can, which suits a bedside lamp, at the cost of the slider feeling less like the
+original at low settings.
+
+`gamma_correct` is the knob for this, and its direction is worth stating because
+it is easy to get backwards. ESPHome applies `output = request ^ gamma`, so
+*raising* it makes the bottom of the range dimmer, not brighter: at the 2.8
+default a 1% request becomes 0.0003% duty, far below this driver's conduction
+floor, and the whole bottom of the slider is dead. That is why it is disabled
+here - it keeps the mapping predictable enough for the `${min_duty}` floor and
+deadband to work. A value below 1 would push more output into the low end.
+
+Matching stock's low-end feel would need its curve measured properly first: a
+brightness sweep at fixed colour temperature on a stock unit, enough points to see
+whether it is even a power law or a lookup table with a knee. Two points cannot
+tell those apart.
+
+One edge worth knowing: at mid colour temperature each channel receives half the
+requested brightness, so below about **0.8%** both fall under the `${deadband}`
+and the lamp goes fully dark. Home Assistant's slider bottoms out at 1%, so this
+is only reachable from a scene or automation setting a fractional value.
 
 ## How the device is identified in Home Assistant
 
