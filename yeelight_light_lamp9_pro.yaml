@@ -1,0 +1,422 @@
+# Yeelight Staria Bedside Lamp Pro (YLCT03YL, yeelink.light.lamp9)
+#
+# Variant of yeelight_light_lamp9.yaml for the Pro model, which adds a Qi
+# wireless charger and its status LED. Differences from
+# yeelight_light_lamp9.yaml are documented in
+# docs/yeelink-light-lamp9-staria-pro.md; in short:
+#
+#   * The white channels will not conduct below roughly 6% PWM duty.
+#     yeelight_light_lamp9.yaml drives them straight from the light component,
+#     which makes low brightness drop out entirely and flicker as the colour
+#     temperature moves off the extremes. The template outputs below apply a
+#     floor with a deadband.
+#   * GPIO33 is not the status LED drive - it is an ENABLE for the LED's supply
+#     rail. The Qi charger drives the other half of the circuit and decides the
+#     pattern. Both must be active for the LED to light.
+#
+# Verified on a unit with production date 2020-10, ESP32-WROOM-32D. Other
+# revisions may differ - see the hardware notes before assuming the GPIO map.
+
+substitutions:
+  name: yeelight-light-lamp9-pro
+
+  # Shown in Home Assistant next to the model. Bump when the config changes in a
+  # way worth telling apart on the device page.
+  project_version: "1.0"
+
+  # Fade applied when the light turns on or off, in milliseconds. The stock
+  # firmware fades over roughly a second. This is the power-on default; it is
+  # also adjustable at runtime from the "transition length" number entity, whose
+  # value is stored on the device and survives a reboot.
+  transition_ms: "1000"
+
+  # Lowest PWM duty at which the white channels conduct reliably. Measured per
+  # unit by driving the raw outputs and finding where the LEDs light without
+  # flicker. 6% on the reference unit.
+  min_duty: "0.06"
+
+  # --- button behaviour ---------------------------------------------------
+  # Brightness and colour temperature form one continuous ramp axis:
+  #
+  #   1% @ warmest  <-->  100% @ warmest  <-->  100% @ mid colour temperature
+  #
+  # Holding the button travels along it. Mid CT is the top end because both LED
+  # channels run at full duty there, which is the brightest the lamp gets.
+  button_min_brightness_pct: "1"
+  button_step_pct: "5"
+  button_ct_step_mireds: "8"
+  button_step_interval_ms: "100"
+  button_hold_time: 500ms
+
+  # Whether the ramp continues past 100% brightness into colour temperature.
+  # false stops it at full brightness.
+  button_ramp_ct: "true"
+
+  # Requests below this are treated as off rather than being lifted to min_duty.
+  # Needed because the light component does not produce an exact zero at the
+  # colour temperature extremes: mired rounding leaves the opposite channel at
+  # ~0.17%, which a plain min_power would raise to full floor and visibly
+  # contaminate the colour. Must sit above that residual and below the duty a
+  # channel receives at the lowest usable brightness.
+  deadband: "0.004"
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  min_version: 2024.10.0
+  # Home Assistant otherwise labels the device "esp32doit-devkit-v1 by Espressif":
+  # the API reports ESPHOME_BOARD as the model and a per-platform hardcoded string
+  # as the manufacturer, neither of which is configurable. HA does however split
+  # project.name on its single dot and use the halves as manufacturer and model,
+  # so setting it here gets the real hardware named instead of the dev board.
+  project:
+    name: "Yeelight.Staria Bedside Lamp Pro"
+    version: "${project_version}"
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          uint32_t ms = (uint32_t) id(transition_number).state;
+          id(bedside_light).set_default_transition_length(ms);
+          id(night_light).set_default_transition_length(ms);
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+      ignore_efuse_custom_mac: true
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  min_auth_mode: WPA2
+  # Strongly recommended, especially when flashing over the network: a typo in
+  # the credentials otherwise leaves the lamp unreachable and only recoverable
+  # over UART, which means opening the device.
+  #
+  # No ssid on purpose. ESPHome then names the AP after the device, including the
+  # MAC suffix if name_add_mac_suffix is set, and truncates to the 32-byte SSID
+  # limit itself. That keeps the rescue AP unique per device without hand-picking
+  # a name, which matters if the device ever changes hands or networks: it falls
+  # back to this AP after ap_timeout (90s by default) whenever it cannot join.
+  ap:
+
+captive_portal:
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  baud_rate: 0
+
+api:
+
+output:
+  # Raw PWM channels. The floor is applied by the wrappers below rather than by
+  # min_power, so that a true zero stays a true zero.
+  - platform: ledc
+    pin: GPIO2
+    id: pwm_warm
+    power_supply: power
+  - platform: ledc
+    pin: GPIO27
+    id: pwm_cold
+    power_supply: power
+
+  - platform: template
+    id: output_warm
+    type: float
+    write_action:
+      - lambda: |-
+          if (state < ${deadband}f) {
+            id(pwm_warm).set_level(0.0f);
+          } else {
+            id(pwm_warm).set_level(${min_duty}f + state * (1.0f - ${min_duty}f));
+          }
+  - platform: template
+    id: output_cold
+    type: float
+    write_action:
+      - lambda: |-
+          if (state < ${deadband}f) {
+            id(pwm_cold).set_level(0.0f);
+          } else {
+            id(pwm_cold).set_level(${min_duty}f + state * (1.0f - ${min_duty}f));
+          }
+
+  # The night light uses a separate driver and dims cleanly to well under 1%,
+  # so it needs no floor.
+  - platform: ledc
+    pin: GPIO12
+    id: output_nightlight
+    power_supply: power
+
+  # Status LED ENABLE - see the hardware notes. This drives a transistor that
+  # powers the LED's supply rail; it does not drive the LED itself.
+  - platform: gpio
+    pin: GPIO33
+    id: led_output
+
+globals:
+  # Direction the next hold travels. Flips after every hold, so a hold that
+  # dimmed down is followed by one that brightens.
+  - id: ramp_up
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+  # True while the ramp is running, so its own light changes are distinguishable
+  # from external ones.
+  - id: button_active
+    type: bool
+    restore_value: false
+    initial_value: 'false'
+
+power_supply:
+  - id: power
+    pin: GPIO4
+    enable_time: 0s
+    keep_on_time: 2s
+
+light:
+  - platform: monochromatic
+    name: "night light"
+    id: night_light
+    output: output_nightlight
+    gamma_correct: 0
+    default_transition_length: ${transition_ms}ms
+    on_turn_on:
+      - light.turn_off: bedside_light
+
+  - platform: cwww
+    name: "bedside light"
+    id: bedside_light
+    cold_white: output_cold
+    warm_white: output_warm
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    # Remember brightness and colour temperature across a power cycle but
+    # come back off - this is what makes 'restore last state' work.
+    restore_mode: RESTORE_AND_OFF
+    # true, and this is measured rather than reasoned. Two lamps were compared
+    # side by side at 100%, one on stock firmware and one converted, with a lux
+    # meter against the diffuser:
+    #
+    #                       2700 K / 6500 K      3815 K (mired midpoint)
+    #   stock                   ~14,450                16,000   (1.11x)
+    #   constant_brightness off ~14,550                28,000   (1.92x)
+    #
+    # Both lamps agree within 1% at either extreme, where this setting has no
+    # effect, so the midpoint difference is the setting and not the hardware.
+    # Stock rises only 11% across the range - it holds output roughly constant.
+    # With it off the converted lamp ran 1.75x brighter than stock ever drives
+    # it, which means both LED sets at full duty on a shared heatsink.
+    #
+    # The cost of true is at the bottom of the range: mid colour temperature
+    # splits the requested brightness across both channels, so each one reaches
+    # the driver's conduction floor sooner. That is what the deadband and
+    # ${min_duty} mapping on the outputs above exist to handle.
+    constant_brightness: true
+    gamma_correct: 0
+    default_transition_length: ${transition_ms}ms
+    on_turn_on:
+      - light.turn_off: night_light
+
+  # Enabling this permits the charger to light the status LED; it does not light
+  # it, and it cannot change the pattern (steady while charging, blinking when
+  # the phone is not aligned). Defaults to on so the lamp behaves like stock.
+  # Turning it off suppresses the charge indicator, e.g. at night.
+  - platform: binary
+    name: "charger status LED enable"
+    id: led_enable
+    output: led_output
+    restore_mode: RESTORE_DEFAULT_ON
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO14
+      inverted: true
+    name: "button"
+    id: button
+
+    # A click toggles. max_length keeps a hold from also firing this on release,
+    # which would otherwise undo whatever the ramp just did.
+    on_click:
+      min_length: 20ms
+      max_length: ${button_hold_time}
+      then:
+        - if:
+            condition:
+              light.is_off: bedside_light
+            then:
+              - if:
+                  condition:
+                    switch.is_on: restore_on_turn_on
+                  then:
+                    # No values given, so the light returns as it was left.
+                    - light.turn_on:
+                        id: bedside_light
+                  else:
+                    - light.turn_on:
+                        id: bedside_light
+                        brightness: !lambda "return id(preset_brightness).state / 100.0f;"
+                        color_temperature: !lambda |-
+                          auto tr = id(bedside_light).get_traits();
+                          float warmest = tr.get_max_mireds();
+                          float coldest = tr.get_min_mireds();
+                          return warmest - (id(preset_color_temp).state / 100.0f) *
+                                           (warmest - coldest);
+            else:
+              - light.turn_off: bedside_light
+
+    # Anything longer than button_hold_time is a hold, and ramps.
+    on_press:
+      then:
+        - delay: ${button_hold_time}
+        - if:
+            condition:
+              binary_sensor.is_on: button
+            then:
+              - lambda: "id(button_active) = true;"
+              - if:
+                  condition:
+                    light.is_off: bedside_light
+                  then:
+                    # From off we start at the bottom of the axis - minimum
+                    # brightness at the warmest setting - and ramp up.
+                    - lambda: "id(ramp_up) = true;"
+                    - light.turn_on:
+                        id: bedside_light
+                        brightness: !lambda "return ${button_min_brightness_pct} / 100.0f;"
+                        color_temperature: !lambda |-
+                          return id(bedside_light).get_traits().get_max_mireds();
+                        transition_length: 0s
+              - while:
+                  condition:
+                    binary_sensor.is_on: button
+                  then:
+                    - lambda: |-
+                        auto *lt = id(bedside_light);
+                        auto tr = lt->get_traits();
+                        const float coldest = tr.get_min_mireds();
+                        const float warmest = tr.get_max_mireds();
+                        const float mid = (coldest + warmest) / 2.0f;
+                        const float min_br = ${button_min_brightness_pct} / 100.0f;
+                        const float d_br = ${button_step_pct} / 100.0f;
+                        const float d_ct = ${button_ct_step_mireds};
+                        const bool use_ct = ${button_ramp_ct};
+
+                        float br = lt->remote_values.get_brightness();
+                        float ct = lt->remote_values.get_color_temperature();
+
+                        auto call = lt->make_call();
+                        uint32_t iv = (uint32_t)(1000.0f * ${button_step_pct} /
+                                                 id(ramp_speed).state);
+                        call.set_transition_length(iv);
+
+                        if (id(ramp_up)) {
+                          if (br < 0.999f) {
+                            call.set_brightness(fminf(br + d_br, 1.0f));
+                          } else if (use_ct && ct > mid + 0.5f) {
+                            call.set_color_temperature(fmaxf(ct - d_ct, mid));
+                          } else {
+                            return;
+                          }
+                        } else {
+                          if (use_ct && ct < warmest - 0.5f) {
+                            call.set_color_temperature(fminf(ct + d_ct, warmest));
+                          } else if (br > min_br) {
+                            call.set_brightness(fmaxf(br - d_br, min_br));
+                          } else {
+                            return;
+                          }
+                        }
+                        call.perform();
+                    - delay: !lambda "return (uint32_t)(1000.0f * ${button_step_pct} / id(ramp_speed).state);"
+              # Flip for next time, so successive holds alternate direction.
+              - lambda: |-
+                  id(ramp_up) = !id(ramp_up);
+                  id(button_active) = false;
+
+switch:
+  - platform: template
+    name: "restore state on turn on"
+    id: restore_on_turn_on
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+
+number:
+  # Runtime control over the on/off fade. Applies to both lights. Home Assistant
+  # can also override it per call with the `transition` parameter of
+  # light.turn_on / light.turn_off; this sets the default used when no
+  # transition is given.
+  - platform: template
+    name: "transition length"
+    id: transition_number
+    entity_category: config
+    unit_of_measurement: ms
+    min_value: 0
+    max_value: 5000
+    step: 100
+    initial_value: ${transition_ms}
+    restore_value: true
+    optimistic: true
+    mode: box
+    set_action:
+      - lambda: |-
+          uint32_t ms = (uint32_t) x;
+          id(bedside_light).set_default_transition_length(ms);
+          id(night_light).set_default_transition_length(ms);
+
+
+  # Used when "restore state on turn on" is off. Colour temperature is a
+  # percentage of the lamp's range: 0% warmest, 100% coldest, so 50% is the
+  # midpoint where both channels run at full duty.
+  - platform: template
+    name: "preset brightness"
+    id: preset_brightness
+    entity_category: config
+    unit_of_measurement: "%"
+    min_value: 1
+    max_value: 100
+    step: 1
+    initial_value: 100
+    restore_value: true
+    optimistic: true
+    mode: box
+
+  - platform: template
+    name: "preset color temperature"
+    id: preset_color_temp
+    entity_category: config
+    unit_of_measurement: "%"
+    min_value: 0
+    max_value: 100
+    step: 1
+    initial_value: 50
+    restore_value: true
+    optimistic: true
+    mode: box
+
+
+  # Brightness percent per second while the button is held. The colour
+  # temperature stage of the ramp scales with it.
+  - platform: template
+    name: "ramp speed"
+    id: ramp_speed
+    entity_category: config
+    unit_of_measurement: "%/s"
+    min_value: 10
+    max_value: 200
+    step: 5
+    initial_value: 50
+    restore_value: true
+    optimistic: true
+    mode: box

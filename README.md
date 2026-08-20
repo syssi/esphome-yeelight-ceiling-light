@@ -41,6 +41,18 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | Yeelight Ceiling Light 400C                      | yeelight.light.ceilb      | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
 | Yeelight Jiaoyue 260 Ceiling Light               | yeelight.light.ceiling24  | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
 
+### Flashing without opening the device
+
+Every procedure in this repository flashes over UART. On ESP32 models running
+stock firmware there is a network-only route: the device's own `miIO.ota`
+mechanism, relayed through the Xiaomi cloud, pointed at a file on your LAN.
+See [docs/flashing-over-the-network.md](docs/flashing-over-the-network.md) and
+the helpers in [`tools/`](tools).
+
+Confirmed on `yeelink.light.lamp9` firmware 2.1.7_0031. It writes only the
+application partition, so it cannot rescue a device that will not boot - that
+still needs UART.
+
 ### More ESPHome + Yeelight projects
 
 - [Yeelight LED Screen Light Bar (YLTD001)](https://github.com/dckiller51/esphome-yeelight-led-screen-light-bar)
@@ -108,6 +120,12 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
   - Color temperature (2700K-6500K)
 - Nightlight (2700K)
   - Brightness
+
+The Staria **Pro** (YLCT03YL) additionally has a Qi charger and its status LED.
+See [`yeelight_light_lamp9_pro.yaml`](yeelight_light_lamp9_pro.yaml) and
+[the hardware notes](docs/yeelink-light-lamp9-staria-pro.md): the white channels
+need a PWM floor to dim without dropping out, and GPIO33 only *enables* the
+status LED rather than driving it.
 
 ### yeelink.light.strip6
 
@@ -330,9 +348,17 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 | GPIO0               | TP next to C37  | GPIO0        |                       |
 | SCL (I2C)           |                 | GPIO18       |                       |
 | SDA (I2C)           |                 | GPIO17       |                       |
-| LED (YLCT03YL only) |                 | GPIO33       |                       |
+| LED enable (YLCT03YL) |               | GPIO33       | see note below        |
 | 3.3V                | +, TP7          | 3.3V         |                       |
 | GND                 | -, TP8          | GND          |                       |
+
+On the Pro (YLCT03YL), GPIO33 does not drive the charger status LED - it enables
+the LED's supply rail through a transistor. The Qi charger drives the other half
+of the circuit and decides the pattern itself, so **both** must be active for
+the LED to light. Toggling GPIO33 with no phone on the charger does
+nothing, which is easily mistaken for a dead LED or a wrong pin. The ESP32 has no
+path to read charge state. Details in
+[docs/yeelink-light-lamp9-staria-pro.md](docs/yeelink-light-lamp9-staria-pro.md).
 
 ### yeelink.light.ceiling24
 
