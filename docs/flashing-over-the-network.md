@@ -47,7 +47,7 @@ LAN address over plain HTTP.
 
 ```
 POST https://<region>.api.io.mi.com/app/home/rpc/<did>
-data = {"id":N,"method":"miIO.ota","params":{"app_url":"http://<your-lan-ip>:8000/fw_crc.bin"}}
+data = {"id":N,"method":"miIO.ota","params":{"app_url":"http://<your-lan-ip>/fw_crc.bin"}}
 ```
 
 Two things about that payload matter:
@@ -61,7 +61,7 @@ Two things about that payload matter:
 
 The cloud only relays the instruction. The firmware file never leaves your LAN.
 
-## Two requirements that are easy to miss
+## Three requirements that are easy to miss
 
 ### 1. The image carries a 4-byte CRC trailer
 
@@ -102,6 +102,46 @@ Serving byte-identical content over HTTP/1.1 with keep-alive and range support
 works first time. `tools/ota_server.py` is a minimal server that does this and
 logs what the device actually requests.
 
+### 3. The URL must not contain a port
+
+The updater does not strip the port from the URL authority. Given
+`http://192.0.2.2:8000/fw.bin` it issues a DNS lookup for the literal string
+`192.0.2.2:8000`:
+
+```
+192.0.2.10.24408 > 192.0.2.1.53: A? 192.0.2.2:8000.
+192.0.2.1.53 > 192.0.2.10.24408: NXDomain
+```
+
+Three attempts, three NXDOMAINs, then it gives up. `miIO.ota` still answers
+`["ok"]`, `miIO.get_ota_state` still reads `idle`, and nothing arrives at the HTTP
+server - so the symptom is indistinguishable from the command being ignored.
+
+**Serve on port 80** so the authority is a bare address. It is then recognised as
+an IP literal, never goes to DNS, and the transfer starts immediately.
+
+This cost a long detour to find, because it is invisible from the machine running
+the HTTP server: a switch does not forward the device's DNS queries to another
+port, so a capture there shows nothing either way. It was only visible from the
+router.
+
+Observed on `yeelink.light.ceiling10` (`miio_ver 0.0.6`). Whether the newer
+`0.0.9` firmware parses a port correctly was not tested - the working `lamp9`
+flash happened to use port 80.
+
+#### Corollary: what counts as success
+
+`["ok"]` is the cloud acknowledging the relay, not the device agreeing to do
+anything, and on some firmware `miIO.ota` reboots the device about eight seconds
+later whether or not it downloads. **Watch the HTTP server log for a GET from the
+device**; that is the only evidence the transfer started, and
+`miIO.get_ota_state` moving `idle -> downloading -> installed` confirms it.
+
+`tools/cloud_ota.py --sweep` tries several documented payload shapes in one login
+and stops as soon as the device leaves `idle`, which is useful when a firmware
+generation wants a different payload - though note that no payload shape helps if
+the URL carries a port.
+
 ## Procedure
 
 1. **Recover the device token and `did`** from the Xiaomi cloud. Existing tools
@@ -126,15 +166,18 @@ logs what the device actually requests.
 5. **Serve it over HTTP/1.1** and confirm another host on the LAN can fetch the
    whole file before going further:
 
+   Port **80**, not a high port - the updater cannot parse a URL with an
+   explicit port (see requirement 3), so binding 80 needs root:
+
    ```
-   python3 tools/ota_server.py fw_crc.bin 8000
+   sudo python3 tools/ota_server.py fw_crc.bin 80
    ```
 
-6. **Relay the OTA command through the cloud:**
+6. **Relay the OTA command through the cloud**, with no port in the URL:
 
    ```
    python3 tools/cloud_ota.py --server de --ip <device-ip> \
-       --url http://<your-lan-ip>:8000/fw_crc.bin
+       --url http://<your-lan-ip>/fw_crc.bin
    ```
 
 7. **Watch it land.** `miIO.get_ota_state` walks `idle -> downloading ->

@@ -1,0 +1,1520 @@
+{
+  "yeelink.light.0004": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.29": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.a10": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.b12g": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.bg12n": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.bslamp1": {
+    "name": "米家床头灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.bslamp2": {
+    "name": "米家床头灯2代",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.bslamp3": {
+    "name": "Yeelight 床头灯2代",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.bulb1": {
+    "name": "Yeelight 智能色温球泡",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.c3yee1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil26": {
+    "name": "Yeelight 纤玉吸顶灯 C2001",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil27": {
+    "name": "Yeelight 智能客厅吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil28": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil29": {
+    "name": "Yeelight 初心吸顶灯 A2001",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil30": {
+    "name": "Yeelight LED智能吊灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil31": {
+    "name": "Yeelight 智能吸顶灯 客厅款",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil32": {
+    "name": "Yeelight LED智能吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil33": {
+    "name": "Yeelight 儿童吸顶灯 C2002",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil34": {
+    "name": "Mi Smart LED Ceiling Light (350mm)",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil35": {
+    "name": "Yeelight 智能LED吊灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil36": {
+    "name": "Yeelight 智能LED吊灯S",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil37": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil38": {
+    "name": "Yeelight 智能吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil39": {
+    "name": "Yeelight 智能吸顶灯升级版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil40": {
+    "name": "Yeelight智能LED吸顶灯升级版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil42": {
+    "name": "Yeelight 智能彩光吊灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil43": {
+    "name": "Yeelight Arwen Ceiling Light D",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil44": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil45": {
+    "name": "Yeelight 超薄智能吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil46": {
+    "name": "Yeelight 凌动LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil47": {
+    "name": "Yeelight 超薄智能吸顶灯PRO",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil48": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil49": {
+    "name": "Yeelight RGB Smart Ceiling Light",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil50": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil54": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil55": {
+    "name": "Yeelight智能吸顶灯 氛围客厅款",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil56": {
+    "name": "Yeelight智能吸顶灯 氛围卧室款",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil57": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil58": {
+    "name": "Yeelight 极月吊灯 L1200",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil59": {
+    "name": "Yeelight 吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil60": {
+    "name": "Yeelight 智能色温吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil63": {
+    "name": "Yeelight 智能超薄吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil64": {
+    "name": "Yeelight 漫反射吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceil65": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil66": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil67": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceil68": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ceila": {
+    "name": "Yeelight 纤玉吸顶灯C2001",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceilb": {
+    "name": "Yeelight 氛围吸顶灯升级版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceilc": {
+    "name": "Yeelight 氛围吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceild": {
+    "name": "Yeelight Minas Ceiling Light",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceile": {
+    "name": "Yeelight LED吸顶灯升级版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling1": {
+    "name": "Yeelight LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling10": {
+    "name": "Yeelight 皓石 LED吊灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling11": {
+    "name": "Yeelight LED吸顶灯（升级版）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling12": {
+    "name": "Yeelight LED吸顶灯 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling13": {
+    "name": "Yeelight LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling14": {
+    "name": "Yeelight LED吸顶灯 Mini",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling15": {
+    "name": "Yeelight 皎月 LED吸顶灯480（升级版）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling16": {
+    "name": " Yeelight 星宇 LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling17": {
+    "name": "Yeelight 智能吸顶灯 卧室款",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling18": {
+    "name": "Yeelight LED吸顶灯 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling19": {
+    "name": "Yeelight RGB彩光吸顶灯 客厅款",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling2": {
+    "name": "Yeelight LED吸顶灯青春版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling20": {
+    "name": "Yeelight RGB彩光吸顶灯 卧室款",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling21": {
+    "name": "米家客厅吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling22": {
+    "name": "米家卧室吸顶灯450",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling23": {
+    "name": "米家卧室吸顶灯350",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling24": {
+    "name": "Yeelight 皎月 LED吸顶灯 260",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling3": {
+    "name": "Yeelight 皎月LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling4": {
+    "name": "Yeelight 皎月LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling5": {
+    "name": "米家LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling6": {
+    "name": "Yeelight 皓石LED吸顶灯 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling7": {
+    "name": "Yeelight 皓石LED吸顶灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling8": {
+    "name": "Yeelight 皓石LED吸顶灯 Plus",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ceiling9": {
+    "name": "Yeelight 皓石LED吸顶灯 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color1": {
+    "name": "Yeelight 彩光灯泡",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color2": {
+    "name": "Yeelight LED灯泡（彩光版）",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color3": {
+    "name": "Mi LED Smart Bulb (White and Color)",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color4": {
+    "name": "Yeelight LED灯泡1S（彩光版）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color5": {
+    "name": "Mi Smart LED Bulb Essential (White and Color)",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color6": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.color7": {
+    "name": "Mi LED Smart Color Bulb (B22)",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.color8": {
+    "name": "Yeelight LED灯泡1S 彩光版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.colora": {
+    "name": "Yeelight 彩光灯泡1SE",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.colorb": {
+    "name": "Yeelight LED灯泡W3（彩光版）",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.colorc": {
+    "name": "Yeelight GU10 smart bulb W1（multicolor）",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.colord": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.colore": {
+    "name": "Yeelight Smart LED Bulb W4 lite（multicolor）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.colorf": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ct2": {
+    "name": "Yeelight LED灯泡（色温版）",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.cta": {
+    "name": "Yeelight LED灯泡W3（色温版）",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.ctb": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ctc": {
+    "name": "Yeelight Smart LED Bulb W4 lite（dimmable）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.cx1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.dd005": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo2": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo3": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo4": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo5": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.demo6": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.dn2grp": {
+    "name": "Mesh筒灯灯组",
+    "protocol": "虚拟组",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.dn3grp": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.dnlight2": {
+    "name": "Yeelight LED筒灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.fancl1": {
+    "name": "Yeelight 逸扬风扇吊灯（智能款）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.fancl2": {
+    "name": "Yeelight  烁影直流变频风扇灯 S2001",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.fancl3": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.fancl5": {
+    "name": "Yeelight 逸扬直流变频风扇吊灯 C900",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.fancl6": {
+    "name": "Yeelight 逸扬直流变频风扇吊灯 C1060",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.fancl8": {
+    "name": "Yeelight 智能风扇灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.fancl9": {
+    "name": "Yeelight Bladeless turbo fan Light",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.holly2": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp1": {
+    "name": "米家台灯",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp10": {
+    "name": "Yeelight 星辰落地灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp11": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp12": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp13": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp14": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp15": {
+    "name": "Yeelight 显示器挂灯",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp16": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp17": {
+    "name": "Yeelight 无线充电台灯",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp18": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp19": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp2": {
+    "name": "米家台灯Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp20": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp21": {
+    "name": "米家智能充电台灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp22": {
+    "name": "米家智能显示器挂灯1S",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp23": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp24": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp25": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp26": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp27": {
+    "name": "米家台灯1S 增强版",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp28": {
+    "name": "米家台灯1S增强版 耀夜黑",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp29": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp3": {
+    "name": "Yeelight 智能护眼台灯",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp30": {
+    "name": "Yeelight 立式学习灯 V8",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp31": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp33": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp34": {
+    "name": "Yeelight 立式学习灯 V6",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp38": {
+    "name": "Yeelight 桌面学习灯 A8 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp39": {
+    "name": "Yeelight 显示器挂灯 Ultra",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp4": {
+    "name": "米家台灯 1S",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp40": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp41": {
+    "name": "Yeelight 立式学习灯 V5",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp42": {
+    "name": "Yeelight 显示器挂灯2 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp43": {
+    "name": "Yeelight Tube Plus2屏幕挂灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp5": {
+    "name": "Yeelight 智能护眼台灯 Prime",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp50": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp51": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamp7": {
+    "name": "Yeelight LED光感台灯V1",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp9": {
+    "name": "Yeelight 星辰LED台灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.lamp99": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lampb": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lamps": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lampv": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.lft": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.light1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.light3": {
+    "name": "米家LED筒灯 蓝牙MESH版",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.light4": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.light5": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mb1grp": {
+    "name": "Mesh球泡灯组",
+    "protocol": "虚拟组",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mb2grp": {
+    "name": "Yeelight LED烛泡灯组",
+    "protocol": "虚拟组",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mb3grp": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mbulb3": {
+    "name": "米家LED灯泡 蓝牙MESH版",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mbulb4": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mbulb5": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.meshbulb1": {
+    "name": "Yeelight LED球泡",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.meshbulb2": {
+    "name": "Yeelight LED烛泡",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.meshdev": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml1": {
+    "name": "Yeelight 筒射灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml10": {
+    "name": "Yeelight智能筒射灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml11": {
+    "name": "YEELIGHT凌动 智能筒射灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml12": {
+    "name": "YEELIGHT凌动 智能磁吸灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml13": {
+    "name": "Yeelight 智能筒射灯2.0",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml14": {
+    "name": "Yeelight智能磁吸灯2.0",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml18": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml2": {
+    "name": "Yeelight 色温灯泡 M2",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml20": {
+    "name": "Yeelight 智能明装筒射灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml23": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml24": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml26": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml3": {
+    "name": "Yeelight 明装色温筒灯M1",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml301": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml4": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml5": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml6": {
+    "name": "米家智能磁吸轨道系统 格栅灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml7": {
+    "name": "米家智能磁吸轨道系统 线条灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml8": {
+    "name": "米家智能磁吸轨道系统 射灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ml9": {
+    "name": "Yeelight智能色温筒射灯C1",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mla": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.mono1": {
+    "name": "Yeelight 白光灯泡",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono10": {
+    "name": "Yeelight P 系列青空灯 3060",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono12": {
+    "name": "Yeelight 青空灯 G6 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono4": {
+    "name": "Yeelight LED 灯泡1S（白光版）",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono5": {
+    "name": "Yeelight LED 灯丝灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono6": {
+    "name": "Mi Smart LED Bulb",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono7": {
+    "name": "Yeelight 青空灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono8": {
+    "name": "Yeelight 青空灯G6",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.mono9": {
+    "name": "Yeelight 青空面板灯A10",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.monoa": {
+    "name": "Yeelight LED smart bulb W3(dimmable)",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.monob": {
+    "name": "Yeelight GU10 Smart Bulb W1(dimmable)",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.nl1": {
+    "name": "米家夜灯2 蓝牙版",
+    "protocol": "蓝牙",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.nl2": {
+    "name": "米家智能光感夜灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.panel1": {
+    "name": "Yeelight 皓白 LED面板灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.panel3": {
+    "name": "Yeelight 皓白 LED面板灯 Pro",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.panel6": {
+    "name": "Yeelight 智能面板灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.panel7": {
+    "name": "Yeelight人体存在面板灯",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.plate1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.plate2": {
+    "name": "Yeelight 智能奇光板",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.proct1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.proct2": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.proct3": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.rgbcw1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.rgbw": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.sp1grp": {
+    "name": "Yeelight LED射灯灯组",
+    "protocol": "虚拟组",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.spec1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.spot1": {
+    "name": "Yeelight LED射灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.spot2": {
+    "name": "米家LED射灯 蓝牙MESH版",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.str1": {
+    "name": "Yeelight 智能色温灯带2.0",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.strip1": {
+    "name": "Yeelight彩光灯带",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.strip2": {
+    "name": "Yeelight彩光灯带（延长版）",
+    "protocol": "MiIO",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.strip4": {
+    "name": "Yeelight 泛影LED灯带",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.strip5": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.strip6": {
+    "name": "Yeelight LED 彩光灯带1S",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.strip7": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.strip8": {
+    "name": "Yeelight Chameleon 幻彩灯带",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.strip9": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripa": {
+    "name": "Yeelight LED 彩光灯带 1S",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.stripb": {
+    "name": "Xiaomi Smart Lightstrip",
+    "protocol": "Wi‑Fi",
+    "feature": "🛜2.4G",
+    "esp_capable": true
+  },
+  "yeelink.light.stripc": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripd": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripe": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripf": {
+    "name": "Yeelight C1智能高压色温灯带",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripg": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.striph": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripj": {
+    "name": "YEELIGHT凌动 灯带控制器",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.stripk": {
+    "name": "Yeelight 智能恒压DC灯带2.0",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.test": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.test1": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.tlight": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.tmbulb": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.wrgb": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.wy0a01": {
+    "name": "Yeelight LED智能磁吸灯",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.wy0a02": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.wy0a03": {
+    "name": "Yeelight LED智能灯带",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.wy0a04": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.wyra01": {
+    "name": "Yeelight LED彩光灯带",
+    "protocol": "BLE Mesh",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.yct01": {
+    "name": "Yeelight Pro 色温灯",
+    "protocol": "18",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.ydim01": {
+    "name": "Yeelight Pro 亮度灯",
+    "protocol": "18",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.yrgb01": {
+    "name": "Yeelight Pro 彩光灯",
+    "protocol": "18",
+    "feature": null,
+    "esp_capable": false
+  },
+  "yeelink.light.znwzd": {
+    "name": null,
+    "protocol": null,
+    "feature": null,
+    "esp_capable": false
+  }
+}
