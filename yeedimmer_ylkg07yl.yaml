@@ -38,7 +38,7 @@ esp32_ble_tracker:
     active: false
 
 xiaomi_ylkg07yl:
-  mac_address: "F8:24:41:C4:7B:BC"
+  mac_address: !secret ylkg07yl_mac_address
   bindkey: "ef3afd53f5c7853a080a3d52"
   keycode:
     name: "last keycode"
