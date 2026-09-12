@@ -1,0 +1,207 @@
+# Yeelight Staria LED Floor Lamp (YLLD01YL, yeelink.light.lamp10)
+#
+# RGB plus tunable white, with an I2C front panel: a power button, a colour
+# button and a touch slider. The panel needs the yeelight_front_panel component;
+# its protocol is documented in docs/yeelight-front-panel.md.
+#
+# Pin map, established from the original firmware and confirmed channel by
+# channel on the device:
+#
+#   GPIO13  red PWM (active low)      GPIO21  front panel SDA
+#   GPIO14  green PWM (active low)    GPIO19  front panel SCL
+#   GPIO5   blue PWM (active low)     GPIO16  front panel interrupt
+#   GPIO12  warm white PWM            GPIO4   switched with the light, see below
+#   GPIO2   cold white PWM
+#
+# Verified on one unit, ESP-WROOM-32D. Other revisions may differ.
+
+substitutions:
+  name: yeelight-light-lamp10
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
+
+  # Lowest PWM duty at which the LEDs light. Measured by driving the raw outputs:
+  # dark at 4.8 %, glowing at 6.2 - 7.6 % on all five channels.
+  min_duty: "7%"
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  min_version: 2024.10.0
+  project:
+    name: "Yeelight.Staria Floor Lamp"
+    version: "1.0"
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+      ignore_efuse_custom_mac: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  min_auth_mode: WPA2
+  # Strongly recommended: a typo in the credentials otherwise leaves the lamp
+  # reachable only over UART, which means opening the device.
+  ap:
+
+captive_portal:
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+
+api:
+
+i2c:
+  - id: front_panel_bus
+    sda: GPIO21
+    scl: GPIO19
+    scan: true
+
+yeelight_front_panel:
+  - id: front_panel
+    model: lamp10
+    i2c_id: front_panel_bus
+    trigger_pin: GPIO16
+    # true logs every raw panel message and a health line every 10 s.
+    debug: false
+
+# The original firmware drives GPIO4 high when the lamp turns on and low after
+# the LEDs are off. The RGB LEDs stay lit with it low, so it is not their
+# supply; what exactly it switches is not known. It follows the light here the
+# way the original firmware drives it.
+power_supply:
+  - id: power
+    pin: GPIO4
+    enable_time: 20ms
+    keep_on_time: 5s
+
+# All channels run at 3000 Hz like the original firmware. min_power keeps the
+# lowest brightness visible; zero_means_zero keeps "off" off.
+output:
+  - platform: ledc
+    id: output_red
+    pin: GPIO13
+    frequency: 3000Hz
+    inverted: true
+    min_power: ${min_duty}
+    zero_means_zero: true
+    power_supply: power
+  - platform: ledc
+    id: output_green
+    pin: GPIO14
+    frequency: 3000Hz
+    inverted: true
+    min_power: ${min_duty}
+    zero_means_zero: true
+    power_supply: power
+  - platform: ledc
+    id: output_blue
+    pin:
+      number: GPIO5
+      ignore_strapping_warning: true
+    frequency: 3000Hz
+    inverted: true
+    min_power: ${min_duty}
+    zero_means_zero: true
+    power_supply: power
+  - platform: ledc
+    id: output_warm
+    pin:
+      number: GPIO12
+      ignore_strapping_warning: true
+    frequency: 3000Hz
+    min_power: ${min_duty}
+    zero_means_zero: true
+    power_supply: power
+  - platform: ledc
+    id: output_cold
+    pin:
+      number: GPIO2
+      ignore_strapping_warning: true
+    frequency: 3000Hz
+    min_power: ${min_duty}
+    zero_means_zero: true
+    power_supply: power
+
+light:
+  - platform: rgbww
+    id: floor_light
+    name: "floor light"
+    red: output_red
+    green: output_green
+    blue: output_blue
+    warm_white: output_warm
+    cold_white: output_cold
+    warm_white_color_temperature: 2700 K
+    cold_white_color_temperature: 6500 K
+    # The original firmware never mixes colour and white.
+    color_interlock: true
+    # With the default 2.8 the lower third of the range sits on the min_duty
+    # floor; linear duty looked uneven. 2.0 was even across the slider.
+    gamma_correct: 2.0
+    default_transition_length: 500ms
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+  - platform: yeelight_front_panel
+    name: "power button"
+    part: power_button
+    on_press:
+      - light.toggle: floor_light
+
+  # Steps through three whites and five colours, keeping the brightness.
+  - platform: yeelight_front_panel
+    name: "color button"
+    part: color_button
+    on_press:
+      - lambda: |-
+          struct Preset { bool white; float kelvin; float r, g, b; };
+          static const Preset PRESETS[] = {
+              {true, 2700, 0, 0, 0},   {true, 4000, 0, 0, 0},   {true, 6500, 0, 0, 0},
+              {false, 0, 1, 0, 0},     {false, 0, 1, 0.5, 0},   {false, 0, 0, 1, 0},
+              {false, 0, 0, 0, 1},     {false, 0, 0.6, 0, 1},
+          };
+          static const size_t COUNT = sizeof(PRESETS) / sizeof(PRESETS[0]);
+          static size_t index = 0;
+          index = (index + 1) % COUNT;
+          const Preset &p = PRESETS[index];
+          auto call = id(floor_light).turn_on();
+          if (p.white) {
+            call.set_color_mode(ColorMode::COLD_WARM_WHITE);
+            call.set_color_temperature(1000000.0f / p.kelvin);
+          } else {
+            call.set_color_mode(ColorMode::RGB);
+            call.set_rgb(p.r, p.g, p.b);
+          }
+          call.set_transition_length(300);
+          call.perform();
+
+  - platform: yeelight_front_panel
+    name: "slider touched"
+    part: slider
+
+sensor:
+  # The panel reports 22 positions, 1 at the "-" end next to the power button.
+  # All 22 map evenly from 1 % to 100 %. The original firmware's br_table only
+  # has 11 steps and repeats 1 % for the lowest four positions.
+  - platform: yeelight_front_panel
+    name: "slider level"
+    on_value:
+      - light.turn_on:
+          id: floor_light
+          brightness: !lambda |-
+            const float pos = std::max(0.0f, std::min(x - 1.0f, 21.0f));
+            return 0.01f + 0.99f * pos / 21.0f;
+          transition_length: 200ms
