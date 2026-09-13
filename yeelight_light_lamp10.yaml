@@ -11,7 +11,7 @@
 #   GPIO14  green PWM (active low)    GPIO19  front panel SCL
 #   GPIO5   blue PWM (active low)     GPIO16  front panel interrupt
 #   GPIO12  warm white PWM            GPIO4   switched with the light, see below
-#   GPIO2   cold white PWM
+#   GPIO2   cold white PWM            GPIO33  LED driver 12 V rail enable
 #
 # Verified on one unit, ESP-WROOM-32D. Other revisions may differ.
 
@@ -86,6 +86,18 @@ power_supply:
     pin: GPIO4
     enable_time: 20ms
     keep_on_time: 5s
+
+# GPIO33 enables the 12 V rail of all LED drivers. The original firmware drives
+# it high once at start-up and never lowers it. Left floating the rail may come
+# up by chance, which is how it went unnoticed: one unit lit fine until it was
+# reassembled, then stayed dark with 12 V in front of the rail switch and 0 V
+# behind it.
+switch:
+  - platform: gpio
+    id: led_rail_enable
+    pin: GPIO33
+    restore_mode: ALWAYS_ON
+    internal: true
 
 # All channels run at 3000 Hz like the original firmware. min_power keeps the
 # lowest brightness visible; zero_means_zero keeps "off" off.
