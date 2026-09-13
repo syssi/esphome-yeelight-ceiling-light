@@ -5,8 +5,7 @@
 #include "esphome/core/hal.h"
 #include "esphome/core/helpers.h"
 
-namespace esphome {
-namespace yeelight_front_panel {
+namespace esphome::yeelight_front_panel {
 
 /// Longest message any supported panel uses. Bump when adding a model.
 static const uint8_t MAX_MESSAGE_LENGTH = 8;
@@ -162,5 +161,4 @@ class YeelightFrontPanel : public Component, public i2c::I2CDevice {
   CallbackManager<void(const FrontPanelEvent &)> event_callback_{};
 };
 
-}  // namespace yeelight_front_panel
-}  // namespace esphome
+}  // namespace esphome::yeelight_front_panel

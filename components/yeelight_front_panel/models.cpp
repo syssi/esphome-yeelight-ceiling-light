@@ -2,8 +2,7 @@
 
 #include <cstring>
 
-namespace esphome {
-namespace yeelight_front_panel {
+namespace esphome::yeelight_front_panel {
 
 // --- Bedside Lamp 2 --------------------------------------------------------
 
@@ -160,5 +159,4 @@ const FrontPanelModel *get_model(Model model) {
   }
 }
 
-}  // namespace yeelight_front_panel
-}  // namespace esphome
+}  // namespace esphome::yeelight_front_panel

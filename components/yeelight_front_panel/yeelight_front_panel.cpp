@@ -6,8 +6,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace esphome {
-namespace yeelight_front_panel {
+namespace esphome::yeelight_front_panel {
 
 static const char *const TAG = "yeelight_front_panel";
 
@@ -78,10 +77,11 @@ void YeelightFrontPanel::loop() {
 
 void YeelightFrontPanel::read_event_() {
   const uint8_t length = this->model_->event_length();
+  char hex[format_hex_pretty_size(MAX_MESSAGE_LENGTH)];
 
   const uint8_t *request = this->model_->event_request();
   if (request != nullptr) {
-    ESP_LOGV(TAG, "Event request: %s", format_hex_pretty(request, length).c_str());
+    ESP_LOGV(TAG, "Event request: %s", format_hex_pretty_to(hex, request, length, '.'));
     const i2c::ErrorCode err = this->write(request, length);
     if (err != i2c::ERROR_OK) {
       ESP_LOGW(TAG, "Requesting the pending event failed (i2c error %d)", err);
@@ -98,17 +98,17 @@ void YeelightFrontPanel::read_event_() {
 
   FrontPanelEvent event;
   if (!this->model_->parse_event(message, &event)) {
-    ESP_LOGW(TAG, "Unrecognised message: %s", format_hex_pretty(message, length).c_str());
+    ESP_LOGW(TAG, "Unrecognised message: %s", format_hex_pretty_to(hex, message, length, '.'));
     return;
   }
 
   // Panels that hold the trigger line low are polled, and answer with an idle
   // message once nothing is pending. Those would drown everything else in the log.
   if (event.part == FrontPanelPart::UNKNOWN) {
-    ESP_LOGV(TAG, "Idle message: %s", format_hex_pretty(message, length).c_str());
+    ESP_LOGV(TAG, "Idle message: %s", format_hex_pretty_to(hex, message, length, '.'));
   } else {
     if (this->debug_) {
-      ESP_LOGI(TAG, "Message: %s", format_hex_pretty(message, length).c_str());
+      ESP_LOGI(TAG, "Message: %s", format_hex_pretty_to(hex, message, length, '.'));
     }
     ESP_LOGD(TAG, "Event: part=%u action=%u level=%u", static_cast<uint8_t>(event.part),
              static_cast<uint8_t>(event.action), event.slider_level);
@@ -120,8 +120,9 @@ void YeelightFrontPanel::read_event_() {
 void YeelightFrontPanel::flush_leds_() {
   uint8_t message[MAX_MESSAGE_LENGTH];
   this->model_->encode_leds(this->led_state_, message);
+  char hex[format_hex_pretty_size(MAX_MESSAGE_LENGTH)];
   ESP_LOGD(TAG, "LED update 0x%04X: %s", this->led_state_,
-           format_hex_pretty(message, this->model_->message_length()).c_str());
+           format_hex_pretty_to(hex, message, this->model_->message_length(), '.'));
   const i2c::ErrorCode err = this->write(message, this->model_->message_length());
   if (err != i2c::ERROR_OK) {
     ESP_LOGW(TAG, "Updating the front panel LEDs failed (i2c error %d)", err);
@@ -153,5 +154,4 @@ uint8_t YeelightFrontPanel::slider_level_count() const {
   return this->model_ == nullptr ? 0 : this->model_->slider_level_count();
 }
 
-}  // namespace yeelight_front_panel
-}  // namespace esphome
+}  // namespace esphome::yeelight_front_panel

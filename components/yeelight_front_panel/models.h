@@ -2,8 +2,7 @@
 
 #include "yeelight_front_panel.h"
 
-namespace esphome {
-namespace yeelight_front_panel {
+namespace esphome::yeelight_front_panel {
 
 /// Xiaomi Mijia Bedside Lamp 2 (yeelink.light.bslamp2).
 ///
@@ -39,7 +38,7 @@ class Bslamp2Model : public FrontPanelModel {
 /// Yeelight Staria Floor Lamp (yeelink.light.lamp10).
 ///
 /// I2C address 0x50, 3 byte messages. Established by static analysis of the
-/// original firmware: the front panel driver writes three bytes to slave 0x50
+/// original firmware: the front panel driver writes three bytes to I2C address 0x50
 /// on I2C port 1, caching a 16 bit LED state into the last two bytes first --
 /// structurally the same LED update the Bedside Lamp 2 performs.
 ///
@@ -82,5 +81,4 @@ class Lamp10Model : public FrontPanelModel {
 
 const FrontPanelModel *get_model(Model model);
 
-}  // namespace yeelight_front_panel
-}  // namespace esphome
+}  // namespace esphome::yeelight_front_panel

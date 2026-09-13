@@ -2,7 +2,13 @@ from esphome import pins
 import esphome.codegen as cg
 from esphome.components import i2c
 import esphome.config_validation as cv
-from esphome.const import CONF_ADDRESS, CONF_ID, CONF_MODEL
+from esphome.const import (
+    CONF_ADDRESS,
+    CONF_DEBUG,
+    CONF_ID,
+    CONF_MODEL,
+    CONF_TRIGGER_PIN,
+)
 
 CODEOWNERS = ["@syssi"]
 
@@ -10,8 +16,6 @@ DEPENDENCIES = ["i2c"]
 MULTI_CONF = True
 
 CONF_YEELIGHT_FRONT_PANEL_ID = "yeelight_front_panel_id"
-CONF_TRIGGER_PIN = "trigger_pin"
-CONF_DEBUG = "debug"
 
 yeelight_front_panel_ns = cg.esphome_ns.namespace("yeelight_front_panel")
 YeelightFrontPanel = yeelight_front_panel_ns.class_(

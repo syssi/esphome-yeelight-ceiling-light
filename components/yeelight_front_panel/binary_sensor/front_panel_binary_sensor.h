@@ -5,8 +5,7 @@
 
 #include "../yeelight_front_panel.h"
 
-namespace esphome {
-namespace yeelight_front_panel {
+namespace esphome::yeelight_front_panel {
 
 /// Reports whether one element of the front panel is currently being touched.
 class FrontPanelBinarySensor : public binary_sensor::BinarySensor, public Component {
@@ -34,5 +33,4 @@ class FrontPanelBinarySensor : public binary_sensor::BinarySensor, public Compon
   FrontPanelPart part_{FrontPanelPart::UNKNOWN};
 };
 
-}  // namespace yeelight_front_panel
-}  // namespace esphome
+}  // namespace esphome::yeelight_front_panel

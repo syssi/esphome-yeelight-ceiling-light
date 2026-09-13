@@ -5,8 +5,7 @@
 
 #include "../yeelight_front_panel.h"
 
-namespace esphome {
-namespace yeelight_front_panel {
+namespace esphome::yeelight_front_panel {
 
 /// Publishes the slider position as a level, counting from 1 at the end of the
 /// slider closest to the power button. The number of levels differs per model;
@@ -28,5 +27,4 @@ class FrontPanelSliderSensor : public sensor::Sensor, public Component {
   YeelightFrontPanel *parent_{nullptr};
 };
 
-}  // namespace yeelight_front_panel
-}  // namespace esphome
+}  // namespace esphome::yeelight_front_panel
