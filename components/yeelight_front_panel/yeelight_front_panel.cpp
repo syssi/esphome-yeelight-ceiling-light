@@ -10,7 +10,10 @@ namespace esphome::yeelight_front_panel {
 
 static const char *const TAG = "yeelight_front_panel";
 
-void IRAM_ATTR HOT FrontPanelTriggerStore::gpio_intr(FrontPanelTriggerStore *store) { store->event_count++; }
+void IRAM_ATTR HOT FrontPanelTriggerStore::gpio_intr(FrontPanelTriggerStore *store) {
+  // Plain assignment: increment of a volatile object is deprecated in C++20. Only the ISR writes it.
+  store->event_count = store->event_count + 1;
+}
 
 void YeelightFrontPanel::setup() {
   this->model_ = get_model(this->model_id_);
