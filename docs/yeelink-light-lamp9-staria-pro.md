@@ -167,7 +167,13 @@ bootloader and partition table stay in place. ESPHome reports:
 ```
 
 Harmless in practice, but it costs around 40KB of IRAM and there is no OTA
-rollback protection. Only a UART flash replaces the bootloader.
+rollback protection.
+
+Replacing the bootloader would clear both, and ESPHome documents a way to do it
+over the air - behind `allow_partition_access`, with upstream's own bricking
+warning. Nothing here has tested it, and the sequencing matters on a freshly
+converted lamp: see "Replacing the partition table or bootloader" in
+[flashing-over-the-network.md](flashing-over-the-network.md).
 
 ## Transition length
 

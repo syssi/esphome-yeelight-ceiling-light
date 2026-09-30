@@ -2,6 +2,13 @@
 # - https://github.com/syssi/esphome-yeelight-ceiling-light/blob/main/yeelight_light_ceiling15.yaml
 # - https://github.com/jaddel/ESPHome-Configurations/blob/master/Devices/Ceiling%20Yeelight%20YLXD41YL/ceiling_yeelight_ylxd41xl.yaml
 
+# To keep a copy of the stock firmware, uncomment the `packages:` block below
+# BEFORE the first flash. Only that first flash leaves the stock firmware
+# readable - the next one overwrites it. See docs/flashing-over-the-network.md.
+#
+# packages:
+#   flash_probe: !include flash_probe.yaml
+
 substitutions:
   name: yeelight-light-ceiling11
 

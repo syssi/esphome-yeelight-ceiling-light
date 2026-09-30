@@ -22,10 +22,13 @@ captcha and email 2FA that Xiaomi's login now requires:
     https://github.com/PiotrMachowski/Xiaomi-cloud-tokens-extractor
 
 Point --extractor at a checkout of it. Credentials are read from the environment
-so they never appear in a command line or shell history:
+rather than from arguments, so they stay out of the process list - but an export
+typed at a prompt still lands in shell history, so prompt for the password:
 
     export MI_USERNAME=...
-    export MI_PASSWORD=...
+    read -rsp 'Mi password: ' MI_PASSWORD && export MI_PASSWORD
+
+--qr needs no password at all.
 
 Usage:
     cloud_ota.py --ip 192.0.2.10 --url http://192.0.2.2:8000/fw_crc.bin

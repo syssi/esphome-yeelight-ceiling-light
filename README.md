@@ -41,6 +41,13 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | Yeelight Ceiling Light 400C                      | yeelight.light.ceilb      | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
 | Yeelight Jiaoyue 260 Ceiling Light               | yeelight.light.ceiling24  | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
 
+### Flashing over UART
+
+The per-model pinouts below say which pads to use. For what goes wrong once they
+are wired - grounding, powering the board, download mode, and reading esptool's
+misleading errors - see
+[docs/flashing-over-uart.md](docs/flashing-over-uart.md).
+
 ### Flashing without opening the device
 
 Every procedure in this repository flashes over UART. On ESP32 models running
@@ -49,9 +56,10 @@ mechanism, relayed through the Xiaomi cloud, pointed at a file on your LAN.
 See [docs/flashing-over-the-network.md](docs/flashing-over-the-network.md) and
 the helpers in [`tools/`](tools).
 
-Confirmed on `yeelink.light.lamp9` firmware 2.1.7_0031. It writes only the
-application partition, so it cannot rescue a device that will not boot - that
-still needs UART.
+Confirmed on `yeelink.light.lamp9` firmware 2.1.7_0031 and
+`yeelink.light.ceiling10` firmware 2.0.6_0049; the requirements differ between
+those two firmware generations. It writes only the application partition, so it
+cannot rescue a device that will not boot - that still needs UART.
 
 ### More ESPHome + Yeelight projects
 

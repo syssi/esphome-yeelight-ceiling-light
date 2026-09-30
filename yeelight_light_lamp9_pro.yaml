@@ -17,6 +17,13 @@
 # Verified on a unit with production date 2020-10, ESP32-WROOM-32D. Other
 # revisions may differ - see the hardware notes before assuming the GPIO map.
 
+# To keep a copy of the stock firmware, uncomment the `packages:` block below
+# BEFORE the first flash. Only that first flash leaves the stock firmware
+# readable - the next one overwrites it. See docs/flashing-over-the-network.md.
+#
+# packages:
+#   flash_probe: !include flash_probe.yaml
+
 substitutions:
   name: yeelight-light-lamp9-pro
 

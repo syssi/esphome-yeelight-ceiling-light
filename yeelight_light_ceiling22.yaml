@@ -1,3 +1,10 @@
+# To keep a copy of the stock firmware, uncomment the `packages:` block below
+# BEFORE the first flash. Only that first flash leaves the stock firmware
+# readable - the next one overwrites it. See docs/flashing-over-the-network.md.
+#
+# packages:
+#   flash_probe: !include flash_probe.yaml
+
 substitutions:
   name: yeelight-light-ceiling22
 

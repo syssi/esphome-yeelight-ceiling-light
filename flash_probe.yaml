@@ -1,0 +1,69 @@
+# Read-only flash instrumentation: keep a copy of the stock firmware.
+#
+# Include this from a device config BEFORE the first flash:
+#
+#     packages:
+#       flash_probe: !include flash_probe.yaml
+#
+# Why the timing matters. A flash always targets the OTA slot that is not
+# running, so converting to ESPHome leaves the vendor image intact in the other
+# slot - but only until the next flash, which targets exactly that slot. The
+# image that replaces stock is therefore the only one that can still read it.
+# Convert without this and the vendor copy is unreachable: gaining the ability
+# to read it costs the flash that destroys it.
+#
+# What it adds, all read-only - nothing here writes to flash:
+#
+#   dump_flash(offset, length)    read the inactive OTA slot, logged as base64
+#   dump_otadata(offset, length)  read the bootloader's slot-selection records
+#   log_slots                     which slot runs now, which the next OTA takes
+#   redump_config                 re-run dump_config, for the partition table
+#
+# Drive it with tools/dump_stock.py, which reassembles the chunks and is
+# restartable. See docs/flashing-over-the-network.md for the whole procedure,
+# including how to verify what you extracted.
+#
+# Cost: about 6 KB of RAM (a 2 KB read buffer, plus the larger log buffer) and
+# four actions visible on the device in Home Assistant. Remove the include again
+# once you have the image - but remember that doing so is itself a flash, and
+# after it the vendor slot is gone.
+#
+# Deliberately NOT `allow_partition_access`: that gates *writes* of the
+# partition table and bootloader and carries an explicit bricking warning.
+# Nothing here needs it.
+
+esphome:
+  includes:
+    - tools/probe_flash.h
+
+# A 2048-byte chunk is 2732 base64 characters and has to fit one log line.
+logger:
+  tx_buffer_size: 4096
+
+# Logs the full partition table at boot, plus chip revision, core count and
+# flash geometry.
+debug:
+
+api:
+  actions:
+    - action: dump_flash
+      variables:
+        offset: int
+        length: int
+      then:
+        - lambda: flash_probe::dump_flash(offset, length);
+
+    - action: dump_otadata
+      variables:
+        offset: int
+        length: int
+      then:
+        - lambda: flash_probe::dump_otadata(offset, length);
+
+    - action: log_slots
+      then:
+        - lambda: flash_probe::log_slots();
+
+    - action: redump_config
+      then:
+        - lambda: App.schedule_dump_config();
