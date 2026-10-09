@@ -14,6 +14,7 @@ from esphome.const import (
 
 AUTO_LOAD = ["xiaomi_ble", "sensor"]
 CODEOWNERS = ["@syssi"]
+DOMAIN = "xiaomi_ylkg07yl"
 DEPENDENCIES = ["esp32_ble_tracker"]
 MULTI_CONF = True
 

@@ -4,6 +4,7 @@ import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
 CODEOWNERS = ["@syssi"]
+DOMAIN = "yeelight_fan_controller"
 
 DEPENDENCIES = ["uart"]
 AUTO_LOAD = ["fan"]
