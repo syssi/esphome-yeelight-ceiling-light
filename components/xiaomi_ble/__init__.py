@@ -5,6 +5,7 @@ from esphome.const import CONF_ID
 
 DEPENDENCIES = ["esp32_ble_tracker"]
 CODEOWNERS = ["@syssi"]
+DOMAIN = "xiaomi_ble"
 
 xiaomi_ble_ns = cg.esphome_ns.namespace("xiaomi_ble")
 XiaomiListener = xiaomi_ble_ns.class_(
