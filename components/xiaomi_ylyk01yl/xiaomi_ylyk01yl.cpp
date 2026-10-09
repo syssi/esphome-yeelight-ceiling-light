@@ -3,9 +3,14 @@
 
 #ifdef USE_ESP32
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::xiaomi_ylyk01yl {
 
-static const char *const TAG = "xiaomi_ylyk01yl";
+ESPHOME_LOG_TAG(TAG, "xiaomi_ylyk01yl");
 
 void XiaomiYLYK01YL::dump_config() {
   ESP_LOGCONFIG(TAG, "Xiaomi YLYK01YL");

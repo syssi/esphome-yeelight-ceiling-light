@@ -7,9 +7,14 @@
 #include <vector>
 #include "mbedtls/ccm.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::xiaomi_ble {
 
-static const char *const TAG = "xiaomi_ble";
+ESPHOME_LOG_TAG(TAG, "xiaomi_ble");
 
 bool parse_xiaomi_value(uint16_t value_type, const uint8_t *data, uint8_t value_length, XiaomiParseResult &result) {
   // button pressed, 3 bytes, only byte 3 is used for supported devices so far
