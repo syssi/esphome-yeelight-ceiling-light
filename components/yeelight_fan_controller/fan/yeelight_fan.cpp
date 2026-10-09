@@ -2,9 +2,14 @@
 #include "esphome/core/log.h"
 #include "esphome/core/hal.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::yeelight_fan_controller {
 
-static const char *const TAG = "yeelight_fan_controller.fan";
+ESPHOME_LOG_TAG(TAG, "yeelight_fan_controller.fan");
 
 static const uint8_t FUNCTION_TURN_OFF = 0x01;
 static const uint8_t FUNCTION_SET_MODE = 0x04;
