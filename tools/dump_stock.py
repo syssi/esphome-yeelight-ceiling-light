@@ -13,11 +13,14 @@ picks up where it stopped rather than starting over.
 
 Usage:
     dump_stock.py <ip> <out.bin> [--size BYTES] [--chunk BYTES]
+
+Set ESPHOME_NOISE_PSK if the device config enables API encryption.
 """
 
 import argparse
 import asyncio
 import base64
+import os
 import pathlib
 import re
 import sys
@@ -46,7 +49,9 @@ async def run(ip: str, out: pathlib.Path, size: int, chunk: int) -> int:
     fh = out.open("r+b")
     dfh = done_path.open("a")
 
-    cli = APIClient(ip, 6053, None)
+    # API encryption key, if the device config sets one; read from the
+    # environment so it stays out of the process list.
+    cli = APIClient(ip, 6053, None, noise_psk=os.environ.get("ESPHOME_NOISE_PSK") or None)
     await cli.connect(login=True)
     try:
         _entities, services = await cli.list_entities_services()
