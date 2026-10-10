@@ -11,6 +11,8 @@ namespace esphome::yeelight_fan_controller {
 
 ESPHOME_LOG_TAG(TAG, "yeelight_fan_controller");
 
+static constexpr size_t MAX_HEX_DUMP_BYTES = 100;
+
 static const uint8_t FAN_PKT_START = 0x01;
 static const uint8_t FAN_PKT_END = 0x03;
 static const uint8_t FAN_PKT_RESPONSE = 0xF3;
@@ -92,7 +94,8 @@ bool YeelightFanController::parse_yeelight_fan_controller_byte_(uint8_t byte) {
     return false;
   }
 
-  ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty(raw, at + 1).c_str());  // NOLINT
+  char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+  ESP_LOGVV(TAG, "RX <- %s", format_hex_pretty_to(hex_buf, raw, at + 1, '.'));
 
   std::vector<uint8_t> data(this->rx_buffer_.begin(), this->rx_buffer_.begin() + frame_len);
 
@@ -113,7 +116,8 @@ void YeelightFanController::on_yeelight_fan_controller_data_(const std::vector<u
     return;
   }
 
-  ESP_LOGW(TAG, "Unhandled response received: %s", format_hex_pretty(&data.front(), data.size()).c_str());  // NOLINT
+  char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+  ESP_LOGW(TAG, "Unhandled response received: %s", format_hex_pretty_to(hex_buf, data, '.'));
 }
 
 void YeelightFanController::dump_config() {  // NOLINT(google-readability-function-size,readability-function-size)

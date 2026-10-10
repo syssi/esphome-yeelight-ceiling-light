@@ -16,6 +16,8 @@ namespace esphome::xiaomi_ble {
 
 ESPHOME_LOG_TAG(TAG, "xiaomi_ble");
 
+static constexpr size_t MAX_HEX_DUMP_BYTES = 100;
+
 bool parse_xiaomi_value(uint16_t value_type, const uint8_t *data, uint8_t value_length, XiaomiParseResult &result) {
   // button pressed, 3 bytes, only byte 3 is used for supported devices so far
   if ((value_type == 0x1001) && (value_length == 3)) {
@@ -295,7 +297,8 @@ optional<XiaomiParseResult> parse_xiaomi_header(const esp32_ble_tracker::Service
 bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
   if (raw.size() < 15) {
     ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet too small (%zu)!", raw.size());
-    ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());  // NOLINT
+    char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+    ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty_to(hex_buf, raw, '.'));
     return false;
   }
 
@@ -365,12 +368,13 @@ bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, c
     memcpy(mac_address + 4, mac_reverse + 1, 1);
     memcpy(mac_address + 5, mac_reverse, 1);
     ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): authenticated decryption failed.");
-    ESP_LOGVV(TAG, "  MAC address : %s", format_hex_pretty(mac_address, 6).c_str());                      // NOLINT
-    ESP_LOGVV(TAG, "       Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());              // NOLINT
-    ESP_LOGVV(TAG, "          Key : %s", format_hex_pretty(vector.key, vector.keysize).c_str());          // NOLINT
-    ESP_LOGVV(TAG, "           Iv : %s", format_hex_pretty(vector.iv, vector.ivsize).c_str());            // NOLINT
-    ESP_LOGVV(TAG, "       Cipher : %s", format_hex_pretty(vector.ciphertext, vector.datasize).c_str());  // NOLINT
-    ESP_LOGVV(TAG, "          Tag : %s", format_hex_pretty(vector.tag, vector.tagsize).c_str());          // NOLINT
+    char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+    ESP_LOGVV(TAG, "  MAC address : %s", format_hex_pretty_to(hex_buf, mac_address, 6, '.'));
+    ESP_LOGVV(TAG, "       Packet : %s", format_hex_pretty_to(hex_buf, raw, '.'));
+    ESP_LOGVV(TAG, "          Key : %s", format_hex_pretty_to(hex_buf, vector.key, vector.keysize, '.'));
+    ESP_LOGVV(TAG, "           Iv : %s", format_hex_pretty_to(hex_buf, vector.iv, vector.ivsize, '.'));
+    ESP_LOGVV(TAG, "       Cipher : %s", format_hex_pretty_to(hex_buf, vector.ciphertext, vector.datasize, '.'));
+    ESP_LOGVV(TAG, "          Tag : %s", format_hex_pretty_to(hex_buf, vector.tag, vector.tagsize, '.'));
     mbedtls_ccm_free(&ctx);
     return false;
   }
@@ -386,9 +390,9 @@ bool decrypt_xiaomi_payload(std::vector<uint8_t> &raw, const uint8_t *bindkey, c
   raw[0] &= ~0x08;
 
   ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): authenticated decryption passed.");
+  char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
   ESP_LOGVV(TAG, "  Plaintext : %s, Packet : %d",
-            format_hex_pretty(raw.data() + cipher_pos, vector.datasize).c_str(),  // NOLINT
-            static_cast<int>(raw[4]));
+            format_hex_pretty_to(hex_buf, raw.data() + cipher_pos, vector.datasize, '.'), static_cast<int>(raw[4]));
 
   mbedtls_ccm_free(&ctx);
   return true;
