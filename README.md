@@ -27,6 +27,7 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | Yeelight Ceiling Light YLXD41YL                  | yeelink.light.ceiling11   | YLXD41YL    | AC220V, 28W, 1800lm, 2700K-6500K, 32cm  |
 | Yeelight Staria Bedside LED                      | yeelink.light.lamp9       | YLCT02YL    | AC220V, 20W, 350lm, 2700K-6500K, without charger |
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lamp9       | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
+| Yeelight Staria LED Floor Lamp                   | yeelink.light.lamp10      | YLLD01YL    | RGB, 2700K-6500K, I2C front panel with slider |
 | Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD001 / MJXDD01SYL     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
 | Yeelight Ceiling Light YLXD50YL                  | yeelink.light.ceiling20   | YLXD50YL    | AC220V, 50W, 3100lm, 2700K-6500K, RGB ambient light, 47cm  |
 | Yeelight Arwen 450C                              | yeelight.light.ceilc      | YLXD013-B   | AC220V, 50W, 4000lm, 2700K-6500K, RGB ambient light, 50cm  |
@@ -134,6 +135,22 @@ See [`yeelight_light_lamp9_pro.yaml`](yeelight_light_lamp9_pro.yaml) and
 [the hardware notes](docs/yeelink-light-lamp9-staria-pro.md): the white channels
 need a PWM floor to dim without dropping out, and GPIO33 only *enables* the
 status LED rather than driving it.
+
+### yeelink.light.lamp10
+
+- Light (RGBWW)
+  - Brightness
+  - Color
+  - Color temperature (2700K-6500K)
+- Front panel
+  - Power button
+  - Color button
+  - Touch slider (22 levels)
+
+See [`yeelight_light_lamp10.yaml`](yeelight_light_lamp10.yaml). The front panel is
+an I2C device and needs the `yeelight_front_panel` component; its protocol is
+documented in [docs/yeelight-front-panel.md](docs/yeelight-front-panel.md). The
+LEDs need a PWM floor of about 7% to light.
 
 ### yeelink.light.strip6
 
