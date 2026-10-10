@@ -10,6 +10,7 @@
 
 substitutions:
   name: yeelight-light-ceiling24
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
 
 esphome:
   name: ${name}
@@ -29,6 +30,10 @@ esp32:
     advanced:
       ignore_efuse_mac_crc: true
       ignore_efuse_custom_mac: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
 
 wifi:
   ssid: !secret wifi_ssid
@@ -55,21 +60,36 @@ sensor:
     attenuation: 12db
 
 output:
+  # 3 kHz as in the stock firmware
   - platform: ledc
     pin: GPIO19
     id: output_warm
+    frequency: 3000
   - platform: ledc
     pin: GPIO21
     id: output_cold
+    frequency: 3000
 
 light:
-  - platform: cwww
+  # Warm/cold mixing of the stock firmware 1.3.2_0003: no interpolation, each table point
+  # holds up to the next one
+  - platform: yeelight_cct
     name: "ceiling light"
     id: ceiling_light
-    cold_white: output_cold
     warm_white: output_warm
-    cold_white_color_temperature: 6500 K
-    warm_white_color_temperature: 2700 K
-    # disabling constant_brightness makes color temperature transition smooth without brightness dips
-    # constant_brightness: true
-    gamma_correct: 0
+    cold_white: output_cold
+    interpolation: none
+    min_brightness: 10%
+    min_duty: 7%
+    mixing_table:
+      - {color_temperature: 2700 K, warm_white: 100%, cold_white: 0%}
+      - {color_temperature: 3000 K, warm_white: 84.946%, cold_white: 7.870%}
+      - {color_temperature: 3200 K, warm_white: 76.344%, cold_white: 15.798%}
+      - {color_temperature: 3400 K, warm_white: 68.817%, cold_white: 23.522%}
+      - {color_temperature: 4000 K, warm_white: 47.312%, cold_white: 44.213%}
+      - {color_temperature: 4500 K, warm_white: 32.506%, cold_white: 59.140%}
+      - {color_temperature: 5000 K, warm_white: 19.223%, cold_white: 73.118%}
+      - {color_temperature: 5500 K, warm_white: 8.157%, cold_white: 83.871%}
+      - {color_temperature: 5800 K, warm_white: 4.831%, cold_white: 87.097%}
+      - {color_temperature: 6000 K, warm_white: 0%, cold_white: 100%}
+      - {color_temperature: 6500 K, warm_white: 0%, cold_white: 100%}
