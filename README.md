@@ -13,6 +13,26 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 * [ESPHome 2024.10.0 or higher](https://github.com/esphome/esphome/releases).
 * TTL-to-USB module (FTDI/CH430/PL2303) and some wires to flash the device once
 
+## Secrets
+
+Create a `secrets.yaml` file with the following keys. Add only the keys that apply to the
+configuration(s) you use:
+
+```yaml
+wifi_ssid: YOUR_WIFI_SSID
+wifi_password: YOUR_WIFI_PASSWORD
+
+# BLE MAC address of the YLYK01YL remote control (yeerc_ylyk01yl.yaml, yeerc_ylyk01yl_fancl.yaml,
+# yeelight_light_fancl5.yaml)
+ylyk01yl_mac_address: AA:BB:CC:DD:EE:FF
+
+# BLE MAC address of the YLYK01YL remote control (yeelight_light_ceila.yaml)
+xiaomi_ylyk01yl_mac_address: AA:BB:CC:DD:EE:FF
+
+# BLE MAC address of the YLKG07YL dimmer (yeedimmer_ylkg07yl.yaml)
+ylkg07yl_mac_address: AA:BB:CC:DD:EE:FF
+```
+
 ## Supported devices
 
 | Name                                             | Model                     | Model no.   | Specs                                   |
