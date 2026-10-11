@@ -19,6 +19,7 @@ CONF_MIN_DUTY = "min_duty"
 CONF_MIN_SHARE = "min_share"
 CONF_MIXING_TABLE = "mixing_table"
 
+# Python handles for the C++ class and enum, used to generate code that refers to them.
 YeelightCCTLightOutput = yeelight_cct_ns.class_(
     "YeelightCCTLightOutput", light.LightOutput
 )
@@ -28,6 +29,7 @@ INTERPOLATIONS = {
     "quadratic": Interpolation.QUADRATIC,
 }
 
+# One row of mixing_table. color_temperature is parsed to mireds, the shares to 0..1.
 MIX_POINT_SCHEMA = cv.Schema(
     {
         cv.Required(CONF_COLOR_TEMPERATURE): cv.color_temperature,
@@ -38,10 +40,12 @@ MIX_POINT_SCHEMA = cv.Schema(
 
 
 def kelvin(mireds):
+    """Convert mireds to whole kelvin."""
     return round(1e6 / mireds)
 
 
 def validate_mixing_table(value):
+    """Require strictly rising colour temperatures."""
     temperatures = [kelvin(point[CONF_COLOR_TEMPERATURE]) for point in value]
     if temperatures != sorted(set(temperatures)):
         raise cv.Invalid(
@@ -50,9 +54,11 @@ def validate_mixing_table(value):
     return value
 
 
+# RGB_LIGHT_SCHEMA is the common schema of lights with outputs (name, transitions, effects, ...).
 CONFIG_SCHEMA = light.RGB_LIGHT_SCHEMA.extend(
     {
         cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(YeelightCCTLightOutput),
+        # PWM outputs of the two LED channels.
         cv.Required(CONF_WARM_WHITE): cv.use_id(output.FloatOutput),
         cv.Required(CONF_COLD_WHITE): cv.use_id(output.FloatOutput),
         cv.Required(CONF_MIXING_TABLE): cv.All(
@@ -63,8 +69,11 @@ CONFIG_SCHEMA = light.RGB_LIGHT_SCHEMA.extend(
         cv.Optional(CONF_INTERPOLATION, default="quadratic"): cv.enum(
             INTERPOLATIONS, lower=True
         ),
+        # quadratic only: keep the table point if a share would drop below this.
         cv.Optional(CONF_MIN_SHARE, default="0%"): cv.percentage,
+        # Output at 1 % brightness.
         cv.Optional(CONF_MIN_BRIGHTNESS, default="0%"): cv.percentage,
+        # Duty offset of every lit channel.
         cv.Optional(CONF_MIN_DUTY, default="0%"): cv.percentage,
         # The stock firmware scales the duty linearly with the brightness.
         cv.Optional(CONF_GAMMA_CORRECT, default=0.0): cv.positive_float,
@@ -73,6 +82,7 @@ CONFIG_SCHEMA = light.RGB_LIGHT_SCHEMA.extend(
 
 
 async def to_code(config):
+    """Generate the C++ code that creates and configures the light output."""
     var = cg.new_Pvariable(config[CONF_OUTPUT_ID])
     await light.register_light(var, config)
 
