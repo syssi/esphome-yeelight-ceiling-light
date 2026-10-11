@@ -8,7 +8,10 @@ your LAN.
 Confirmed here on two units of different firmware generations:
 `yeelink.light.lamp9` on `2.1.7_0031` (`miio_ver 0.0.9`) and
 `yeelink.light.ceiling10` on `2.0.6_0049` (`miio_ver 0.0.6`). The requirements
-differ between them - see the table further down. Third parties report the same
+differ between them - see the table further down. A third unit,
+`yeelight.light.ceilc` (Arwen 550C, YLXD013-C) on `2.0.6_0005`, was converted by
+a contributor with all five requirements applied at once, so it confirms the route
+but not which requirements that model strictly needs. Third parties report the same
 mechanism working on `yeelink.light.ceiling22`; that was not verified here.
 
 > **Read the limits first.** The procedure here writes only the application
@@ -81,15 +84,18 @@ Not verified, and where the real risk lies:
 ## Five requirements that are easy to miss
 
 Not all five apply to every device, and the differences track the firmware
-generation. Two units were converted, and this is what each one actually showed:
+generation. Three units were converted, and this is what each one actually showed:
 
-| | `yeelink.light.lamp9`<br>`miio_ver 0.0.9`, stock 2.1.7_0031 | `yeelink.light.ceiling10`<br>`miio_ver 0.0.6`, stock 2.0.6_0049 |
-| --- | --- | --- |
-| 1. CRC trailer | appended; necessity not tested | **required** - verified by serving an image without one |
-| 2. HTTP/1.1 | **observed necessary** | served over 1.1 throughout, so never retested |
-| 3. no port in the URL | **not needed** - flashed successfully on port 8000 | **required** |
-| 4. `PARTITION_TABLE_MD5: n` | **not needed** - booted fine without it | **required** |
-| 5. `FREERTOS_UNICORE: y` | set; necessity not tested | **required**; die confirmed single-core |
+| | `yeelink.light.lamp9`<br>`miio_ver 0.0.9`, stock 2.1.7_0031 | `yeelink.light.ceiling10`<br>`miio_ver 0.0.6`, stock 2.0.6_0049 | `yeelight.light.ceilc`<br>`miio_ver` not read, stock 2.0.6_0005 |
+| --- | --- | --- | --- |
+| 1. CRC trailer | appended; necessity not tested | **required** - verified by serving an image without one | appended; necessity not tested |
+| 2. HTTP/1.1 | **observed necessary** | served over 1.1 throughout, so never retested | served over 1.1; necessity not tested |
+| 3. no port in the URL | **not needed** - flashed successfully on port 8000 | **required** | port 80, no port in the URL; necessity not tested |
+| 4. `PARTITION_TABLE_MD5: n` | **not needed** - booted fine without it | **required** | set; necessity not tested |
+| 5. `FREERTOS_UNICORE: y` | set; necessity not tested | **required**; die confirmed single-core | set; die reports single-core (`ESP32 rev1.0, 1 core(s)`) |
+
+The `ceilc` shares the `2.0.6` firmware generation with the `ceiling10`, so treat
+it like the older column until someone tests the requirements one at a time.
 
 So a newer unit may well flash without 3 or 4 at all. An older one needs both, and
 each failure looks like something else entirely - which is why they are written up
@@ -154,6 +160,14 @@ trailer the served file carried. Two things follow. Restoring such an image
 byte-for-byte reproduces what the vendor wrote, trailer included; and
 `esp_image_verify()` accepts it, because bytes past the declared image end are
 never examined. Both were confirmed by restoring one.
+
+This does not hold on every model. A `ceilc` on `2.0.6_0005`, read back the same
+way, matched the cloud image byte for byte up to its ESP-IDF image end at
+1,264,672 bytes - but the four bytes after it were `ffffffff`, not the
+`2aff9de3` trailer the cloud file carries. Whether that slot was last written by an
+OTA or at the factory is unknown, so this shows only that the trailer is not
+guaranteed to be in flash. It does not affect a restore, since
+`esp_image_verify()` stops at the image end either way.
 
 ### 2. The HTTP server must speak HTTP/1.1
 
@@ -368,7 +382,10 @@ an edited one.
 
    `--server` selects the account region (`cn`, `de`, `us`, `ru`, `tw`, `sg`, `i2`;
    default `de`). The device list is per-region, so the wrong one simply will not
-   find your lamp.
+   find your lamp. One account can hold devices in several regions at once: a
+   `ceilc` paired long ago turned up in `us` while the same account also had stale,
+   offline entries in `de` and `cn`. If `--state` reports no device at your IP, try
+   the other regions before suspecting anything else.
 
    Note the Yeelight app account and the Xiaomi account may be the same identity,
    in which case no re-pairing is needed.
@@ -557,6 +574,14 @@ reassembles the chunks and is restartable, because it records completed offsets
 in a sidecar next to the output file:
 
 ```
+python3 tools/dump_stock.py <device-ip> stock.bin
+```
+
+If the device config enables API encryption, pass the key through the
+environment, the same way the cloud tools take credentials:
+
+```
+read -rsp 'API key: ' ESPHOME_NOISE_PSK && export ESPHOME_NOISE_PSK
 python3 tools/dump_stock.py <device-ip> stock.bin
 ```
 
