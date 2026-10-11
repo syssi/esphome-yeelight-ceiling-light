@@ -5,6 +5,7 @@ from esphome.const import (
     CONF_COLD_WHITE,
     CONF_COLOR_TEMPERATURE,
     CONF_GAMMA_CORRECT,
+    CONF_MIN_BRIGHTNESS,
     CONF_OUTPUT_ID,
     CONF_WARM_WHITE,
 )
@@ -14,7 +15,6 @@ from . import yeelight_cct_ns
 CODEOWNERS = ["@syssi"]
 
 CONF_INTERPOLATION = "interpolation"
-CONF_MIN_BRIGHTNESS = "min_brightness"
 CONF_MIN_DUTY = "min_duty"
 CONF_MIN_SHARE = "min_share"
 CONF_MIXING_TABLE = "mixing_table"
