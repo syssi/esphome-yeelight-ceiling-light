@@ -16,9 +16,12 @@ namespace esphome::xiaomi_ylkg07yl {
 
 ESPHOME_LOG_TAG(TAG, "xiaomi_ylkg07yl");
 
+static constexpr size_t MAX_HEX_DUMP_BYTES = 100;
+
 void XiaomiYLKG07YL::dump_config() {
   ESP_LOGCONFIG(TAG, "Xiaomi YLKG07YL");
-  ESP_LOGCONFIG(TAG, "  Bindkey: %s", format_hex_pretty(this->bindkey_, 12).c_str());  // NOLINT
+  char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+  ESP_LOGCONFIG(TAG, "  Bindkey: %s", format_hex_pretty_to(hex_buf, this->bindkey_, 12, '.'));
   LOG_SENSOR("  ", "Keycode", this->keycode_sensor_);
   LOG_SENSOR("  ", "Encoder value", this->encoder_value_sensor_);
   LOG_SENSOR("  ", "Action type", this->action_type_sensor_);
@@ -105,7 +108,8 @@ void XiaomiYLKG07YL::set_bindkey(const std::string &bindkey) {
 bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint8_t *bindkey, const uint64_t &address) {
   if (raw.size() != 21) {
     ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): data packet has wrong size (%zu)!", raw.size());
-    ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());  // NOLINT
+    char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+    ESP_LOGVV(TAG, "  Packet : %s", format_hex_pretty_to(hex_buf, raw, '.'));
     return false;
   }
 
@@ -196,11 +200,12 @@ bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint
     memcpy(mac_address + 4, mac_reverse + 1, 1);
     memcpy(mac_address + 5, mac_reverse, 1);
     ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): mbedtls_ccm_star_auth_decrypt failed.");
-    ESP_LOGVV(TAG, "  MAC address : %s", format_hex_pretty(mac_address, 6).c_str());                      // NOLINT
-    ESP_LOGVV(TAG, "       Packet : %s", format_hex_pretty(raw.data(), raw.size()).c_str());              // NOLINT
-    ESP_LOGVV(TAG, "          Key : %s", format_hex_pretty(vector.key, vector.keysize).c_str());          // NOLINT
-    ESP_LOGVV(TAG, "           Iv : %s", format_hex_pretty(vector.iv, vector.ivsize).c_str());            // NOLINT
-    ESP_LOGVV(TAG, "       Cipher : %s", format_hex_pretty(vector.ciphertext, vector.datasize).c_str());  // NOLINT
+    char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
+    ESP_LOGVV(TAG, "  MAC address : %s", format_hex_pretty_to(hex_buf, mac_address, 6, '.'));
+    ESP_LOGVV(TAG, "       Packet : %s", format_hex_pretty_to(hex_buf, raw, '.'));
+    ESP_LOGVV(TAG, "          Key : %s", format_hex_pretty_to(hex_buf, vector.key, vector.keysize, '.'));
+    ESP_LOGVV(TAG, "           Iv : %s", format_hex_pretty_to(hex_buf, vector.iv, vector.ivsize, '.'));
+    ESP_LOGVV(TAG, "       Cipher : %s", format_hex_pretty_to(hex_buf, vector.ciphertext, vector.datasize, '.'));
     mbedtls_ccm_free(&ctx);
     return false;
   }
@@ -216,9 +221,9 @@ bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint
   raw[0] &= ~0x08;
 
   ESP_LOGVV(TAG, "decrypt_mibeacon_v23_(): authenticated decryption passed.");
+  char hex_buf[format_hex_pretty_size(MAX_HEX_DUMP_BYTES)];
   ESP_LOGVV(TAG, "  Plaintext : %s, Packet : %d",
-            format_hex_pretty(raw.data() + cipher_pos, vector.datasize).c_str(),  // NOLINT
-            static_cast<int>(raw[4]));
+            format_hex_pretty_to(hex_buf, raw.data() + cipher_pos, vector.datasize, '.'), static_cast<int>(raw[4]));
 
   mbedtls_ccm_free(&ctx);
   return true;
