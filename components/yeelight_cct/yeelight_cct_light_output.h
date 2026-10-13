@@ -16,6 +16,16 @@ enum class Interpolation : uint8_t {
   NONE,
   /// Quadratic Lagrange interpolation with the stock edge rules (stock firmware 2.x).
   QUADRATIC,
+  /// Linear interpolation in kelvin between two points (ceil49).
+  LINEAR,
+};
+
+/// How the stock firmware maps brightness 1..100 % to the output factor min_brightness..100 %.
+enum class BrightnessCurve : uint8_t {
+  /// Straight line (ceiling lights).
+  LINEAR,
+  /// Quadratic curve that stays darker at low brightness (lamp2, lamp4, lamp7, lamp9).
+  QUADRATIC,
 };
 
 /// Colour temperature light that drives the warm and cold channel like the Yeelight stock firmware.
@@ -26,6 +36,7 @@ class YeelightCCTLightOutput : public light::LightOutput {
   void set_cold_white(output::FloatOutput *cold_white) { this->cold_white_ = cold_white; }
   void add_point(uint16_t kelvin, float warm, float cold) { this->table_.push_back({kelvin, warm, cold}); }
   void set_interpolation(Interpolation interpolation) { this->interpolation_ = interpolation; }
+  void set_brightness_curve(BrightnessCurve brightness_curve) { this->brightness_curve_ = brightness_curve; }
   void set_min_share(float min_share) { this->min_share_ = min_share; }
   void set_min_brightness(float min_brightness) { this->min_brightness_ = min_brightness; }
   void set_min_duty(float min_duty) { this->min_duty_ = min_duty; }
@@ -86,11 +97,27 @@ class YeelightCCTLightOutput : public light::LightOutput {
         c = cl;
       }
     }
+    if (this->interpolation_ == Interpolation::LINEAR && i < last) {
+      const MixPoint &p0 = table[i], &p1 = table[i + 1];
+      float a = (t - p0.kelvin) / (p1.kelvin - p0.kelvin);
+      w = p0.warm + a * (p1.warm - p0.warm);
+      c = p0.cold + a * (p1.cold - p0.cold);
+    }
 
-    // Brightness 1..100 % maps linearly to min_brightness..100 % output. The stock firmware
-    // works in whole percent; fractions are kept here for smooth transitions.
+    // Brightness 1..100 % maps to min_brightness..100 % output. The stock firmware works in
+    // whole percent; fractions are kept here for smooth transitions.
     float b = std::min(std::max(brightness, 0.01f), 1.0f);
-    float f = this->min_brightness_ + (b - 0.01f) * (1.0f - this->min_brightness_) / 0.99f;
+    float f;
+    if (this->brightness_curve_ == BrightnessCurve::QUADRATIC) {
+      // Stock curve in percent: x = (b + k) / (100 + k) with k = max(m, 15), and x(1 %) maps to m.
+      float m = this->min_brightness_ * 100.0f;
+      float k = std::max(m, 15.0f);
+      float x = (b * 100.0f + k) / (100.0f + k);
+      float y = (1.0f + k) / (100.0f + k);
+      f = (m + (100.0f - m) * (x * x - y * y) / (1.0f - y * y)) / 100.0f;
+    } else {
+      f = this->min_brightness_ + (b - 0.01f) * (1.0f - this->min_brightness_) / 0.99f;
+    }
     // Share of each channel scaled by the brightness factor.
     float ow = w * f;
     float oc = c * f;
@@ -117,6 +144,7 @@ class YeelightCCTLightOutput : public light::LightOutput {
   output::FloatOutput *cold_white_;
   std::vector<MixPoint> table_;  // sorted by rising kelvin
   Interpolation interpolation_{Interpolation::QUADRATIC};
+  BrightnessCurve brightness_curve_{BrightnessCurve::LINEAR};
   float min_share_{0.0f};       // quadratic: keep the table point if a share drops below this
   float min_brightness_{0.0f};  // output factor at 1 % brightness
   float min_duty_{0.0f};        // duty offset of every lit channel

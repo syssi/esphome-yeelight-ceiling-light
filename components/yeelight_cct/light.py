@@ -14,6 +14,7 @@ from . import yeelight_cct_ns
 
 CODEOWNERS = ["@syssi"]
 
+CONF_BRIGHTNESS_CURVE = "brightness_curve"
 CONF_INTERPOLATION = "interpolation"
 CONF_MIN_DUTY = "min_duty"
 CONF_MIN_SHARE = "min_share"
@@ -27,6 +28,12 @@ Interpolation = yeelight_cct_ns.enum("Interpolation", is_class=True)
 INTERPOLATIONS = {
     "none": Interpolation.NONE,
     "quadratic": Interpolation.QUADRATIC,
+    "linear": Interpolation.LINEAR,
+}
+BrightnessCurve = yeelight_cct_ns.enum("BrightnessCurve", is_class=True)
+BRIGHTNESS_CURVES = {
+    "linear": BrightnessCurve.LINEAR,
+    "quadratic": BrightnessCurve.QUADRATIC,
 }
 
 # One row of mixing_table. color_temperature is parsed to mireds, the shares to 0..1.
@@ -71,6 +78,10 @@ CONFIG_SCHEMA = light.RGB_LIGHT_SCHEMA.extend(
         ),
         # quadratic only: keep the table point if a share would drop below this.
         cv.Optional(CONF_MIN_SHARE, default="0%"): cv.percentage,
+        # Mapping of brightness to output between min_brightness and 100 %.
+        cv.Optional(CONF_BRIGHTNESS_CURVE, default="linear"): cv.enum(
+            BRIGHTNESS_CURVES, lower=True
+        ),
         # Output at 1 % brightness.
         cv.Optional(CONF_MIN_BRIGHTNESS, default="0%"): cv.percentage,
         # Duty offset of every lit channel.
@@ -98,5 +109,6 @@ async def to_code(config):
         )
     cg.add(var.set_interpolation(config[CONF_INTERPOLATION]))
     cg.add(var.set_min_share(config[CONF_MIN_SHARE]))
+    cg.add(var.set_brightness_curve(config[CONF_BRIGHTNESS_CURVE]))
     cg.add(var.set_min_brightness(config[CONF_MIN_BRIGHTNESS]))
     cg.add(var.set_min_duty(config[CONF_MIN_DUTY]))
