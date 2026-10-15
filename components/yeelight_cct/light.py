@@ -12,14 +12,11 @@ from esphome.const import (
 
 from . import yeelight_cct_ns
 
-CODEOWNERS = ["@syssi"]
-
 CONF_BRIGHTNESS_CURVE = "brightness_curve"
 CONF_INTERPOLATION = "interpolation"
 CONF_MIN_SHARE = "min_share"
 CONF_MIXING_TABLE = "mixing_table"
 
-# Python handles for the C++ class and enum, used to generate code that refers to them.
 YeelightCCTLightOutput = yeelight_cct_ns.class_(
     "YeelightCCTLightOutput", light.LightOutput
 )
