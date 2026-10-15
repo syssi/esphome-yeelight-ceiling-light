@@ -62,10 +62,15 @@ output:
     pin: GPIO19
     id: output_warm
     frequency: 10000
+    # Minimum duty of a lit channel; off stays off
+    min_power: 8%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
     frequency: 10000
+    min_power: 8%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
@@ -87,7 +92,6 @@ light:
     interpolation: quadratic
     min_share: 8%
     min_brightness: 15%
-    min_duty: 8%
     mixing_table:
       - {color_temperature: 2700 K, warm_white: 100%, cold_white: 0%}
       - {color_temperature: 3000 K, warm_white: 85.74%, cold_white: 8.08%}

@@ -16,7 +16,6 @@ CODEOWNERS = ["@syssi"]
 
 CONF_BRIGHTNESS_CURVE = "brightness_curve"
 CONF_INTERPOLATION = "interpolation"
-CONF_MIN_DUTY = "min_duty"
 CONF_MIN_SHARE = "min_share"
 CONF_MIXING_TABLE = "mixing_table"
 
@@ -84,8 +83,6 @@ CONFIG_SCHEMA = light.RGB_LIGHT_SCHEMA.extend(
         ),
         # Output at 1 % brightness.
         cv.Optional(CONF_MIN_BRIGHTNESS, default="0%"): cv.percentage,
-        # Duty offset of every lit channel.
-        cv.Optional(CONF_MIN_DUTY, default="0%"): cv.percentage,
         # The stock firmware scales the duty linearly with the brightness.
         cv.Optional(CONF_GAMMA_CORRECT, default=0.0): cv.positive_float,
     }
@@ -111,4 +108,3 @@ async def to_code(config):
     cg.add(var.set_min_share(config[CONF_MIN_SHARE]))
     cg.add(var.set_brightness_curve(config[CONF_BRIGHTNESS_CURVE]))
     cg.add(var.set_min_brightness(config[CONF_MIN_BRIGHTNESS]))
-    cg.add(var.set_min_duty(config[CONF_MIN_DUTY]))

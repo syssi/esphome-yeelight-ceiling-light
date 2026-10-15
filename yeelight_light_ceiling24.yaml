@@ -65,10 +65,15 @@ output:
     pin: GPIO19
     id: output_warm
     frequency: 3000
+    # Minimum duty of a lit channel; off stays off
+    min_power: 7%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
     frequency: 3000
+    min_power: 7%
+    zero_means_zero: true
 
 light:
   # Warm/cold mixing of the stock firmware 1.3.2_0003: no interpolation, each table point
@@ -80,7 +85,6 @@ light:
     cold_white: output_cold
     interpolation: none
     min_brightness: 10%
-    min_duty: 7%
     mixing_table:
       - {color_temperature: 2700 K, warm_white: 100%, cold_white: 0%}
       - {color_temperature: 3000 K, warm_white: 84.946%, cold_white: 7.870%}

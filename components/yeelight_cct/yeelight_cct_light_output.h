@@ -39,7 +39,6 @@ class YeelightCCTLightOutput : public light::LightOutput {
   void set_brightness_curve(BrightnessCurve brightness_curve) { this->brightness_curve_ = brightness_curve; }
   void set_min_share(float min_share) { this->min_share_ = min_share; }
   void set_min_brightness(float min_brightness) { this->min_brightness_ = min_brightness; }
-  void set_min_duty(float min_duty) { this->min_duty_ = min_duty; }
 
   /// Report a colour-temperature-only light whose range is the first to the last table point.
   light::LightTraits get_traits() override {
@@ -118,12 +117,10 @@ class YeelightCCTLightOutput : public light::LightOutput {
     } else {
       f = this->min_brightness_ + (b - 0.01f) * (1.0f - this->min_brightness_) / 0.99f;
     }
-    // Share of each channel scaled by the brightness factor.
-    float ow = w * f;
-    float oc = c * f;
-    // Every lit channel is offset by the stock minimum duty.
-    this->warm_white_->set_level(ow > 0.0f ? this->min_duty_ + (1.0f - this->min_duty_) * ow : 0.0f);
-    this->cold_white_->set_level(oc > 0.0f ? this->min_duty_ + (1.0f - this->min_duty_) * oc : 0.0f);
+    // Share of each channel scaled by the brightness factor. The stock minimum duty of a lit
+    // channel is min_power with zero_means_zero on the outputs.
+    this->warm_white_->set_level(w * f);
+    this->cold_white_->set_level(c * f);
   }
 
  protected:
@@ -147,7 +144,6 @@ class YeelightCCTLightOutput : public light::LightOutput {
   BrightnessCurve brightness_curve_{BrightnessCurve::LINEAR};
   float min_share_{0.0f};       // quadratic: keep the table point if a share drops below this
   float min_brightness_{0.0f};  // output factor at 1 % brightness
-  float min_duty_{0.0f};        // duty offset of every lit channel
 };
 
 }  // namespace esphome::yeelight_cct
