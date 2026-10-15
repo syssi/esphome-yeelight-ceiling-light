@@ -48,7 +48,7 @@ esp32_ble_tracker:
     active: false
 
 xiaomi_ylyk01yl:
-  mac_address: "A4:C1:38:6C:23:2D"
+  mac_address: !secret ylyk01yl_mac_address
   last_button_pressed:
     name: "last button pressed"
 
