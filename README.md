@@ -33,6 +33,8 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | Yeelight Arwen 450S                              | yeelight.light.ceilc      | YLXD013     | AC220V, 50W, 3000lm, 2700K-6500K, RGB ambient light, 45cm  |
 | [Yeelight Arwen 550C](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilc      | YLXD013-C   | AC220V, 50W, 4500lm, 2700K-6500K, RGB ambient light, 60cm  |
 | [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilb      | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
+| [Yeelight Arwen D500](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/125)  | yeelink.light.ceil43(?)   | YLXDD-0149  | AC220V, RGB front light, RGB ambient light  |
+| [Yeelight Arwen D600](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/125)  | yeelink.light.ceil43      | YLXDD-0150  | AC220V, 50W, 4800lm, 2700K-6500K, RGB front light, RGB ambient light, 60cm  |
 | Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
 | Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
 | [Yeelight Ceiling Light A2001R900](#ylpw13yl)    | yeelight.light.ceila      | YLPW13YL    | AC220V, 95W, 6000lm, 2700K-6500K, 93x63 cm  |
@@ -109,6 +111,18 @@ cannot rescue a device that will not boot - that still needs UART.
 - Sensor
   - ADC1
   - ADC2
+
+### yeelink.light.ceil43
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Nightlight (untested)
+  - Brightness
+- Ambient light (RGB)
+  - Brightness
+  - Color
+- The RGB front light is not supported yet
 
 ### yeelink.light.ceiling15, yeelink.light.ceiling11
 
@@ -342,6 +356,23 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point TP3 at the bac
 
 
 The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the back) is held low (GND) on reset / power.
+
+### yeelink.light.ceil43
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | W      | GPIO19       |                       |
+| Cold white PWM      | C      | GPIO21       |                       |
+| Night Light PWM     |        | GPIO23       |                       |
+| Red ambient PWM     | R      | GPIO33       |                       |
+| Green ambient PWM   | G      | GPIO27       |                       |
+| Blue ambient PWM    | B      | GPIO26       |                       |
+| Power supply GPIO   |        | GPIO22       |                       |
+| TXD                 | TXD    | GPIO1        |                       |
+| RXD                 | RXD    | GPIO3        |                       |
+| GPIO0               | IO0    | GPIO0        |                       |
+
+The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
 
 ### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
