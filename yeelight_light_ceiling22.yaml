@@ -51,21 +51,21 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
-    frequency: "2441Hz"
+    frequency: 2kHz
     # min_power: 0.14
     max_power: 0.50
     power_supply: power_supply1
   - platform: ledc
     pin: GPIO21
     id: output_cold
-    frequency: "2441Hz"
+    frequency: 2kHz
     # min_power: 0.20
     max_power: 0.88
     power_supply: power_supply1
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
-    frequency: "19531Hz"
+    frequency: 20kHz
     # min_power: 0.10
     max_power: 1.00
     power_supply: power_supply1

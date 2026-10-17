@@ -61,19 +61,20 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
-    frequency: 10000
+    frequency: 10kHz
     # Minimum duty of a lit channel; off stays off
     min_power: 8%
     zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
-    frequency: 10000
+    frequency: 10kHz
     min_power: 8%
     zero_means_zero: true
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
+    frequency: 20kHz
 
 light:
   - platform: monochromatic

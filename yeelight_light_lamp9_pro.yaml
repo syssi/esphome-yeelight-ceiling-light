@@ -129,10 +129,12 @@ output:
   - platform: ledc
     pin: GPIO2
     id: pwm_warm
+    frequency: 20kHz
     power_supply: power
   - platform: ledc
     pin: GPIO27
     id: pwm_cold
+    frequency: 20kHz
     power_supply: power
 
   - platform: template
@@ -161,6 +163,7 @@ output:
   - platform: ledc
     pin: GPIO12
     id: output_nightlight
+    frequency: 20kHz
     power_supply: power
 
   # Status LED ENABLE - see the hardware notes. This drives a transistor that

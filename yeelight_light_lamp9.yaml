@@ -93,14 +93,17 @@ output:
   - platform: ledc
     pin: GPIO2
     id: output_warm
+    frequency: 20kHz
     power_supply: power
   - platform: ledc
     pin: GPIO27
     id: output_cold
+    frequency: 20kHz
     power_supply: power
   - platform: ledc
     pin: GPIO12
     id: output_nightlight
+    frequency: 20kHz
     power_supply: power
   - platform: gpio
     pin: GPIO33
