@@ -52,16 +52,19 @@ output:
     pin: GPIO19
     id: output_warm
     power_supply: power
+    frequency: 2kHz
     # limit of the stock firmware (1.5V)
     max_power: 0.50
   - platform: ledc
     pin: GPIO21
     id: output_cold
     power_supply: power
+    frequency: 2kHz
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
     power_supply: power
+    frequency: 20kHz
 
 power_supply:
   - id: power

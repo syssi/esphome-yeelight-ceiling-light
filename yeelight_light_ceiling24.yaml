@@ -64,14 +64,14 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
-    frequency: 3000
+    frequency: 3kHz
     # Minimum duty of a lit channel; off stays off
     min_power: 7%
     zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
-    frequency: 3000
+    frequency: 3kHz
     min_power: 7%
     zero_means_zero: true
 

@@ -45,12 +45,14 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
+    frequency: 2kHz
     power_supply: power
 #    min_power: 0.13
     max_power: 0.50
   - platform: ledc
     pin: GPIO21
     id: output_cold
+    frequency: 2kHz
     power_supply: power
 #    min_power: 0.13
     max_power: 0.96
@@ -58,19 +60,23 @@ output:
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
+    frequency: 20kHz
     power_supply: power
 
   - platform: ledc
     pin: GPIO33
     id: output_red
+    frequency: 20kHz
     power_supply: power
   - platform: ledc
     pin: GPIO26
     id: output_green
+    frequency: 20kHz
     power_supply: power
   - platform: ledc
     pin: GPIO27
     id: output_blue
+    frequency: 20kHz
     power_supply: power
 
 power_supply:

@@ -74,12 +74,15 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
+    frequency: 2kHz
   - platform: ledc
     pin: GPIO21
     id: output_cold
+    frequency: 2kHz
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
+    frequency: 20kHz
   # Passive buzzer: needs a 50% square wave at its resonance frequency
   - platform: ledc
     pin: GPIO33

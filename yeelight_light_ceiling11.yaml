@@ -59,15 +59,15 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
-    frequency: 4882Hz
+    frequency: 10kHz
   - platform: ledc
     pin: GPIO21
     id: output_cold
-    frequency: 4882Hz
+    frequency: 10kHz
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
-    frequency: 19531Hz
+    frequency: 20kHz
 
 light:
   - platform: monochromatic

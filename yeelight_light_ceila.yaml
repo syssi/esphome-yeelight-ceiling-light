@@ -65,18 +65,21 @@ output:
   - platform: ledc
     pin: GPIO19
     id: output_warm
+    frequency: 2kHz
     power_supply: power
     max_power: ${warm_max_power}
     zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
+    frequency: 2kHz
     power_supply: power
     max_power: ${cold_max_power}
     zero_means_zero: true
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
+    frequency: 20kHz
     power_supply: power
     zero_means_zero: true
 

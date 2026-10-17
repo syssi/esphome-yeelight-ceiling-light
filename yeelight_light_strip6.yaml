@@ -53,12 +53,15 @@ output:
   - platform: ledc
     pin: GPIO13
     id: output_red
+    frequency: 20kHz
   - platform: ledc
     pin: GPIO14
     id: output_green
+    frequency: 20kHz
   - platform: ledc
     pin: GPIO5
     id: output_blue
+    frequency: 20kHz
 
 light:
   - platform: rgb
