@@ -11,6 +11,7 @@
 
 substitutions:
   name: yeelight-light-ceiling11
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
 
 esphome:
   name: ${name}
@@ -30,6 +31,10 @@ esp32:
     advanced:
       ignore_efuse_mac_crc: true
       ignore_efuse_custom_mac: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
 
 wifi:
   ssid: !secret wifi_ssid
@@ -60,10 +65,15 @@ output:
     pin: GPIO19
     id: output_warm
     frequency: 10kHz
+    # Minimum duty of a lit channel; off stays off
+    min_power: 8%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO21
     id: output_cold
     frequency: 10kHz
+    min_power: 8%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO23
     id: output_nightlight
@@ -77,14 +87,24 @@ light:
     gamma_correct: 0.7
     on_turn_on:
       - light.turn_off: ceiling_light
-  - platform: cwww
+  - platform: yeelight_cct
     name: "${name}"
     id: ceiling_light
-    cold_white: output_cold
     warm_white: output_warm
-    cold_white_color_temperature: 6500 K
-    warm_white_color_temperature: 2700 K
-    constant_brightness: true
-    gamma_correct: 0.4
+    cold_white: output_cold
+    interpolation: none
+    min_brightness: 15%
+    mixing_table:
+      - {color_temperature: 2700 K, warm_white: 100%, cold_white: 0%}
+      - {color_temperature: 3000 K, warm_white: 79.11%, cold_white: 9.99%}
+      - {color_temperature: 3200 K, warm_white: 71.62%, cold_white: 16.89%}
+      - {color_temperature: 3400 K, warm_white: 65.26%, cold_white: 23.48%}
+      - {color_temperature: 4000 K, warm_white: 48.53%, cold_white: 41.14%}
+      - {color_temperature: 4500 K, warm_white: 35.99%, cold_white: 53.24%}
+      - {color_temperature: 5000 K, warm_white: 24.75%, cold_white: 63.48%}
+      - {color_temperature: 5500 K, warm_white: 15.79%, cold_white: 71.82%}
+      - {color_temperature: 5800 K, warm_white: 13.35%, cold_white: 74.22%}
+      - {color_temperature: 6000 K, warm_white: 7.28%, cold_white: 80.91%}
+      - {color_temperature: 6500 K, warm_white: 0%, cold_white: 100%}
     on_turn_on:
       - light.turn_off: night_light
