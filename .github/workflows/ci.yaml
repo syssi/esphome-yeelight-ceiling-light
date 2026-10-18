@@ -488,7 +488,7 @@ jobs:
           . venv/bin/activate
           echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml
           # Compile only a few examples as they are all very similar
-          for YAML in yeelight_light_lamp9.yaml yeelight_light_ceiling15.yaml yeerc_ylyk01yl.yaml; do
+          for YAML in yeelink_light_lamp9.yaml yeelink_light_ceiling15.yaml yeerc_ylyk01yl.yaml; do
             esphome -s external_components_source components compile $YAML
           done
         env:
