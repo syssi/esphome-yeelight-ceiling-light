@@ -149,6 +149,10 @@ invocation means a captcha and an emailed 2FA code every time. Xiaomi rate limit
 those codes, with a daily ceiling that is reachable in an afternoon.
 
 `--qr` logs in by QR code scanned in the Mi Home app, which skips the captcha.
+It depends on the region: Xiaomi may hand out a long-poll URL on
+`sgp.lp.account.xiaomi.com`, whose `*.account.xiaomi.com` certificate does not
+match that host, and the login then fails with `CERTIFICATE_VERIFY_FAILED`
+([#164](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/164)).
 
 One observation that is a hypothesis rather than a finding: the token extractor
 generates a random `deviceId` per instance and sets it as a cookie during login,

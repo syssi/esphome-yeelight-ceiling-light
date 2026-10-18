@@ -9,10 +9,15 @@ Confirmed here on two units of different firmware generations:
 `yeelink.light.lamp9` on `2.1.7_0031` (`miio_ver 0.0.9`) and
 `yeelink.light.ceiling10` on `2.0.6_0049` (`miio_ver 0.0.6`). The requirements
 differ between them - see the table further down. A third unit,
-`yeelight.light.ceilc` (Arwen 550C, YLXD013-C) on `2.0.6_0005`, was converted by
+`yeelink.light.ceilc` (Arwen 550C, YLXD013-C) on `2.0.6_0005`, was converted by
 a contributor with all five requirements applied at once, so it confirms the route
-but not which requirements that model strictly needs. Third parties report the same
-mechanism working on `yeelink.light.ceiling22`; that was not verified here.
+but not which requirements that model strictly needs. The same goes for a
+`yeelink.light.ceilb` on `2.1.7_0011` (`miio_ver 0.0.9`) and a second `ceilc` on
+`2.0.6_0005` (`miio_ver 0.0.6`), both converted the same way by another
+contributor
+([#164](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/164)).
+Third parties report the same mechanism working on `yeelink.light.ceiling22`; that
+was not verified here.
 
 > **Read the limits first.** The procedure here writes only the application
 > partition. The stock bootloader and partition table remain, so it cannot recover
@@ -84,18 +89,20 @@ Not verified, and where the real risk lies:
 ## Five requirements that are easy to miss
 
 Not all five apply to every device, and the differences track the firmware
-generation. Three units were converted, and this is what each one actually showed:
+generation. These models were converted, and this is what each one actually showed:
 
-| | `yeelink.light.lamp9`<br>`miio_ver 0.0.9`, stock 2.1.7_0031 | `yeelink.light.ceiling10`<br>`miio_ver 0.0.6`, stock 2.0.6_0049 | `yeelight.light.ceilc`<br>`miio_ver` not read, stock 2.0.6_0005 |
-| --- | --- | --- | --- |
-| 1. CRC trailer | appended; necessity not tested | **required** - verified by serving an image without one | appended; necessity not tested |
-| 2. HTTP/1.1 | **observed necessary** | served over 1.1 throughout, so never retested | served over 1.1; necessity not tested |
-| 3. no port in the URL | **not needed** - flashed successfully on port 8000 | **required** | port 80, no port in the URL; necessity not tested |
-| 4. `PARTITION_TABLE_MD5: n` | **not needed** - booted fine without it | **required** | set; necessity not tested |
-| 5. `FREERTOS_UNICORE: y` | set; necessity not tested | **required**; die confirmed single-core | set; die reports single-core (`ESP32 rev1.0, 1 core(s)`) |
+| | `yeelink.light.lamp9`<br>`miio_ver 0.0.9`, stock 2.1.7_0031 | `yeelink.light.ceiling10`<br>`miio_ver 0.0.6`, stock 2.0.6_0049 | `yeelink.light.ceilc`<br>`miio_ver 0.0.6`, stock 2.0.6_0005 | `yeelink.light.ceilb`<br>`miio_ver 0.0.9`, stock 2.1.7_0011 |
+| --- | --- | --- | --- | --- |
+| 1. CRC trailer | appended; necessity not tested | **required** - verified by serving an image without one | appended; necessity not tested | appended; necessity not tested |
+| 2. HTTP/1.1 | **observed necessary** | served over 1.1 throughout, so never retested | served over 1.1; necessity not tested | served over 1.1; necessity not tested |
+| 3. no port in the URL | **not needed** - flashed successfully on port 8000 | **required** | port 80, no port in the URL; necessity not tested | port 80, no port in the URL; necessity not tested |
+| 4. `PARTITION_TABLE_MD5: n` | **not needed** - booted fine without it | **required** | set; necessity not tested | set; necessity not tested |
+| 5. `FREERTOS_UNICORE: y` | set; necessity not tested | **required**; die confirmed single-core | set; die reports single-core (`ESP32 rev1.0, 1 core(s)`) | set; necessity not tested |
 
 The `ceilc` shares the `2.0.6` firmware generation with the `ceiling10`, so treat
-it like the older column until someone tests the requirements one at a time.
+it like the older column until someone tests the requirements one at a time. The
+`ceilb` is on `2.1.7` like the `lamp9`, but was converted with all five applied,
+so it does not show yet whether it gets away without 3 and 4 as well.
 
 So a newer unit may well flash without 3 or 4 at all. An older one needs both, and
 each failure looks like something else entirely - which is why they are written up
@@ -168,6 +175,13 @@ way, matched the cloud image byte for byte up to its ESP-IDF image end at
 OTA or at the factory is unknown, so this shows only that the trailer is not
 guaranteed to be in flash. It does not affect a restore, since
 `esp_image_verify()` stops at the image end either way.
+
+Two more units read back by a contributor
+([#164](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/164)) follow
+the same split by firmware generation: a second `ceilc` on `2.0.6_0005` again ended
+in `ffffffff` at 1,264,672 bytes, while a `ceilb` on `2.1.7_0011` kept its trailer
+`6cf97f79` and matched the catalogue md5 as stored. Two units per generation is
+an observation, not a rule.
 
 ### 2. The HTTP server must speak HTTP/1.1
 
@@ -374,9 +388,14 @@ an edited one.
 
    `--qr` logs in by scanning a code in the Mi Home app instead, which needs no
    password at all and skips both the captcha and the emailed code - worth reaching
-   for, since Xiaomi rate limits those codes. Sessions are cached by
-   `tools/mi_session.py` and reused until the server rejects them, so this is
-   usually a one-time cost. See "Logging in" in
+   for, since Xiaomi rate limits those codes. It can fail depending on the
+   region, though: one contributor was handed a long-poll URL on
+   `sgp.lp.account.xiaomi.com`, whose `*.account.xiaomi.com` certificate does not
+   match that host, so the login dies with `CERTIFICATE_VERIFY_FAILED`
+   ([#164](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/164)).
+   The Home Assistant route in step 6 avoids the login entirely. Sessions are
+   cached by `tools/mi_session.py` and reused until the server rejects them, so
+   this is usually a one-time cost. See "Logging in" in
    [xiaomi-cloud-firmware.md](xiaomi-cloud-firmware.md) for the details, including
    where the cache lives.
 
@@ -437,6 +456,28 @@ an edited one.
    python3 tools/cloud_ota.py --server de --ip <device-ip> \
        --url http://<your-lan-ip>/fw_crc.bin
    ```
+
+   If the lamp is already on a Xiaomi account that Home Assistant is logged in to
+   through [hass-xiaomi-miot](https://github.com/al-one/hass-xiaomi-miot), the
+   integration can relay the same RPC over its existing cloud session, with no
+   separate login. `entity_id` can be any entity of that integration; it only
+   selects the account. Reported working on a `ceilb` and a `ceilc`
+   ([#164](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/164)):
+
+   ```yaml
+   action: xiaomi_miot.request_xiaomi_api
+   data:
+     entity_id: sensor.<any_xiaomi_miot_entity>
+     api: /home/rpc/<did>
+     data:
+       id: 1
+       method: miIO.ota
+       params:
+         app_url: http://<your-lan-ip>/fw_crc.bin
+   ```
+
+   The same call with `miIO.get_ota_state`, `miIO.get_ota_progress` or
+   `miIO.info` as `method` and `return_response: true` polls the device.
 
 7. **Watch it land.** `miIO.get_ota_state` walks `idle -> downloading ->
    installed`, the server logs one full-size `GET`, and the device reboots into
@@ -587,6 +628,12 @@ python3 tools/dump_stock.py <device-ip> stock.bin
 
 The whole slot comes out, 960 chunks of 2048 bytes on these models. On the run
 documented here that took about six minutes with no retries.
+
+With the device in Home Assistant, the actions can also be called from there as
+`esphome.<device>_dump_flash` and the `CHUNK` lines collected from the log stream
+instead; a `ceilb` and a `ceilc` were read back that way, 960 chunks each with
+no retries
+([#164](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/164)).
 
 **Verify it against something.** The point of the exercise is a file you can
 trust, so check it against an independent oracle rather than eyeballing it. If the
