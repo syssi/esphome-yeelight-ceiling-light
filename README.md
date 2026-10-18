@@ -59,10 +59,11 @@ See [docs/flashing-over-the-network.md](docs/flashing-over-the-network.md) and
 the helpers in [`tools/`](tools).
 
 Confirmed on `yeelink.light.lamp9` firmware 2.1.7_0031,
-`yeelink.light.ceiling10` firmware 2.0.6_0049 and `yeelight.light.ceilc`
-(Arwen 550C) firmware 2.0.6_0005; the requirements differ between the two
-firmware generations. It writes only the application partition, so it
-cannot rescue a device that will not boot - that still needs UART.
+`yeelink.light.ceiling10` firmware 2.0.6_0049, `yeelink.light.ceilc`
+(Arwen 550C) firmware 2.0.6_0005 and `yeelink.light.ceilb` firmware
+2.1.7_0011; the requirements differ between the two firmware generations.
+It writes only the application partition, so it cannot rescue a device that
+will not boot - that still needs UART.
 
 ### More ESPHome + Yeelight projects
 
