@@ -13,7 +13,7 @@ which board is inside.
 
 ## Status LED is an AND gate across two boards
 
-`yeelight_light_lamp9.yaml` lists GPIO33 as `LED (YLCT03YL only)` and
+`yeelink_light_lamp9.yaml` lists GPIO33 as `LED (YLCT03YL only)` and
 drives it as a plain output. That is correct as far as it goes, but it will not
 light the LED on its own, and the reason is not obvious from software.
 
@@ -260,7 +260,7 @@ delivers about **3.3%**. That is the extent of what was measured - two brightnes
 settings, 1% and 100%, so the shape of stock's curve between them is unknown and
 no exponent is claimed for it.
 
-On this side the chain is known: both this config and `yeelight_light_lamp9.yaml` set
+On this side the chain is known: both this config and `yeelink_light_lamp9.yaml` set
 `gamma_correct: 0`, which in ESPHome means gamma correction is **disabled** -
 `gamma <= 0` returns the value unchanged - so a 1% request stays 1%, is lifted by
 the `${min_duty}` floor to about 6.9% duty, and the driver turns that into roughly

@@ -29,19 +29,19 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | Yeelight Staria Pro Bedside LED                  | yeelink.light.lamp9       | YLCT03YL    | AC220V, 20W, 350lm, 2700K-6500K, Qi charger      |
 | Mi Smart LED Ceiling Light                       | yeelink.light.ceiling22   | MJXDD001 / MJXDD01SYL     | AC220V, 45W, 3100lm, 2700K-6000K, 45cm    |
 | Yeelight Ceiling Light YLXD50YL                  | yeelink.light.ceiling20   | YLXD50YL    | AC220V, 50W, 3100lm, 2700K-6500K, RGB ambient light, 47cm  |
-| Yeelight Arwen 450C                              | yeelight.light.ceilc      | YLXD013-B   | AC220V, 50W, 4000lm, 2700K-6500K, RGB ambient light, 50cm  |
-| Yeelight Arwen 450S                              | yeelight.light.ceilc      | YLXD013     | AC220V, 50W, 3000lm, 2700K-6500K, RGB ambient light, 45cm  |
-| [Yeelight Arwen 550C](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilc      | YLXD013-C   | AC220V, 50W, 4500lm, 2700K-6500K, RGB ambient light, 60cm  |
-| [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelight.light.ceilb      | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
+| Yeelight Arwen 450C                              | yeelink.light.ceilc       | YLXD013-B   | AC220V, 50W, 4000lm, 2700K-6500K, RGB ambient light, 50cm  |
+| Yeelight Arwen 450S                              | yeelink.light.ceilc       | YLXD013     | AC220V, 50W, 3000lm, 2700K-6500K, RGB ambient light, 45cm  |
+| [Yeelight Arwen 550C](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelink.light.ceilc       | YLXD013-C   | AC220V, 50W, 4500lm, 2700K-6500K, RGB ambient light, 60cm  |
+| [Yeelight Arwen 550S](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/22)  | yeelink.light.ceilb       | YLXD013-A   | AC220V, 50W, 3500lm, 2700K-6500K, RGB ambient light, 55cm  |
 | [Yeelight Arwen D500](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/125)  | yeelink.light.ceil43(?)   | YLXDD-0149  | AC220V, RGB front light, RGB ambient light  |
 | [Yeelight Arwen D600](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/125)  | yeelink.light.ceil43      | YLXDD-0150  | AC220V, 50W, 4800lm, 2700K-6500K, RGB front light, RGB ambient light, 60cm  |
-| Yeelight Arwen A2001 450                         | yeelight.light.ceil29     | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
-| Yeelight Arwen A2001 550                         | yeelight.light.ceil29     | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
-| [Yeelight Ceiling Light A2001R900](#ylpw13yl)    | yeelight.light.ceila      | YLPW13YL    | AC220V, 95W, 6000lm, 2700K-6500K, 93x63 cm  |
-| Yeelight Ceiling Light 235C                      | yeelight.light.ceilb      | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
-| Yeelight Ceiling Light 300C                      | yeelight.light.ceilb      | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
-| Yeelight Ceiling Light 400C                      | yeelight.light.ceilb      | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
-| Yeelight Jiaoyue 260 Ceiling Light               | yeelight.light.ceiling24  | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
+| Yeelight Arwen A2001 450                         | yeelink.light.ceil29      | YLXD032     | AC220V, 50W, 4500lm, 2700K-6500K, 50cm  |
+| Yeelight Arwen A2001 550                         | yeelink.light.ceil29      | YLXD031     | AC220V, 50W, 4800lm, 2700K-6500K, 60cm  |
+| [Yeelight Ceiling Light A2001R900](#ylpw13yl)    | yeelink.light.ceila       | YLPW13YL    | AC220V, 95W, 6000lm, 2700K-6500K, 93x63 cm  |
+| Yeelight Ceiling Light 235C                      | yeelink.light.ceilb       | YLXDD-0030  | AC220V, 18W, 1200lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 300C                      | yeelink.light.ceilb       | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
+| Yeelight Ceiling Light 400C                      | yeelink.light.ceilb       | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
+| Yeelight Jiaoyue 260 Ceiling Light               | yeelink.light.ceiling24   | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
 
 ### Flashing over UART
 
@@ -88,7 +88,7 @@ will not boot - that still needs UART.
 - Sensor
   - Power supply voltage (ESP32 VCC)
 
-### yeelink.light.ceiling10, yeelink.light.ceiling20, yeelight.light.ceilb, yeelight.light.ceilc
+### yeelink.light.ceiling10, yeelink.light.ceiling20, yeelink.light.ceilb, yeelink.light.ceilc
 
 - Light (CCWW)
   - Brightness
@@ -102,7 +102,7 @@ will not boot - that still needs UART.
   - ADC1
   - ADC2
 
-### yeelight.light.ceil29
+### yeelink.light.ceil29
 
 - Light (CCWW)
   - Brightness
@@ -146,7 +146,7 @@ will not boot - that still needs UART.
   - Brightness
 
 The Staria **Pro** (YLCT03YL) additionally has a Qi charger and its status LED.
-See [`yeelight_light_lamp9_pro.yaml`](yeelight_light_lamp9_pro.yaml) and
+See [`yeelink_light_lamp9_pro.yaml`](yeelink_light_lamp9_pro.yaml) and
 [the hardware notes](docs/yeelink-light-lamp9-staria-pro.md): the white channels
 need a PWM floor to dim without dropping out, and GPIO33 only *enables* the
 status LED rather than driving it.
@@ -792,5 +792,5 @@ wires to the test points (TPs). Images are under [images/ylpw13yl](./images/ylpw
 
 * Reported firmware was `yeelink.light.ceila`. No RGB, only CW and WW.
 * Uses same module as `yeelink.light.ceil20` or `yeelink.light.ceiling22` (single-core ESP32-WROOM-32D).
-* Configuration file is [yeelight_light_ceila.yaml](./yeelight_light_ceila.yaml) that behaves a lot like original
+* Configuration file is [yeelink_light_ceila.yaml](./yeelink_light_ceila.yaml) that behaves a lot like original
   (but no color temperature control yet). Remove remote config if you have problems with it, or don't plan to use it.

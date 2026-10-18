@@ -1,5 +1,5 @@
 # configuration based on:
-# - https://github.com/syssi/esphome-yeelight-ceiling-light/blob/main/yeelight_light_ceiling15.yaml
+# - https://github.com/syssi/esphome-yeelight-ceiling-light/blob/main/yeelink_light_ceiling15.yaml
 
 # To keep a copy of the stock firmware, uncomment the `packages:` block below
 # BEFORE the first flash. Only that first flash leaves the stock firmware

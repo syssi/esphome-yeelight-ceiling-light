@@ -1,12 +1,12 @@
 # Yeelight Staria Bedside Lamp Pro (YLCT03YL, yeelink.light.lamp9)
 #
-# Variant of yeelight_light_lamp9.yaml for the Pro model, which adds a Qi
+# Variant of yeelink_light_lamp9.yaml for the Pro model, which adds a Qi
 # wireless charger and its status LED. Differences from
-# yeelight_light_lamp9.yaml are documented in
+# yeelink_light_lamp9.yaml are documented in
 # docs/yeelink-light-lamp9-staria-pro.md; in short:
 #
 #   * The white channels will not conduct below roughly 6% PWM duty.
-#     yeelight_light_lamp9.yaml drives them straight from the light component,
+#     yeelink_light_lamp9.yaml drives them straight from the light component,
 #     which makes low brightness drop out entirely and flicker as the colour
 #     temperature moves off the extremes. The template outputs below apply a
 #     floor with a deadband.
