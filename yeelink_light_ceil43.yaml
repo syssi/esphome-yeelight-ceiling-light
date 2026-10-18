@@ -7,7 +7,7 @@
 
 substitutions:
   name: yeelight-light-ceil43
-  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@sm16825-component
 
 esphome:
   name: ${name}
