@@ -19,13 +19,11 @@ from . import sm16825_ns
 DEPENDENCIES = ["esp32"]
 
 CONF_CURRENT_GAIN = "current_gain"
-# The five constant current outputs of the chip, in the order they are sent on the wire.
 CHIP_OUTPUTS = ("outr", "outg", "outb", "outw", "outy")
 
 SM16825LightOutput = sm16825_ns.class_("SM16825LightOutput", light.AddressableLight)
 
-# 5 bit gain per output: 0 = 10.2 mA ... 31 = 310 mA. The default is the lowest current, so an
-# incomplete configuration can never overdrive the LEDs.
+# 0 = 10.2 mA ... 31 = 310 mA
 CURRENT_GAIN_SCHEMA = cv.Schema(
     {
         cv.Optional(output, default=0): cv.int_range(min=0, max=31)
@@ -35,7 +33,7 @@ CURRENT_GAIN_SCHEMA = cv.Schema(
 
 
 def validate_idf_version(config: ConfigType) -> ConfigType:
-    # The streaming encoder (rmt_new_simple_encoder) was added in ESP-IDF 5.3.
+    # rmt_new_simple_encoder requires ESP-IDF 5.3
     if esp32.idf_version() < cv.Version(5, 3, 0):
         raise cv.Invalid("The sm16825 light requires ESP-IDF 5.3 or newer")
     return config
@@ -51,7 +49,6 @@ CONFIG_SCHEMA = cv.All(
             cv.GenerateID(CONF_OUTPUT_ID): cv.declare_id(SM16825LightOutput),
             cv.Required(CONF_PIN): pins.internal_gpio_output_pin_schema,
             cv.Required(CONF_NUM_LEDS): cv.int_range(min=1, max=1024),
-            # Which chip output (OUTR, OUTG, OUTB, OUTW) drives which colour, e.g. "BRG".
             cv.Optional(
                 CONF_CHANNEL_COLORS, default="RGB"
             ): light.validate_channel_colors,

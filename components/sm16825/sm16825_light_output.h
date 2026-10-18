@@ -12,12 +12,12 @@
 
 namespace esphome::sm16825 {
 
-/// Constant current outputs per chip: OUTR, OUTG, OUTB, OUTW, OUTY.
-static constexpr uint8_t OUTPUTS_PER_CHIP = 5;
-/// 16 bit grayscale per output.
-static constexpr uint8_t BYTES_PER_CHIP = OUTPUTS_PER_CHIP * 2;
-/// The frame ends with one 32 bit word: 5 x 5 bit current gain, 2 bit standby, 5 reserved bits.
-static constexpr uint8_t TRAILER_BYTES = 4;
+// Five outputs (OUTR, OUTG, OUTB, OUTW, OUTY) with 16 bit grayscale each
+static const uint8_t OUTPUTS_PER_CHIP = 5;
+static const uint8_t BYTES_PER_CHIP = OUTPUTS_PER_CHIP * 2;
+
+// Current gain, standby and reserved bits at the end of the frame
+static const uint8_t TRAILER_BYTES = 4;
 
 struct RmtSymbols {
   rmt_symbol_word_t bit0;
@@ -25,9 +25,6 @@ struct RmtSymbols {
   rmt_symbol_word_t reset;
 };
 
-/// Chain of SM16825E 5-channel RGBWY drivers (16 bit, 800 kbit/s RZ code), sent with the RMT peripheral.
-///
-/// write_state() never waits: while the previous frame is still on the wire it only schedules another show.
 class SM16825LightOutput final : public light::AddressableLight {
  public:
   void setup() override;
@@ -44,7 +41,6 @@ class SM16825LightOutput final : public light::AddressableLight {
   void set_num_leds(uint16_t num_leds) { this->num_leds_ = num_leds; }
   void set_channel_colors(light::ChannelColors channel_colors) { this->channel_colors_ = channel_colors; }
   void set_rmt_symbols(uint32_t rmt_symbols) { this->rmt_symbols_ = rmt_symbols; }
-  /// Raw 5 bit gains (0 = 10.2 mA ... 31 = 310 mA) of the outputs OUTR, OUTG, OUTB, OUTW and OUTY.
   void set_current_gain(uint8_t outr, uint8_t outg, uint8_t outb, uint8_t outw, uint8_t outy);
 
  protected:
@@ -53,10 +49,8 @@ class SM16825LightOutput final : public light::AddressableLight {
   size_t get_frame_size_() const { return this->num_leds_ * BYTES_PER_CHIP + TRAILER_BYTES; }
   static bool on_transmit_done_(rmt_channel_handle_t channel, const rmt_tx_done_event_data_t *event, void *context);
 
-  /// 8 bit colours, laid out like the outputs of a chip (see channel_colors_).
   uint8_t *colors_{nullptr};
   uint8_t *effect_data_{nullptr};
-  /// Bytes on the wire. The RMT ISR reads it while the next colours are already being computed.
   uint8_t *frame_{nullptr};
 
   RmtSymbols symbols_;
