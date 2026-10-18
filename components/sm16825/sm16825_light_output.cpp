@@ -22,16 +22,14 @@ ESPHOME_LOG_TAG(TAG, "sm16825");
 
 static const size_t RMT_SYMBOLS_PER_BYTE = 8;
 
-// SM16825E datasheet, typical values: T0H 300 ns / T0L 900 ns, T1H 900 ns / T1L 300 ns.
+// Typical timings of the SM16825E datasheet
 static const uint32_t BIT0_HIGH_NS = 300;
 static const uint32_t BIT0_LOW_NS = 900;
 static const uint32_t BIT1_HIGH_NS = 900;
 static const uint32_t BIT1_LOW_NS = 300;
-// The chips latch the frame after at least 200 µs low. The reset symbol is part of the
-// transmission, so the done callback only fires once the bus is ready for the next frame.
+// The chips latch the frame after at least 200 µs low
 static const uint32_t RESET_LOW_NS = 300000;
 
-// Query the RMT default clock source frequency (80 MHz on most variants, 32 MHz on H2).
 static uint32_t rmt_resolution_hz() {
   uint32_t frequency;
   esp_clk_tree_src_get_freq_hz((soc_module_clk_t) RMT_CLK_SRC_DEFAULT, ESP_CLK_TREE_SRC_FREQ_PRECISION_CACHED,
@@ -41,26 +39,26 @@ static uint32_t rmt_resolution_hz() {
 
 static size_t IRAM_ATTR HOT encoder_callback(const void *data, size_t size, size_t symbols_written, size_t symbols_free,
                                              rmt_symbol_word_t *symbols, bool *done, void *arg) {
-  auto *params = static_cast<RmtSymbols *>(arg);
+  auto *rmt_symbols = static_cast<RmtSymbols *>(arg);
   const auto *bytes = static_cast<const uint8_t *>(data);
   size_t index = symbols_written / RMT_SYMBOLS_PER_BYTE;
 
-  // convert byte to symbols, MSB first
+  // Convert byte to symbols, MSB first
   if (index < size) {
     if (symbols_free < RMT_SYMBOLS_PER_BYTE) {
       return 0;
     }
     for (size_t bit = 0; bit < RMT_SYMBOLS_PER_BYTE; bit++) {
-      symbols[bit] = (bytes[index] & (1 << (7 - bit))) ? params->bit1 : params->bit0;
+      symbols[bit] = (bytes[index] & (1 << (7 - bit))) ? rmt_symbols->bit1 : rmt_symbols->bit0;
     }
     return RMT_SYMBOLS_PER_BYTE;
   }
 
-  // send reset
+  // Send reset
   if (symbols_free < 1) {
     return 0;
   }
-  symbols[0] = params->reset;
+  symbols[0] = rmt_symbols->reset;
   *done = true;
   return 1;
 }
@@ -72,7 +70,7 @@ bool IRAM_ATTR SM16825LightOutput::on_transmit_done_(rmt_channel_handle_t channe
 }
 
 void SM16825LightOutput::set_current_gain(uint8_t outr, uint8_t outg, uint8_t outb, uint8_t outw, uint8_t outy) {
-  // 5 bit gain per output, standby bits 00 (active), reserved bits 11111 as the datasheet recommends.
+  // 5 bit gain per output, standby bits 00 (active), reserved bits 11111
   uint32_t word = (uint32_t) (outr & 0x1F) << 27 | (uint32_t) (outg & 0x1F) << 22 | (uint32_t) (outb & 0x1F) << 17 |
                   (uint32_t) (outw & 0x1F) << 12 | (uint32_t) (outy & 0x1F) << 7 | 0x1F;
   this->trailer_[0] = word >> 24;
@@ -94,22 +92,19 @@ void SM16825LightOutput::setup() {
   }
   memset(this->colors_, 0, colors_size);
   memset(this->effect_data_, 0, this->num_leds_);
-  // Unused outputs stay off; the trailer never changes.
   memset(this->frame_, 0, this->get_frame_size_());
   memcpy(this->frame_ + this->num_leds_ * BYTES_PER_CHIP, this->trailer_, TRAILER_BYTES);
 
   const float ticks_per_ns = (float) rmt_resolution_hz() / 1e09f;
-  // 0-bit
   this->symbols_.bit0.duration0 = (uint32_t) (ticks_per_ns * BIT0_HIGH_NS);
   this->symbols_.bit0.level0 = 1;
   this->symbols_.bit0.duration1 = (uint32_t) (ticks_per_ns * BIT0_LOW_NS);
   this->symbols_.bit0.level1 = 0;
-  // 1-bit
   this->symbols_.bit1.duration0 = (uint32_t) (ticks_per_ns * BIT1_HIGH_NS);
   this->symbols_.bit1.level0 = 1;
   this->symbols_.bit1.duration1 = (uint32_t) (ticks_per_ns * BIT1_LOW_NS);
   this->symbols_.bit1.level1 = 0;
-  // reset: both halves low, a zero duration would end the transmission before the reset time has passed
+  // A zero duration would end the transmission, so both halves of the reset symbol are low
   this->symbols_.reset.duration0 = (uint32_t) (ticks_per_ns * RESET_LOW_NS / 2);
   this->symbols_.reset.level0 = 0;
   this->symbols_.reset.duration1 = (uint32_t) (ticks_per_ns * RESET_LOW_NS / 2);
@@ -155,14 +150,14 @@ void SM16825LightOutput::write_state(light::LightState *state) {
   if (this->channel_ == nullptr) {
     return;
   }
-  // The previous frame is still on the wire: try again next loop iteration instead of waiting.
+  // Don't block while the previous frame is still on the wire
   if (this->transmitting_.load(std::memory_order_acquire)) {
     this->schedule_show();
     return;
   }
   this->mark_shown_();
 
-  // Expand each 8 bit colour to the 16 bit grayscale of its output (0xFF -> 0xFFFF).
+  // Expand each 8 bit color to the 16 bit grayscale of its output (0xFF -> 0xFFFF)
   const uint8_t bytes_per_led = this->channel_colors_.bytes_per_led();
   const uint8_t *color = this->colors_;
   uint8_t *chip = this->frame_;
@@ -197,10 +192,7 @@ light::LightTraits SM16825LightOutput::get_traits() {
   return traits;
 }
 
-void SM16825LightOutput::clear_effect_data() {
-  for (int i = 0; i < this->size(); i++)
-    this->effect_data_[i] = 0;
-}
+void SM16825LightOutput::clear_effect_data() { memset(this->effect_data_, 0, this->num_leds_); }
 
 light::ESPColorView SM16825LightOutput::get_view_internal(int32_t index) const {
   const light::ChannelColors &colors = this->channel_colors_;
