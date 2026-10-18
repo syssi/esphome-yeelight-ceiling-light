@@ -63,8 +63,8 @@ static size_t IRAM_ATTR HOT encoder_callback(const void *data, size_t size, size
   return 1;
 }
 
-bool IRAM_ATTR SM16825LightOutput::on_transmit_done_(rmt_channel_handle_t channel,
-                                                     const rmt_tx_done_event_data_t *event, void *context) {
+bool IRAM_ATTR SM16825LightOutput::on_transmit_done(rmt_channel_handle_t channel, const rmt_tx_done_event_data_t *event,
+                                                    void *context) {
   static_cast<SM16825LightOutput *>(context)->transmitting_.store(false, std::memory_order_release);
   return false;
 }
@@ -137,7 +137,7 @@ void SM16825LightOutput::setup() {
 
   rmt_tx_event_callbacks_t callbacks;
   memset(&callbacks, 0, sizeof(callbacks));
-  callbacks.on_trans_done = on_transmit_done_;
+  callbacks.on_trans_done = on_transmit_done;
   if (rmt_tx_register_event_callbacks(this->channel_, &callbacks, this) != ESP_OK ||
       rmt_enable(this->channel_) != ESP_OK) {
     ESP_LOGE(TAG, "Enabling channel failed");

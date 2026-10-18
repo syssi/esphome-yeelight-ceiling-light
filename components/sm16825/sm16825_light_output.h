@@ -47,7 +47,7 @@ class SM16825LightOutput final : public light::AddressableLight {
   light::ESPColorView get_view_internal(int32_t index) const override;
 
   size_t get_frame_size_() const { return this->num_leds_ * BYTES_PER_CHIP + TRAILER_BYTES; }
-  static bool on_transmit_done_(rmt_channel_handle_t channel, const rmt_tx_done_event_data_t *event, void *context);
+  static bool on_transmit_done(rmt_channel_handle_t channel, const rmt_tx_done_event_data_t *event, void *context);
 
   uint8_t *colors_{nullptr};
   uint8_t *effect_data_{nullptr};
