@@ -7,6 +7,7 @@
 
 substitutions:
   name: yeelight-light-lamp9
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
 
 esphome:
   name: ${name}
@@ -26,6 +27,10 @@ esp32:
     advanced:
       ignore_efuse_mac_crc: true
       ignore_efuse_custom_mac: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
 
 wifi:
   ssid: !secret wifi_ssid
@@ -95,11 +100,17 @@ output:
     id: output_warm
     frequency: 20kHz
     power_supply: power
+    # Minimum duty of a lit channel; off stays off. The stock firmware uses 3 % for
+    # warm and 4 % for cold
+    min_power: 3%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO27
     id: output_cold
     frequency: 20kHz
     power_supply: power
+    min_power: 4%
+    zero_means_zero: true
   - platform: ledc
     pin: GPIO12
     id: output_nightlight
@@ -123,15 +134,32 @@ light:
     gamma_correct: 0
     on_turn_on:
       - light.turn_off: bedside_light
-  - platform: cwww
+  - platform: yeelight_cct
     name: "bedside light"
     id: bedside_light
-    cold_white: output_cold
     warm_white: output_warm
-    cold_white_color_temperature: 6500 K
-    warm_white_color_temperature: 2700 K
-    constant_brightness: true
-    gamma_correct: 0
+    cold_white: output_cold
+    interpolation: quadratic
+    min_share: 3%
+    brightness_curve: quadratic
+    min_brightness: 3%
+    mixing_table:
+      - {color_temperature: 2700 K, warm_white: 100%, cold_white: 0%}
+      - {color_temperature: 2800 K, warm_white: 85.965%, cold_white: 3.765%}
+      - {color_temperature: 2900 K, warm_white: 81.837%, cold_white: 7.936%}
+      - {color_temperature: 3000 K, warm_white: 77.834%, cold_white: 11.980%}
+      - {color_temperature: 3200 K, warm_white: 69.399%, cold_white: 19.461%}
+      - {color_temperature: 3400 K, warm_white: 63.544%, cold_white: 27.460%}
+      - {color_temperature: 3700 K, warm_white: 53.834%, cold_white: 38.313%}
+      - {color_temperature: 4000 K, warm_white: 44.333%, cold_white: 47.913%}
+      - {color_temperature: 4250 K, warm_white: 37.138%, cold_white: 55.183%}
+      - {color_temperature: 4500 K, warm_white: 30.059%, cold_white: 61.294%}
+      - {color_temperature: 4750 K, warm_white: 23.634%, cold_white: 66.745%}
+      - {color_temperature: 5000 K, warm_white: 17.837%, cold_white: 71.561%}
+      - {color_temperature: 5250 K, warm_white: 12.698%, cold_white: 76.753%}
+      - {color_temperature: 5500 K, warm_white: 7.931%, cold_white: 81.049%}
+      - {color_temperature: 6000 K, warm_white: 2.820%, cold_white: 86.214%}
+      - {color_temperature: 6500 K, warm_white: 0%, cold_white: 100%}
     on_turn_on:
       - light.turn_off: night_light
   - platform: binary
