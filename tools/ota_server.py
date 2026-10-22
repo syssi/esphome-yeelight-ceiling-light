@@ -18,6 +18,7 @@ at this host and port.
 """
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import pathlib
 import re
 import socketserver
 import sys
@@ -39,9 +40,11 @@ def build_handler(data: bytes):
 
         def _log_request(self):
             with _lock:
-                print(f"\n=== {self.client_address[0]}:{self.client_address[1]} "
-                      f"{self.command} {self.path} {self.request_version} ===",
-                      flush=True)
+                print(
+                    f"\n=== {self.client_address[0]}:{self.client_address[1]} "
+                    f"{self.command} {self.path} {self.request_version} ===",
+                    flush=True,
+                )
                 for k, v in self.headers.items():
                     print(f"    {k}: {v}", flush=True)
 
@@ -66,7 +69,7 @@ def build_handler(data: bytes):
                         end = min(int(m.group(2)), size - 1)
                     partial = True
 
-            body = data[start:end + 1]
+            body = data[start : end + 1]
             self.send_response(206 if partial else 200)
             self.send_header("Content-Type", "application/octet-stream")
             self.send_header("Content-Length", str(len(body)))
@@ -78,15 +81,19 @@ def build_handler(data: bytes):
             sent = 0
             try:
                 while sent < len(body):
-                    n = self.wfile.write(body[sent:sent + 4096])
+                    n = self.wfile.write(body[sent : sent + 4096])
                     sent += n or 4096
                 with _lock:
-                    print(f"    --> sent {sent}/{len(body)} bytes  COMPLETE",
-                          flush=True)
+                    print(
+                        f"    --> sent {sent}/{len(body)} bytes  COMPLETE", flush=True
+                    )
             except Exception as e:  # noqa: BLE001 - report whatever went wrong
                 with _lock:
-                    print(f"    --> sent {sent}/{len(body)} bytes then "
-                          f"DISCONNECT: {type(e).__name__}: {e}", flush=True)
+                    print(
+                        f"    --> sent {sent}/{len(body)} bytes then "
+                        f"DISCONNECT: {type(e).__name__}: {e}",
+                        flush=True,
+                    )
 
     return Handler
 
@@ -102,11 +109,14 @@ def main() -> int:
         return 2
     path = sys.argv[1]
     port = int(sys.argv[2]) if len(sys.argv) > 2 else 8000
-    with open(path, "rb") as f:
+    with pathlib.Path(path).open("rb") as f:
         data = f.read()
     print(f"serving {path} ({len(data)} bytes) on port {port}", flush=True)
-    print("verify another host on the LAN can fetch the whole file before "
-          "sending the OTA command", flush=True)
+    print(
+        "verify another host on the LAN can fetch the whole file before "
+        "sending the OTA command",
+        flush=True,
+    )
     Server(("0.0.0.0", port), build_handler(data)).serve_forever()
     return 0
 

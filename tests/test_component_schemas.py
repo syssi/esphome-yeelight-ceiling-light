@@ -1,9 +1,9 @@
 """Schema structure tests for yeelight_ceiling_light ESPHome component modules."""
 
-import os
+from pathlib import Path
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import components.xiaomi_ylkg07yl as ylkg07yl  # noqa: E402
 import components.xiaomi_ylyk01yl as ylyk01yl  # noqa: E402

@@ -55,9 +55,8 @@ def validate_short_bind_key(value):
     for part in parts:
         try:
             parts_int.append(int(part, 16))
-        except ValueError:
-            # pylint: disable=raise-missing-from
-            raise cv.Invalid("Bind key must be hex values from 00 to FF")
+        except ValueError as err:
+            raise cv.Invalid("Bind key must be hex values from 00 to FF") from err
 
     return "".join(f"{part:02X}" for part in parts_int)
 

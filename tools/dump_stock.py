@@ -30,8 +30,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 CHUNK_LINE = re.compile(r"CHUNK (\d+) (\d+) (\S+)")
 
-PART_SIZE = 0x1E0000          # miio_fw1 / miio_fw2 on lamp9
-CHUNK = 2048                  # MAX_CHUNK in probe_flash.h
+PART_SIZE = 0x1E0000  # miio_fw1 / miio_fw2 on lamp9
+CHUNK = 2048  # MAX_CHUNK in probe_flash.h
 
 
 async def run(ip: str, out: pathlib.Path, size: int, chunk: int) -> int:
@@ -51,13 +51,17 @@ async def run(ip: str, out: pathlib.Path, size: int, chunk: int) -> int:
 
     # API encryption key, if the device config sets one; read from the
     # environment so it stays out of the process list.
-    cli = APIClient(ip, 6053, None, noise_psk=os.environ.get("ESPHOME_NOISE_PSK") or None)
+    cli = APIClient(
+        ip, 6053, None, noise_psk=os.environ.get("ESPHOME_NOISE_PSK") or None
+    )
     await cli.connect(login=True)
     try:
         _entities, services = await cli.list_entities_services()
         svc = {s.name: s for s in services}
         if "dump_flash" not in svc:
-            raise SystemExit(f"{ip} does not expose dump_flash - is the probe build running?")
+            raise SystemExit(
+                f"{ip} does not expose dump_flash - is the probe build running?"
+            )
 
         got: dict[int, bytes] = {}
 
@@ -74,8 +78,10 @@ async def run(ip: str, out: pathlib.Path, size: int, chunk: int) -> int:
         for i, off in enumerate(offsets, 1):
             for attempt in range(4):
                 got.pop(off, None)
-                await cli.execute_service(svc["dump_flash"], {"offset": off, "length": chunk})
-                for _ in range(60):                      # up to ~3 s
+                await cli.execute_service(
+                    svc["dump_flash"], {"offset": off, "length": chunk}
+                )
+                for _ in range(60):  # up to ~3 s
                     await asyncio.sleep(0.05)
                     if off in got:
                         break
