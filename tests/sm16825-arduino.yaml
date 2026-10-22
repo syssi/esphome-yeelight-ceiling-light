@@ -1,0 +1,35 @@
+substitutions:
+  name: sm16825-arduino
+  external_components_source: ../components
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  min_version: 2026.9.0
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: arduino
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+logger:
+  level: DEBUG
+
+light:
+  - platform: sm16825
+    name: "rgbw strip"
+    pin: GPIO13
+    num_leds: 30
+    channel_colors: RGBW
+    current_gain:
+      outr: 10
+      outg: 10
+      outb: 10
+      outw: 10
+    effects:
+      - addressable_rainbow:
+      - addressable_twinkle:

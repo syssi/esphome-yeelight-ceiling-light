@@ -7,11 +7,12 @@
 
 substitutions:
   name: yeelight-light-ceil43
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@sm16825-component
 
 esphome:
   name: ${name}
   friendly_name: ${name}
-  min_version: 2024.10.0
+  min_version: 2026.9.0
 
 esp32:
   board: esp32doit-devkit-v1
@@ -26,6 +27,10 @@ esp32:
     advanced:
       ignore_efuse_mac_crc: true
       ignore_efuse_custom_mac: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
 
 wifi:
   ssid: !secret wifi_ssid
@@ -106,3 +111,25 @@ light:
     green: output_green
     blue: output_blue
     gamma_correct: 0
+
+  # RGB front light: 9 SM16825E drivers on GPIO13. The board wires blue to OUTR, red to OUTG
+  # and green to OUTB; the current gains are the values of the stock firmware (0x4A94A51F).
+  # The stock firmware limits R+G+B to 150 %, color_correct keeps it on the safe side until
+  # the thermal limits are known.
+  - platform: sm16825
+    name: "front light"
+    id: front_light
+    pin: GPIO13
+    num_leds: 9
+    channel_colors: BRG
+    current_gain:
+      outr: 9
+      outg: 10
+      outb: 10
+      outw: 10
+      outy: 10
+    color_correct: [50%, 50%, 50%]
+    power_supply: power
+    effects:
+      - addressable_rainbow:
+      - addressable_color_wipe:
