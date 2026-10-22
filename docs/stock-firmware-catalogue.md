@@ -171,4 +171,3 @@ current build whatever version is requested. See the docs for the test.
 | 2.1.7_0031 | - | Fix uncontrollable problems in homekit |
 | 2.1.7_0029 | 2021-12-23 | Fix known issues. |
 | 2.0.6_0017 | 2019-10-16 | 1. 修复已知问题 / 2. 提升网络稳定性和兼容性 |
-

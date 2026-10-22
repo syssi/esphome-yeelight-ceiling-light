@@ -21,6 +21,7 @@ Usage:
     append_crc.py --verify <image.bin>     check a genuine Xiaomi image
 """
 
+import pathlib
 import struct
 import sys
 
@@ -41,7 +42,7 @@ def xiaomi_crc(buf: bytes) -> int:
 
 
 def verify(path: str) -> int:
-    with open(path, "rb") as f:
+    with pathlib.Path(path).open("rb") as f:
         data = f.read()
     body, trailer = data[:-4], data[-4:]
     packed = struct.pack("<I", xiaomi_crc(body))
@@ -53,14 +54,17 @@ def verify(path: str) -> int:
 
 
 def append(src: str, dst: str) -> int:
-    with open(src, "rb") as f:
+    with pathlib.Path(src).open("rb") as f:
         body = f.read()
     if body[:1] != b"\xe9":
-        print(f"warning: {src} does not start with 0xE9 and may not be an "
-              f"ESP-IDF application image", file=sys.stderr)
+        print(
+            f"warning: {src} does not start with 0xE9 and may not be an "
+            f"ESP-IDF application image",
+            file=sys.stderr,
+        )
     crc = xiaomi_crc(body)
     out = body + struct.pack("<I", crc)
-    with open(dst, "wb") as f:
+    with pathlib.Path(dst).open("wb") as f:
         f.write(out)
     print(f"in   : {src}  {len(body)} bytes")
     print(f"crc  : {crc:08x}  -> trailer {struct.pack('<I', crc).hex()}")

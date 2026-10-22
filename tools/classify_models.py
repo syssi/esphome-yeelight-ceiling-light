@@ -53,18 +53,19 @@ def fetch(model: str, cache: pathlib.Path) -> str | None:
     cached = cache / f"{model}.html"
     if cached.is_file():
         return cached.read_text(errors="replace")
-    req = urllib.request.Request(CATALOGUE.format(model=model),
-                                 headers={"User-Agent": UA})
+    req = urllib.request.Request(
+        CATALOGUE.format(model=model), headers={"User-Agent": UA}
+    )
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
             body = r.read().decode("utf-8", errors="replace")
     except urllib.error.HTTPError as e:
         if e.code == 404:
-            cached.write_text("")          # cache the miss too
+            cached.write_text("")  # cache the miss too
             return ""
         print(f"  {model}: HTTP {e.code}", file=sys.stderr)
         return None
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - report any failure and continue
         print(f"  {model}: {e}", file=sys.stderr)
         return None
     cached.write_text(body)
@@ -83,17 +84,22 @@ def parse(model: str, body: str) -> dict:
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(description=__doc__,
-                                formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--models-from", required=True, metavar="FILE",
-                   help="model names, one per line (# comments ok)")
+    p = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    p.add_argument(
+        "--models-from",
+        required=True,
+        metavar="FILE",
+        help="model names, one per line (# comments ok)",
+    )
     p.add_argument("--out", default="protocols.json", metavar="FILE")
     p.add_argument("--cache", default=".catalogue-cache", metavar="DIR")
     p.add_argument("--throttle", type=float, default=0.4, metavar="SEC")
     args = p.parse_args()
 
     models = []
-    for line in pathlib.Path(args.models_from).read_text().splitlines():
+    for line in pathlib.Path(args.models_from).read_text(encoding="utf-8").splitlines():
         line = line.split("#", 1)[0].strip()
         if line:
             models.append(line)
@@ -107,16 +113,24 @@ def main() -> int:
         body = fetch(model, cache)
         if body is None:
             continue
-        info = parse(model, body) if body else {"name": None, "protocol": None,
-                                               "feature": None}
+        info = (
+            parse(model, body)
+            if body
+            else {"name": None, "protocol": None, "feature": None}
+        )
         info["esp_capable"] = normalise(info["protocol"] or "") in ESP_CAPABLE
         out[model] = info
-        print(f"{model:<30} {str(info['protocol'] or 'not in catalogue'):<14} "
-              f"{'ESP-capable' if info['esp_capable'] else '-':<12} "
-              f"{info['name'] or ''}", flush=True)
+        print(
+            f"{model:<30} {str(info['protocol'] or 'not in catalogue'):<14} "
+            f"{'ESP-capable' if info['esp_capable'] else '-':<12} "
+            f"{info['name'] or ''}",
+            flush=True,
+        )
 
     pathlib.Path(args.out).write_text(
-        json.dumps(dict(sorted(out.items())), indent=2, ensure_ascii=False) + "\n")
+        json.dumps(dict(sorted(out.items())), indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     n = sum(1 for v in out.values() if v["esp_capable"])
     print(f"\nwrote {args.out}: {len(out)} models, {n} ESP-capable")
     return 0

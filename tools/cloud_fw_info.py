@@ -75,9 +75,14 @@ import mi_session  # noqa: E402
 # chip_id at 12..13. Anything not starting 0xE9 is not an ESP-IDF app image at
 # all, which is how the non-ESP models (BLE/mesh parts) get filtered out.
 ESP_CHIP_IDS = {
-    0x0000: "ESP32", 0x0002: "ESP32-S2", 0x0005: "ESP32-C3",
-    0x0009: "ESP32-S3", 0x000C: "ESP32-C2", 0x000D: "ESP32-C6",
-    0x0010: "ESP32-H2", 0x0012: "ESP32-P4",
+    0x0000: "ESP32",
+    0x0002: "ESP32-S2",
+    0x0005: "ESP32-C3",
+    0x0009: "ESP32-S3",
+    0x000C: "ESP32-C2",
+    0x000D: "ESP32-C6",
+    0x0010: "ESP32-H2",
+    0x0012: "ESP32-P4",
 }
 
 
@@ -93,7 +98,7 @@ def identify_chip(url: str):
             head = r.read(32)
             crange = r.headers.get("Content-Range") or ""
             total = int(crange.rsplit("/", 1)[-1]) if "/" in crange else None
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - report any failure and continue
         return f"probe failed: {e}", None
 
     if len(head) < 24 or head[0] != 0xE9:
@@ -118,12 +123,16 @@ def list_devices(connector, server: str):
     homes = []
     h = connector.get_homes(server)
     if h:
-        homes.extend({"home_id": x["id"], "home_owner": connector.userId}
-                     for x in h["result"]["homelist"])
+        homes.extend(
+            {"home_id": x["id"], "home_owner": connector.userId}
+            for x in h["result"]["homelist"]
+        )
     cnt = connector.get_dev_cnt(server)
     if cnt:
-        homes.extend({"home_id": x["home_id"], "home_owner": x["home_owner"]}
-                     for x in cnt["result"]["share"]["share_family"])
+        homes.extend(
+            {"home_id": x["home_id"], "home_owner": x["home_owner"]}
+            for x in cnt["result"]["share"]["share_family"]
+        )
 
     out = []
     for home in homes:
@@ -142,41 +151,83 @@ def find_device(connector, server: str, ip: str):
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(description=__doc__,
-                                formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--ip", help="device LAN address; probes every per-device endpoint for it")
-    p.add_argument("--model", action="append", default=[], metavar="MODEL",
-                   help="fetch latest firmware info for this model (repeatable)")
-    p.add_argument("--raw", action="store_true",
-                   help="dump the full JSON for every model, not a summary line")
-    p.add_argument("--models-from", metavar="FILE",
-                   help="read model names from FILE, one per line (# comments ok)")
-    p.add_argument("--esp-only", action="store_true",
-                   help="identify the chip from a 32-byte ranged read first and "
-                        "skip anything that is not an ESP-IDF app image")
-    p.add_argument("--throttle", type=float, default=0.5, metavar="SEC",
-                   help="pause between cloud calls (default: 0.5)")
-    p.add_argument("--all-models", action="store_true",
-                   help="fetch every distinct model on the account")
-    p.add_argument("--version", metavar="VER",
-                   help="ask for this specific firmware version rather than the "
-                        "latest; undocumented, so it may simply be ignored. A "
-                        "model may also carry its own as 'model@version'.")
-    p.add_argument("--download", metavar="DIR",
-                   help="save each model's image to DIR and verify its md5")
-    p.add_argument("--qr", action="store_true",
-                   help="log in by QR code scanned in the Mi Home app: no captcha "
-                        "and no emailed 2FA code")
-    p.add_argument("--server", default="de",
-                   help="Xiaomi cloud region: cn, de, us, ru, tw, sg, i2 (default: de)")
-    p.add_argument("--extractor",
-                   default=str(pathlib.Path(__file__).resolve().parent
-                               / "Xiaomi-cloud-tokens-extractor"),
-                   help="path to a Xiaomi-cloud-tokens-extractor checkout")
+    p = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    p.add_argument(
+        "--ip", help="device LAN address; probes every per-device endpoint for it"
+    )
+    p.add_argument(
+        "--model",
+        action="append",
+        default=[],
+        metavar="MODEL",
+        help="fetch latest firmware info for this model (repeatable)",
+    )
+    p.add_argument(
+        "--raw",
+        action="store_true",
+        help="dump the full JSON for every model, not a summary line",
+    )
+    p.add_argument(
+        "--models-from",
+        metavar="FILE",
+        help="read model names from FILE, one per line (# comments ok)",
+    )
+    p.add_argument(
+        "--esp-only",
+        action="store_true",
+        help="identify the chip from a 32-byte ranged read first and "
+        "skip anything that is not an ESP-IDF app image",
+    )
+    p.add_argument(
+        "--throttle",
+        type=float,
+        default=0.5,
+        metavar="SEC",
+        help="pause between cloud calls (default: 0.5)",
+    )
+    p.add_argument(
+        "--all-models",
+        action="store_true",
+        help="fetch every distinct model on the account",
+    )
+    p.add_argument(
+        "--version",
+        metavar="VER",
+        help="ask for this specific firmware version rather than the "
+        "latest; undocumented, so it may simply be ignored. A "
+        "model may also carry its own as 'model@version'.",
+    )
+    p.add_argument(
+        "--download",
+        metavar="DIR",
+        help="save each model's image to DIR and verify its md5",
+    )
+    p.add_argument(
+        "--qr",
+        action="store_true",
+        help="log in by QR code scanned in the Mi Home app: no captcha "
+        "and no emailed 2FA code",
+    )
+    p.add_argument(
+        "--server",
+        default="de",
+        help="Xiaomi cloud region: cn, de, us, ru, tw, sg, i2 (default: de)",
+    )
+    p.add_argument(
+        "--extractor",
+        default=str(
+            pathlib.Path(__file__).resolve().parent / "Xiaomi-cloud-tokens-extractor"
+        ),
+        help="path to a Xiaomi-cloud-tokens-extractor checkout",
+    )
     args = p.parse_args()
 
     if args.models_from:
-        for line in pathlib.Path(args.models_from).read_text().splitlines():
+        for line in (
+            pathlib.Path(args.models_from).read_text(encoding="utf-8").splitlines()
+        ):
             line = line.split("#", 1)[0].strip()
             if line:
                 args.model.append(line)
@@ -191,10 +242,15 @@ def main() -> int:
                 print(f"{var} is not set", file=sys.stderr)
                 return 2
 
-    sys.argv = ["token_extractor.py",
-                "-u", os.environ.get("MI_USERNAME", "").strip(),
-                "-p", os.environ.get("MI_PASSWORD", "").strip(),
-                "-l", "CRITICAL"]
+    sys.argv = [
+        "token_extractor.py",
+        "-u",
+        os.environ.get("MI_USERNAME", "").strip(),
+        "-p",
+        os.environ.get("MI_PASSWORD", "").strip(),
+        "-l",
+        "CRITICAL",
+    ]
     te = mi_session.load_extractor(args.extractor, qr=args.qr)
 
     connector = mi_session.get_connector(te, args.server, qr=args.qr)
@@ -209,8 +265,10 @@ def main() -> int:
         if not quiet:
             print(f"\n>>> POST {path}  {json.dumps(payload)}", flush=True)
         try:
-            resp = connector.execute_api_call_encrypted(url, {"data": json.dumps(payload)})
-        except Exception as e:
+            resp = connector.execute_api_call_encrypted(
+                url, {"data": json.dumps(payload)}
+            )
+        except Exception as e:  # noqa: BLE001 - report any failure and continue
             print(f"<<< raised {type(e).__name__}: {e}", flush=True)
             return None
         if not quiet:
@@ -235,16 +293,23 @@ def main() -> int:
     if args.ip:
         device = find_device(connector, args.server, args.ip)
         if not device:
-            print(f"no device with local address {args.ip} on server "
-                  f"'{args.server}'", file=sys.stderr)
+            print(
+                f"no device with local address {args.ip} on server '{args.server}'",
+                file=sys.stderr,
+            )
             return 1
 
         did, model = device["did"], device.get("model")
         pid = device.get("pid", 0)
         print(f"\ntarget: {device.get('name')}  model={model}  did={did}  pid={pid}")
         print("--- device_info as the cloud holds it ---")
-        print(json.dumps({k: v for k, v in device.items() if k != "token"},
-                         indent=2, ensure_ascii=False))
+        print(
+            json.dumps(
+                {k: v for k, v in device.items() if k != "token"},
+                indent=2,
+                ensure_ascii=False,
+            )
+        )
         if model:
             dids.setdefault(model, did)
             if model not in models:
@@ -284,20 +349,32 @@ def main() -> int:
         matched_key = None
         if want:
             for key in VERSION_KEYS:
-                latest = ((probe("/home/latest_version", {"model": model, key: want},
-                                 quiet=quiet) or {}).get("result")) or {}
+                latest = (
+                    (
+                        probe(
+                            "/home/latest_version",
+                            {"model": model, key: want},
+                            quiet=quiet,
+                        )
+                        or {}
+                    ).get("result")
+                ) or {}
                 if latest.get("version") == want:
                     matched_key = key
                     break
                 time.sleep(args.throttle)
         else:
-            latest = ((probe("/home/latest_version", {"model": model},
-                             quiet=quiet) or {}).get("result")) or {}
+            latest = (
+                (
+                    probe("/home/latest_version", {"model": model}, quiet=quiet) or {}
+                ).get("result")
+            ) or {}
 
         history = None
         if model in dids and not want:
-            resp = probe("/v2/device/get_firmware_history", {"did": dids[model]},
-                         quiet=quiet)
+            resp = probe(
+                "/v2/device/get_firmware_history", {"did": dids[model]}, quiet=quiet
+            )
             history = ((resp or {}).get("result") or {}).get("list")
 
         url, md5 = latest.get("safe_url"), latest.get("md5")
@@ -322,14 +399,19 @@ def main() -> int:
             verdict = chip or "not identified (--esp-only off)"
 
         if quiet and len(models) > 1:
-            print(f"{spec:<30} {str(version or '-'):<14} "
-                  f"{(size or 0):>9}  {verdict}", flush=True)
+            print(
+                f"{spec:<30} {str(version or '-'):<14} {(size or 0):>9}  {verdict}",
+                flush=True,
+            )
 
         # Deliberately no dids and no device names: the changelog is about models,
         # and keeping it free of anything account-specific makes it publishable.
         if not want:
             catalogue[model] = {
-                "version": version, "md5": md5, "size": size, "chip": chip,
+                "version": version,
+                "md5": md5,
+                "size": size,
+                "chip": chip,
                 "upload_time": latest.get("upload_time"),
                 "changeLog": latest.get("changeLog"),
                 "fw_change_log": latest.get("fw_change_log"),
@@ -340,19 +422,21 @@ def main() -> int:
         if not args.download or not url:
             continue
         if want and not matched_key:
-            continue          # would just re-download the latest under a wrong name
+            continue  # would just re-download the latest under a wrong name
         if args.esp_only and (chip is None or str(chip).startswith("probe failed")):
             continue
         try:
             with urllib.request.urlopen(url, timeout=90) as r:
                 blob = r.read()
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - report any failure and continue
             print(f"!! download failed for {model}: {e}", file=sys.stderr)
             continue
         got = hashlib.md5(blob).hexdigest()
         if got != md5:
-            print(f"!! md5 mismatch for {model}: got {got}, expected {md5}",
-                  file=sys.stderr)
+            print(
+                f"!! md5 mismatch for {model}: got {got}, expected {md5}",
+                file=sys.stderr,
+            )
             continue
         out = pathlib.Path(args.download) / f"{model}-stock-{version}.bin"
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -375,8 +459,10 @@ def main() -> int:
             if entry.get("history") is None and model in merged:
                 entry["history"] = merged[model].get("history")
             merged[model] = entry
-        cl.write_text(json.dumps(dict(sorted(merged.items())),
-                                 indent=2, ensure_ascii=False) + "\n")
+        cl.write_text(
+            json.dumps(dict(sorted(merged.items())), indent=2, ensure_ascii=False)
+            + "\n"
+        )
         print(f"\nwrote {cl} ({len(merged)} models)")
 
     return 0

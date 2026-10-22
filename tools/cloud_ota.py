@@ -70,12 +70,16 @@ def find_device(connector, server: str, ip: str):
     homes = []
     h = connector.get_homes(server)
     if h:
-        homes.extend({"home_id": x["id"], "home_owner": connector.userId}
-                     for x in h["result"]["homelist"])
+        homes.extend(
+            {"home_id": x["id"], "home_owner": connector.userId}
+            for x in h["result"]["homelist"]
+        )
     cnt = connector.get_dev_cnt(server)
     if cnt:
-        homes.extend({"home_id": x["home_id"], "home_owner": x["home_owner"]}
-                     for x in cnt["result"]["share"]["share_family"])
+        homes.extend(
+            {"home_id": x["home_id"], "home_owner": x["home_owner"]}
+            for x in cnt["result"]["share"]["share_family"]
+        )
 
     for home in homes:
         devs = connector.get_devices(server, home["home_id"], home["home_owner"])
@@ -88,27 +92,45 @@ def find_device(connector, server: str, ip: str):
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(description=__doc__,
-                                formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--ip", required=True, help="device LAN address, used to identify it")
+    p = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    p.add_argument(
+        "--ip", required=True, help="device LAN address, used to identify it"
+    )
     p.add_argument("--url", help="firmware URL to hand the device")
-    p.add_argument("--qr", action="store_true",
-                   help="log in by QR code scanned in the Mi Home app: no captcha "
-                        "and no emailed 2FA code")
-    p.add_argument("--server", default="de",
-                   help="Xiaomi cloud region: cn, de, us, ru, tw, sg, i2 (default: de)")
-    p.add_argument("--extractor",
-                   default=str(pathlib.Path(__file__).resolve().parent
-                               / "Xiaomi-cloud-tokens-extractor"),
-                   help="path to a Xiaomi-cloud-tokens-extractor checkout")
-    p.add_argument("--state", action="store_true",
-                   help="only read OTA state and exit")
+    p.add_argument(
+        "--qr",
+        action="store_true",
+        help="log in by QR code scanned in the Mi Home app: no captcha "
+        "and no emailed 2FA code",
+    )
+    p.add_argument(
+        "--server",
+        default="de",
+        help="Xiaomi cloud region: cn, de, us, ru, tw, sg, i2 (default: de)",
+    )
+    p.add_argument(
+        "--extractor",
+        default=str(
+            pathlib.Path(__file__).resolve().parent / "Xiaomi-cloud-tokens-extractor"
+        ),
+        help="path to a Xiaomi-cloud-tokens-extractor checkout",
+    )
+    p.add_argument("--state", action="store_true", help="only read OTA state and exit")
     p.add_argument("--md5", help="md5 of the served file, for the fuller payloads")
-    p.add_argument("--sweep", action="store_true",
-                   help="try several miIO.ota payload shapes in one login, stopping "
-                        "as soon as the device leaves the idle state")
-    p.add_argument("--poll", type=int, default=40,
-                   help="how many 5s polls to run after sending (default: 40)")
+    p.add_argument(
+        "--sweep",
+        action="store_true",
+        help="try several miIO.ota payload shapes in one login, stopping "
+        "as soon as the device leaves the idle state",
+    )
+    p.add_argument(
+        "--poll",
+        type=int,
+        default=40,
+        help="how many 5s polls to run after sending (default: 40)",
+    )
     args = p.parse_args()
 
     if not args.state and not args.url:
@@ -121,10 +143,15 @@ def main() -> int:
                 print(f"{var} is not set", file=sys.stderr)
                 return 2
 
-    sys.argv = ["token_extractor.py",
-                "-u", os.environ.get("MI_USERNAME", "").strip(),
-                "-p", os.environ.get("MI_PASSWORD", "").strip(),
-                "-l", "CRITICAL"]
+    sys.argv = [
+        "token_extractor.py",
+        "-u",
+        os.environ.get("MI_USERNAME", "").strip(),
+        "-p",
+        os.environ.get("MI_PASSWORD", "").strip(),
+        "-l",
+        "CRITICAL",
+    ]
     te = mi_session.load_extractor(args.extractor, qr=args.qr)
 
     connector = mi_session.get_connector(te, args.server, qr=args.qr)
@@ -134,8 +161,10 @@ def main() -> int:
 
     device = find_device(connector, args.server, args.ip)
     if not device:
-        print(f"no device with local address {args.ip} on server "
-              f"'{args.server}'", file=sys.stderr)
+        print(
+            f"no device with local address {args.ip} on server '{args.server}'",
+            file=sys.stderr,
+        )
         return 1
 
     did = device["did"]
@@ -146,8 +175,9 @@ def main() -> int:
 
     def relay(method, params):
         counter[0] += 1
-        data = (f'{{"id":{counter[0]},"method":"{method}",'
-                f'"params":{json.dumps(params)}}}')
+        data = (
+            f'{{"id":{counter[0]},"method":"{method}","params":{json.dumps(params)}}}'
+        )
         print(f">>> {data}", flush=True)
         resp = connector.execute_api_call_encrypted(url, {"data": data})
         print(f"<<< {json.dumps(resp)}\n", flush=True)
@@ -170,13 +200,21 @@ def main() -> int:
         yield ("url only", {"app_url": args.url})
         m = args.md5
         if m:
-            yield ("python-miio classic",
-                   {"mode": "normal", "install": "1", "app_url": args.url,
-                    "file_md5": m, "proc": "dnld install"})
+            yield (
+                "python-miio classic",
+                {
+                    "mode": "normal",
+                    "install": "1",
+                    "app_url": args.url,
+                    "file_md5": m,
+                    "proc": "dnld install",
+                },
+            )
             yield ("url+md5", {"app_url": args.url, "file_md5": m})
-            yield ("url+md5+install",
-                   {"mode": "normal", "install": "1", "app_url": args.url,
-                    "file_md5": m})
+            yield (
+                "url+md5+install",
+                {"mode": "normal", "install": "1", "app_url": args.url, "file_md5": m},
+            )
 
     def left_idle(rounds=6, gap=4):
         """True once the device reports anything other than idle."""

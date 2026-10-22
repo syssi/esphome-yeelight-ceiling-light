@@ -24,8 +24,9 @@ import sys
 # Set MI_STATE_DIR to put these somewhere else. The captcha and QR images land
 # here too, because the extractor's own options - an HTTP server on :31415 or a
 # desktop image viewer - are both useless over SSH.
-STATE_DIR = pathlib.Path(os.environ.get(
-    "MI_STATE_DIR", pathlib.Path.home() / ".cache" / "esphome-yeelight"))
+STATE_DIR = pathlib.Path(
+    os.environ.get("MI_STATE_DIR", pathlib.Path.home() / ".cache" / "esphome-yeelight")
+)
 SESSION_PATH = STATE_DIR / "mi_session.json"
 IDENTITY_PATH = STATE_DIR / "mi_identity.json"
 CAPTCHA_PATH = STATE_DIR / "captcha.jpg"
@@ -45,17 +46,20 @@ def load_extractor(extractor_path: str, qr: bool = False):
     try:
         import token_extractor as te  # noqa: PLC0415
     except ImportError:
-        print(f"could not import token_extractor from {extractor_path}",
-              file=sys.stderr)
-        raise SystemExit(2)
+        print(
+            f"could not import token_extractor from {extractor_path}", file=sys.stderr
+        )
+        raise SystemExit(2) from None
 
     target = QR_PATH if qr else CAPTCHA_PATH
 
     def save_image(image_content, **_kwargs):
         STATE_DIR.mkdir(parents=True, exist_ok=True)
         target.write_bytes(image_content)
-        print(f"\n*** {'QR code' if qr else 'captcha'} written to {target} ***\n",
-              flush=True)
+        print(
+            f"\n*** {'QR code' if qr else 'captcha'} written to {target} ***\n",
+            flush=True,
+        )
 
     te.present_image_image = save_image
     return te
@@ -77,8 +81,10 @@ def _identity(te) -> dict:
             return json.loads(IDENTITY_PATH.read_text())
         except (OSError, ValueError):
             pass
-    ident = {"_agent": te.XiaomiCloudConnector.generate_agent(),
-             "_device_id": te.XiaomiCloudConnector.generate_device_id()}
+    ident = {
+        "_agent": te.XiaomiCloudConnector.generate_agent(),
+        "_device_id": te.XiaomiCloudConnector.generate_device_id(),
+    }
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     IDENTITY_PATH.write_text(json.dumps(ident))
     IDENTITY_PATH.chmod(0o600)
@@ -123,8 +129,9 @@ def get_connector(te, server: str, qr: bool = False):
             return cached
         print("cached session rejected, logging in again", flush=True)
 
-    connector = (te.QrCodeXiaomiCloudConnector() if qr
-                 else te.PasswordXiaomiCloudConnector())
+    connector = (
+        te.QrCodeXiaomiCloudConnector() if qr else te.PasswordXiaomiCloudConnector()
+    )
     # Before login: the deviceId cookie is set during the first login step.
     for k, v in ident.items():
         setattr(connector, k, v)

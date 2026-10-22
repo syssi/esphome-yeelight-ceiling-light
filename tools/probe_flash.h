@@ -29,8 +29,8 @@ inline void log_part(const char *what, const esp_partition_t *p) {
     ESP_LOGI(TAG, "%s: none", what);
     return;
   }
-  ESP_LOGI(TAG, "%s: label=%s type=0x%02x subtype=0x%02x addr=0x%06" PRIx32 " size=0x%06" PRIx32,
-           what, p->label, p->type, p->subtype, p->address, p->size);
+  ESP_LOGI(TAG, "%s: label=%s type=0x%02x subtype=0x%02x addr=0x%06" PRIx32 " size=0x%06" PRIx32, what, p->label,
+           p->type, p->subtype, p->address, p->size);
 }
 
 /// Which slot is running and which one the next OTA would overwrite. Confirms
@@ -39,8 +39,7 @@ inline void log_slots() {
   log_part("running", esp_ota_get_running_partition());
   log_part("boot", esp_ota_get_boot_partition());
   log_part("next_update", esp_ota_get_next_update_partition(nullptr));
-  log_part("otadata", esp_partition_find_first(ESP_PARTITION_TYPE_DATA,
-                                               ESP_PARTITION_SUBTYPE_DATA_OTA, nullptr));
+  log_part("otadata", esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_DATA_OTA, nullptr));
 }
 
 inline void dump_part(const esp_partition_t *part, const char *what, int offset, int length) {
@@ -68,8 +67,7 @@ inline void dump_part(const esp_partition_t *part, const char *what, int offset,
   }
   // One line per chunk: tag, offset, length, base64. The offset is echoed so a
   // reassembling caller never has to trust the order lines arrive in.
-  ESP_LOGI(TAG, "%s %d %u %s", what, offset, (unsigned) len,
-           esphome::base64_encode(buf, len).c_str());
+  ESP_LOGI(TAG, "%s %d %u %s", what, offset, (unsigned) len, esphome::base64_encode(buf, len).c_str());
 }
 
 /// The inactive OTA slot - the vendor image, after exactly one flash.
@@ -80,9 +78,8 @@ inline void dump_flash(int offset, int length) {
 /// otadata, where the bootloader keeps the sequence numbers that decide which
 /// slot boots. Separate partition, so it needs its own reader.
 inline void dump_otadata(int offset, int length) {
-  dump_part(esp_partition_find_first(ESP_PARTITION_TYPE_DATA,
-                                     ESP_PARTITION_SUBTYPE_DATA_OTA, nullptr),
-            "OTADATA", offset, length);
+  dump_part(esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_DATA_OTA, nullptr), "OTADATA",
+            offset, length);
 }
 
 }  // namespace flash_probe
