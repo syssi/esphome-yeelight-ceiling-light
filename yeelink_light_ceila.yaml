@@ -196,7 +196,6 @@ esp32_ble_tracker:
   scan_parameters:
     active: false
 
-xiaomi_ble:
 xiaomi_ylyk01yl:
   mac_address: "${xiaomi_ylyk01yl_mac_address}"
   on_press:

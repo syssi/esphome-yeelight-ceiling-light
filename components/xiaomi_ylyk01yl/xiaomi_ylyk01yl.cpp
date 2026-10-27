@@ -26,24 +26,24 @@ bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
 
   bool success = false;
   for (auto &service_data : device.get_service_datas()) {
-    auto res = xiaomi_ble::parse_xiaomi_header(service_data);
+    auto res = yeelight_ble_remote::parse_mibeacon_header(service_data);
     if (!res.has_value()) {
       continue;
     }
-    if (res->is_duplicate) {
+    if (this->last_frame_count_.has_value() && *this->last_frame_count_ == res->frame_count) {
+      ESP_LOGVV(TAG, "parse_device(): duplicate data packet received (%u).", res->frame_count);
       continue;
     }
+    this->last_frame_count_ = res->frame_count;
     if (res->has_encryption) {
       ESP_LOGVV(TAG, "parse_device(): payload decryption is currently not "
                      "supported on this device.");
       continue;
     }
-    if (!(xiaomi_ble::parse_xiaomi_message(service_data.data, *res))) {
+    if (!(yeelight_ble_remote::parse_mibeacon_message(service_data.data, *res))) {
       continue;
     }
-    if (!(xiaomi_ble::report_xiaomi_results(res, device.address_str()))) {
-      continue;
-    }
+    yeelight_ble_remote::report_results(*res, device.address_str());
     if (res->keycode.has_value()) {
       if (this->keycode_ != nullptr)
         this->keycode_->publish_state(*res->keycode);

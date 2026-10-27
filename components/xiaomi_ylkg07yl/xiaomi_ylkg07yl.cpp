@@ -36,34 +36,34 @@ bool XiaomiYLKG07YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) 
 
   bool success = false;
   for (auto &service_data : device.get_service_datas()) {
-    auto res = xiaomi_ble::parse_xiaomi_header(service_data);
+    auto res = yeelight_ble_remote::parse_mibeacon_header(service_data);
     if (!res.has_value()) {
       continue;
     }
-    if (res->is_duplicate) {
+    if (this->last_frame_count_.has_value() && *this->last_frame_count_ == res->frame_count) {
+      ESP_LOGVV(TAG, "parse_device(): duplicate data packet received (%u).", res->frame_count);
       continue;
     }
+    this->last_frame_count_ = res->frame_count;
+    // Decrypt a copy: the tracker hands the same service data to every listener
+    std::vector<uint8_t> raw = service_data.data;
     if (res->has_encryption) {
-      if (!(this->decrypt_mibeacon_v23_(const_cast<std::vector<uint8_t> &>(service_data.data), this->bindkey_,
-                                        this->address_))) {
+      if (!(this->decrypt_mibeacon_v23_(raw, this->bindkey_, this->address_))) {
         // Try v4/v5 decryption if legacy fails - pad 12-byte key with 0xFF to 16 bytes
         uint8_t padded_key[16];
         memcpy(padded_key, this->bindkey_, 12);
         memset(padded_key + 12, 0xFF, 4);
-        if (!(xiaomi_ble::decrypt_xiaomi_payload(const_cast<std::vector<uint8_t> &>(service_data.data), padded_key,
-                                                 this->address_))) {
+        if (!(yeelight_ble_remote::decrypt_mibeacon_v45(raw, padded_key, this->address_))) {
           continue;
         }
         // Adjust raw_offset for V4 frame parsing - encrypted payload starts at byte 5
         res->raw_offset = 5;
       }
     }
-    if (!(xiaomi_ble::parse_xiaomi_message(service_data.data, *res))) {
+    if (!(yeelight_ble_remote::parse_mibeacon_message(raw, *res))) {
       continue;
     }
-    if (!(xiaomi_ble::report_xiaomi_results(res, device.address_str()))) {
-      continue;
-    }
+    yeelight_ble_remote::report_results(*res, device.address_str());
     if (res->keycode.has_value()) {
       if (res->encoder_value.has_value())
         res->encoder_value = ((res->encoder_value.value() + 128) % 256 - 128);
@@ -121,17 +121,17 @@ bool XiaomiYLKG07YL::decrypt_mibeacon_v23_(std::vector<uint8_t> &raw, const uint
   mac_reverse[1] = (uint8_t) (address >> 8);
   mac_reverse[0] = (uint8_t) (address >> 0);
 
-  xiaomi_ble::XiaomiAESVector vector{.key = {0},
-                                     .plaintext = {0},
-                                     .ciphertext = {0},
-                                     .authdata = {0x11},
-                                     .iv = {0},
-                                     .tag = {0},
-                                     .keysize = 16,
-                                     .authsize = 1,
-                                     .datasize = 0,
-                                     .tagsize = 4,
-                                     .ivsize = 13};
+  yeelight_ble_remote::AESVector vector{.key = {0},
+                                        .plaintext = {0},
+                                        .ciphertext = {0},
+                                        .authdata = {0x11},
+                                        .iv = {0},
+                                        .tag = {0},
+                                        .keysize = 16,
+                                        .authsize = 1,
+                                        .datasize = 0,
+                                        .tagsize = 4,
+                                        .ivsize = 13};
 
   vector.datasize = raw.size() - 15;
   int cipher_pos = 11;

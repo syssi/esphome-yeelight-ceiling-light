@@ -12,7 +12,7 @@ from esphome.const import (
     UNIT_EMPTY,
 )
 
-AUTO_LOAD = ["xiaomi_ble", "sensor"]
+AUTO_LOAD = ["yeelight_ble_remote", "sensor"]
 CODEOWNERS = ["@syssi"]
 DOMAIN = "xiaomi_ylkg07yl"
 DEPENDENCIES = ["esp32_ble_tracker"]

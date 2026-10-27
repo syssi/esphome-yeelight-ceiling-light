@@ -2,7 +2,7 @@
 
 #include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 #include "esphome/components/sensor/sensor.h"
-#include "esphome/components/xiaomi_ble/xiaomi_ble.h"
+#include "esphome/components/yeelight_ble_remote/yeelight_ble_remote.h"
 #include "esphome/core/automation.h"
 #include "esphome/core/component.h"
 
@@ -36,6 +36,7 @@ class XiaomiYLKG07YL : public Component, public esp32_ble_tracker::ESPBTDeviceLi
  protected:
   uint64_t address_;
   uint8_t bindkey_[12];
+  optional<uint8_t> last_frame_count_;
   sensor::Sensor *keycode_sensor_{nullptr};
   sensor::Sensor *encoder_value_sensor_{nullptr};
   sensor::Sensor *action_type_sensor_{nullptr};

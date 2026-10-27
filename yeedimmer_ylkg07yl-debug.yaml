@@ -5,7 +5,7 @@ logger:
   logs:
     esp32_ble_tracker: INFO
     xiaomi_ylkg07yl: VERY_VERBOSE
-    xiaomi_ble: VERY_VERBOSE
+    yeelight_ble_remote: VERY_VERBOSE
     scheduler: DEBUG
     component: DEBUG
     api.service: INFO

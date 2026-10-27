@@ -16,7 +16,7 @@ CODEOWNERS = ["@syssi"]
 DOMAIN = "xiaomi_ylyk01yl"
 
 DEPENDENCIES = ["esp32_ble_tracker"]
-AUTO_LOAD = ["xiaomi_ble", "sensor"]
+AUTO_LOAD = ["yeelight_ble_remote", "sensor"]
 MULTI_CONF = True
 
 CONF_LAST_BUTTON_PRESSED = "last_button_pressed"
