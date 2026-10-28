@@ -10,7 +10,7 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 
 ## Requirements
 
-* [ESPHome 2026.1.0 or higher](https://github.com/esphome/esphome/releases). The Bluetooth remotes YLYK01YL and YLKG07YL require ESPHome 2026.11.0 or higher (currently the `dev` branch).
+* [ESPHome 2026.1.0 or higher](https://github.com/esphome/esphome/releases). The Bluetooth remotes YLYK01YL and YLKG07YL require ESPHome 2026.11.0 or higher.
 * TTL-to-USB module (FTDI/CH430/PL2303) and some wires to flash the device once
 
 ## Supported devices
