@@ -2,9 +2,14 @@
 
 #include "esphome/core/log.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::yeelight_front_panel {
 
-static const char *const TAG = "yeelight_front_panel.sensor";
+ESPHOME_LOG_TAG(TAG, "yeelight_front_panel.sensor");
 
 void FrontPanelSliderSensor::dump_config() { LOG_SENSOR("", "Yeelight front panel slider", this); }
 

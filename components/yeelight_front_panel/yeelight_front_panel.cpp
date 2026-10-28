@@ -6,9 +6,14 @@
 #include <cmath>
 #include <cstring>
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::yeelight_front_panel {
 
-static const char *const TAG = "yeelight_front_panel";
+ESPHOME_LOG_TAG(TAG, "yeelight_front_panel");
 
 void IRAM_ATTR HOT FrontPanelTriggerStore::gpio_intr(FrontPanelTriggerStore *store) {
   // Plain assignment: increment of a volatile object is deprecated in C++20. Only the ISR writes it.
@@ -26,7 +31,7 @@ void YeelightFrontPanel::setup() {
     this->set_interval("health", 10000, [this]() {
       ESP_LOGD(TAG, "Health: trigger level=%d, interrupts=%u, handled=%u, leds=0x%04X%s",
                this->trigger_pin_->digital_read(), this->store_.event_count, this->last_event_count_, this->led_state_,
-               this->leds_dirty_ ? " (pending)" : "");
+               this->leds_dirty_ ? LOG_STR_LITERAL(" (pending)") : LOG_STR_LITERAL(""));
     });
   }
 }
