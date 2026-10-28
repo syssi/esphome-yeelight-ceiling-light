@@ -71,7 +71,6 @@ i2c:
 
 yeelight_front_panel:
   - id: front_panel
-    model: lamp10
     i2c_id: front_panel_bus
     trigger_pin: GPIO16
     # true logs every raw panel message and a health line every 10 s.

@@ -7,8 +7,32 @@
 
 namespace esphome::yeelight_front_panel {
 
-/// Longest message any supported panel uses. Bump when adding a model.
-static const uint8_t MAX_MESSAGE_LENGTH = 8;
+/// LED updates are 3 bytes: a command byte followed by the 16 bit LED state.
+/// Established by static analysis of the original firmware: the front panel
+/// driver writes three bytes to I2C address 0x50 on I2C port 1, caching a 16 bit
+/// LED state into the last two bytes first -- structurally the same LED update
+/// the Bedside Lamp 2 performs.
+static const uint8_t LED_MESSAGE_LENGTH = 3;
+/// Unverified: the command byte that precedes the 16 bit LED state.
+static const uint8_t LED_COMMAND = 0x02;
+
+/// Events are read as 6 bytes, captured on the device on 2026-09-12:
+///
+///   [0]  fixed 0A
+///   [1]  power button:  01 touch, 02 held (repeats), 03 release
+///   [2]  colour button: 01 touch, 02 held (repeats), 03 release
+///   [3]  slider: 01 touch / moving, 02 release
+///   [4]  slider position, 00 at the "-" end (power button) .. 15 at "+"
+///   [5]  always 00
+///
+/// While events are pending the panel holds the trigger line low, and reads
+/// then return all zeros once it has nothing more to report.
+static const uint8_t EVENT_LENGTH = 6;
+
+/// Unverified: taken from the number of slider LEDs visible on the device.
+static const uint8_t SLIDER_LEDS = 10;
+/// Verified: positions 00..15 were all observed.
+static const uint8_t SLIDER_LEVELS = 22;
 
 /// The element of the front panel that generated an event.
 enum class FrontPanelPart : uint8_t {
@@ -25,16 +49,9 @@ enum class FrontPanelAction : uint8_t {
   RELEASE = 2,
 };
 
-enum class Model : uint8_t {
-  BSLAMP2 = 0,
-  LAMP10 = 1,
-};
-
-/// Model-independent LED bitmask.
+/// LED bitmask, written to the panel as is.
 ///
-/// Slider LED 1 is the one closest to the power button. Each model maps these
-/// bits onto its own wire format, so configurations stay portable between
-/// lamps with a different number of LEDs or a different bit order.
+/// Slider LED 1 is the one closest to the power button.
 enum FrontPanelLED : uint16_t {
   LED_NONE = 0,
   LED_SLIDER_1 = 1 << 0,
@@ -56,42 +73,8 @@ enum FrontPanelLED : uint16_t {
 struct FrontPanelEvent {
   FrontPanelPart part{FrontPanelPart::UNKNOWN};
   FrontPanelAction action{FrontPanelAction::UNKNOWN};
-  /// 1 .. FrontPanelModel::slider_level_count(), or 0 when not applicable.
+  /// 1 .. SLIDER_LEVELS, or 0 when not applicable.
   uint8_t slider_level{0};
-};
-
-/// Describes one lamp's front panel wire protocol.
-///
-/// Everything that differs between lamps lives behind this interface; the hub
-/// component and the sensor platforms above it are model independent.
-class FrontPanelModel {
- public:
-  virtual ~FrontPanelModel() = default;
-
-  virtual const char *name() const = 0;
-
-  /// Number of bytes in every message exchanged with this panel.
-  virtual uint8_t message_length() const = 0;
-
-  /// Number of bytes read for an event. Defaults to message_length().
-  virtual uint8_t event_length() const { return this->message_length(); }
-
-  /// Number of LEDs illuminating the slider.
-  virtual uint8_t slider_led_count() const = 0;
-
-  /// Number of distinct positions the slider reports.
-  virtual uint8_t slider_level_count() const = 0;
-
-  /// Message that must be written before the pending event can be read,
-  /// or nullptr when the panel can be read directly.
-  virtual const uint8_t *event_request() const { return nullptr; }
-
-  /// Decode a message into an event. Returns false when the message is not
-  /// recognised, in which case the caller logs the raw bytes.
-  virtual bool parse_event(const uint8_t *message, FrontPanelEvent *event) const = 0;
-
-  /// Render an LED bitmask into an outgoing message of message_length() bytes.
-  virtual void encode_leds(uint16_t leds, uint8_t *message) const = 0;
 };
 
 struct FrontPanelTriggerStore {
@@ -99,14 +82,14 @@ struct FrontPanelTriggerStore {
   static void gpio_intr(FrontPanelTriggerStore *store);
 };
 
-/// Hub component for the I2C touch panel found on several Yeelight lamps.
+/// Hub component for the I2C touch panel of the Yeelight Staria Floor Lamp
+/// (yeelink.light.lamp10).
 ///
 /// The panel pulls an interrupt line low when an event is waiting. The ISR only
 /// counts those pulses; the main loop does the I2C work and dispatches decoded
 /// events to the binary_sensor and sensor platforms.
 class YeelightFrontPanel : public Component, public i2c::I2CDevice {
  public:
-  void set_model(Model model) { this->model_id_ = model; }
   void set_trigger_pin(InternalGPIOPin *pin) { this->trigger_pin_ = pin; }
   void set_debug(bool debug) { this->debug_ = debug; }
 
@@ -132,10 +115,11 @@ class YeelightFrontPanel : public Component, public i2c::I2CDevice {
   /// 0.0 turns the slider illumination off entirely.
   void set_slider_level(float level);
 
-  uint8_t slider_level_count() const;
+  uint8_t slider_level_count() const { return SLIDER_LEVELS; }
 
  protected:
   void read_event_();
+  bool parse_event_(const uint8_t *message, FrontPanelEvent *event);
   void flush_leds_();
 
   void update_leds_(uint16_t leds) {
@@ -148,8 +132,6 @@ class YeelightFrontPanel : public Component, public i2c::I2CDevice {
 
   InternalGPIOPin *trigger_pin_{nullptr};
   FrontPanelTriggerStore store_{};
-  const FrontPanelModel *model_{nullptr};
-  Model model_id_{Model::BSLAMP2};
   bool debug_{false};
 
   uint32_t last_event_count_{0};
@@ -157,6 +139,9 @@ class YeelightFrontPanel : public Component, public i2c::I2CDevice {
   bool last_trigger_level_{true};
   uint16_t led_state_{LED_NONE};
   bool leds_dirty_{true};
+  /// The panel reports its whole state on every read, so events are derived
+  /// from what changed since the previous message.
+  uint8_t last_message_[EVENT_LENGTH]{};
 
   CallbackManager<void(const FrontPanelEvent &)> event_callback_{};
 };
