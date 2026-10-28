@@ -28,6 +28,9 @@ struct XiaomiParseResult {
     TYPE_MHOC401,
     TYPE_CGPR1,
     TYPE_RTCGQ02LM,
+    TYPE_YLYK01YL,
+    TYPE_YLYK01YL_FANCL,
+    TYPE_YLKG07YL,
   } type;
   const char *name;
   optional<float> temperature;
@@ -43,6 +46,9 @@ struct XiaomiParseResult {
   optional<bool> has_motion;
   optional<bool> is_light;
   optional<bool> button_press;
+  optional<uint8_t> keycode;
+  optional<uint8_t> encoder_value;
+  optional<uint8_t> action_type;
   bool has_encryption;  // 0x08
   int raw_offset;
 };
@@ -70,6 +76,9 @@ bool parse_xiaomi_message(const uint8_t *message, size_t size, XiaomiParseResult
 optional<XiaomiParseResult> parse_xiaomi_header(const uint8_t *raw, size_t size);
 /// Decrypts the payload of `raw` in place and clears its encryption flag.
 bool decrypt_xiaomi_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, uint64_t address);
+/// Decrypts a MiBeacon V2/V3 payload of `raw` with a 12 byte `bindkey` in place and clears its encryption flag.
+/// These frames carry no message integrity code, so a wrong bindkey is not detected.
+bool decrypt_xiaomi_legacy_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, uint64_t address);
 
 /// A Xiaomi MiBeacon device: matches its address, decodes each frame once and hands it to publish_result().
 class XiaomiDevice : public ble_device_base::ESPBTDeviceListener {
@@ -82,6 +91,10 @@ class XiaomiDevice : public ble_device_base::ESPBTDeviceListener {
  protected:
   /// Encrypted frames are dropped when `bindkey` is null.
   bool parse_xiaomi_device_(const ble_device_base::ESPBTDevice &device, const uint8_t *bindkey);
+  /// Decrypts `raw` in place; devices with another encryption scheme override this.
+  virtual bool decrypt_payload(uint8_t *raw, size_t size, const uint8_t *bindkey) {
+    return decrypt_xiaomi_payload(raw, size, bindkey, this->address_);
+  }
   virtual void publish_result(const XiaomiParseResult &result) = 0;
 
   uint64_t address_{0};

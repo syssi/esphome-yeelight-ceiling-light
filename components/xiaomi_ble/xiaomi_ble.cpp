@@ -16,9 +16,8 @@
 #define XIAOMI_CRYPTO_PSA
 #endif
 #endif
-#ifndef XIAOMI_CRYPTO_PSA
+// MiBeacon V2/V3 frames have no tag, so they are always decrypted with the software AES of ble_device_base
 #include "esphome/components/ble_device_base/ble_aes_ccm.h"
-#endif
 
 namespace esphome::xiaomi_ble {
 
@@ -28,9 +27,12 @@ ESPHOME_LOG_TAG(TAG, "xiaomi_ble");
 static constexpr size_t XIAOMI_MAX_LOG_BYTES = 32;
 
 bool parse_xiaomi_value(uint16_t value_type, const uint8_t *data, uint8_t value_length, XiaomiParseResult &result) {
-  // button pressed, 3 bytes, only byte 3 is used for supported devices so far
+  // button event, 3 bytes: keycode, encoder value (Yeelight dimmer) and action type
   if ((value_type == 0x1001) && (value_length == 3)) {
     result.button_press = data[2] == 0;
+    result.keycode = data[0];
+    result.encoder_value = data[1];
+    result.action_type = data[2];
     return true;
   }
   // motion detection, 1 byte, 8-bit unsigned integer
@@ -260,6 +262,17 @@ optional<XiaomiParseResult> parse_xiaomi_header(const uint8_t *raw, size_t size)
     result.name = "RTCGQ02LM";
     if (size == 19)
       result.raw_offset -= 6;
+  } else if (device_uuid == 0x0153) {  // Yeelight Remote Control YLYK01YL
+    result.type = XiaomiParseResult::TYPE_YLYK01YL;
+    result.name = "YLYK01YL";
+  } else if (device_uuid == 0x068E) {  // Yeelight Remote Control YLYK01YL Ceiling Fan
+    result.type = XiaomiParseResult::TYPE_YLYK01YL_FANCL;
+    result.name = "YLYK01YL-FANCL";
+  } else if (device_uuid == 0x03B6) {  // Yeelight Wireless Smart Dimmer YLKG07YL/YLKG08YL
+    result.type = XiaomiParseResult::TYPE_YLKG07YL;
+    result.name = "YLKG07YL";
+    if (size == 18)
+      result.raw_offset -= 6;
   } else {
     ESP_LOGVV(TAG, "parse_xiaomi_header(): unknown device, no magic bytes.");
     return {};
@@ -269,7 +282,8 @@ optional<XiaomiParseResult> parse_xiaomi_header(const uint8_t *raw, size_t size)
 }
 
 bool decrypt_xiaomi_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, uint64_t address) {
-  if ((size != 19) && ((size < 22) || (size > XIAOMI_MAX_ENCRYPTED_FRAME_SIZE))) {
+  // Frames of 18 (Yeelight dimmer) or 19 bytes carry no MAC address
+  if ((size != 18) && (size != 19) && ((size < 22) || (size > XIAOMI_MAX_ENCRYPTED_FRAME_SIZE))) {
     ESP_LOGVV(TAG, "decrypt_xiaomi_payload(): data packet has wrong size (%u)!", static_cast<unsigned>(size));
     ESP_LOGVV_HEX(TAG, raw, size, XIAOMI_MAX_LOG_BYTES, "  Packet : %s");
     return false;
@@ -295,8 +309,9 @@ bool decrypt_xiaomi_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, u
                          .tagsize = 4,
                          .ivsize = 12};
 
-  vector.datasize = (size == 19) ? size - 12 : size - 18;
-  const size_t cipher_pos = (size == 19) ? 5 : 11;
+  const bool has_mac = size > 19;
+  vector.datasize = has_mac ? size - 18 : size - 12;
+  const size_t cipher_pos = has_mac ? 11 : 5;
 
   const uint8_t *v = raw;
 
@@ -375,6 +390,46 @@ bool decrypt_xiaomi_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, u
   return true;
 }
 
+bool decrypt_xiaomi_legacy_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, uint64_t address) {
+  // frame control (2), product id (2), frame count (1), MAC address (6), cipher (6), ext. count (3), unknown (1)
+  static constexpr size_t LEGACY_FRAME_SIZE = 21;
+  static constexpr size_t LEGACY_CIPHER_POS = 11;
+  static constexpr size_t LEGACY_CIPHER_SIZE = LEGACY_FRAME_SIZE - 15;
+  if (size != LEGACY_FRAME_SIZE) {
+    ESP_LOGVV(TAG, "decrypt_xiaomi_legacy_payload(): data packet has wrong size (%u)!", static_cast<unsigned>(size));
+    ESP_LOGVV_HEX(TAG, raw, size, XIAOMI_MAX_LOG_BYTES, "  Packet : %s");
+    return false;
+  }
+
+  // key: bindkey[0:6] 8d.3d.3c.97 bindkey[6:12]
+  uint8_t key[16] = {0, 0, 0, 0, 0, 0, 0x8d, 0x3d, 0x3c, 0x97, 0, 0, 0, 0, 0, 0};
+  memcpy(key, bindkey, 6);
+  memcpy(key + 10, bindkey + 6, 6);
+
+  // AES-CCM* without tag is AES-CTR; the first counter block is flags (L - 1) | nonce | counter 1
+  // nonce: frame control, product id and frame count (5) | ext. count (3) | reversed MAC address without its MSB (5)
+  uint8_t counter_block[16] = {0x01};
+  memcpy(counter_block + 1, raw, 5);
+  memcpy(counter_block + 6, raw + size - 4, 3);
+  for (size_t i = 0; i < 5; i++)
+    counter_block[9 + i] = static_cast<uint8_t>(address >> (8 * i));
+  counter_block[15] = 0x01;
+
+  uint8_t keystream[16];
+  ble_device_base::aes128_encrypt_block(key, counter_block, keystream);
+  for (size_t i = 0; i < LEGACY_CIPHER_SIZE; i++)
+    raw[LEGACY_CIPHER_POS + i] ^= keystream[i];
+  raw[0] &= ~0x08;
+
+#if ESPHOME_LOG_LEVEL >= ESPHOME_LOG_LEVEL_VERY_VERBOSE
+  char hex_buf[format_hex_pretty_size(XIAOMI_MAX_LOG_BYTES)];
+#endif
+  ESP_LOGVV(TAG, "decrypt_xiaomi_legacy_payload(): Plaintext : %s, Packet : %d",
+            format_hex_pretty_to(hex_buf, raw + LEGACY_CIPHER_POS, LEGACY_CIPHER_SIZE), static_cast<int>(raw[4]));
+
+  return true;
+}
+
 #if ESPHOME_LOG_LEVEL >= ESPHOME_LOG_LEVEL_DEBUG
 static void report_xiaomi_results(const XiaomiParseResult &result, const char *address) {
   ESP_LOGD(TAG, "Got Xiaomi %s (%s):", result.name, address);
@@ -412,6 +467,15 @@ static void report_xiaomi_results(const XiaomiParseResult &result, const char *a
   if (result.button_press.has_value()) {
     ESP_LOGD(TAG, "  Button: %s", *result.button_press ? LOG_STR_LITERAL("pressed") : LOG_STR_LITERAL(""));
   }
+  if (result.keycode.has_value()) {
+    ESP_LOGD(TAG, "  Keycode: %u", *result.keycode);
+  }
+  if (result.encoder_value.has_value()) {
+    ESP_LOGD(TAG, "  Encoder value: %u", *result.encoder_value);
+  }
+  if (result.action_type.has_value()) {
+    ESP_LOGD(TAG, "  Action type: %u", *result.action_type);
+  }
 }
 #endif
 
@@ -443,7 +507,7 @@ bool XiaomiDevice::parse_xiaomi_device_(const ble_device_base::ESPBTDevice &devi
       if (size > sizeof(plaintext))
         continue;
       memcpy(plaintext, raw, size);
-      if (!decrypt_xiaomi_payload(plaintext, size, bindkey, this->address_))
+      if (!this->decrypt_payload(plaintext, size, bindkey))
         continue;
       raw = plaintext;
     }

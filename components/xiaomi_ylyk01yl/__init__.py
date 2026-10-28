@@ -1,6 +1,6 @@
 from esphome import automation
 import esphome.codegen as cg
-from esphome.components import esp32_ble_tracker, sensor
+from esphome.components import ble_device_base, sensor, xiaomi_ble
 import esphome.config_validation as cv
 from esphome.const import (
     CONF_ID,
@@ -11,12 +11,12 @@ from esphome.const import (
     ICON_EMPTY,
     UNIT_EMPTY,
 )
+from esphome.types import ConfigType
 
 CODEOWNERS = ["@syssi"]
 DOMAIN = "xiaomi_ylyk01yl"
 
-DEPENDENCIES = ["esp32_ble_tracker"]
-AUTO_LOAD = ["xiaomi_ble", "sensor"]
+AUTO_LOAD = ["ble_device_base", "xiaomi_ble", "sensor"]
 MULTI_CONF = True
 
 CONF_LAST_BUTTON_PRESSED = "last_button_pressed"
@@ -30,7 +30,7 @@ ON_PRESS_ACTIONS = [
 
 xiaomi_ylyk01yl_ns = cg.esphome_ns.namespace("xiaomi_ylyk01yl")
 XiaomiYLYK01YL = xiaomi_ylyk01yl_ns.class_(
-    "XiaomiYLYK01YL", esp32_ble_tracker.ESPBTDeviceListener, cg.Component
+    "XiaomiYLYK01YL", xiaomi_ble.XiaomiDevice, cg.Component
 )
 
 OnPressTrigger = xiaomi_ylyk01yl_ns.class_(
@@ -42,7 +42,8 @@ OnLongPressTrigger = xiaomi_ylyk01yl_ns.class_(
 )
 
 # pylint: disable=too-many-function-args
-CONFIG_SCHEMA = (
+CONFIG_SCHEMA = cv.All(
+    ble_device_base.rename_legacy_hub_id("xiaomi_ylyk01yl"),
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(XiaomiYLYK01YL),
@@ -67,17 +68,17 @@ CONFIG_SCHEMA = (
             ),
         }
     )
-    .extend(esp32_ble_tracker.ESP_BLE_DEVICE_SCHEMA)
     .extend(cv.COMPONENT_SCHEMA)
+    .extend(ble_device_base.BLE_DEVICE_SCHEMA),
 )
 
 
-async def to_code(config):
+async def to_code(config: ConfigType) -> None:
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-    await esp32_ble_tracker.register_ble_device(var, config)
+    await ble_device_base.register_ble_device(var, config)
 
-    cg.add(var.set_address(config[CONF_MAC_ADDRESS].as_hex))
+    xiaomi_ble.setup_xiaomi_device(var, config)
 
     if CONF_LAST_BUTTON_PRESSED in config:
         sens = await sensor.new_sensor(config[CONF_LAST_BUTTON_PRESSED])
