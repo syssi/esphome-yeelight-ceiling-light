@@ -1,12 +1,9 @@
 #pragma once
 
-#include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/xiaomi_ble/xiaomi_ble.h"
 #include "esphome/core/automation.h"
 #include "esphome/core/component.h"
-
-#ifdef USE_ESP32
 
 namespace esphome::xiaomi_ylyk01yl {
 
@@ -17,19 +14,18 @@ namespace esphome::xiaomi_ylyk01yl {
 // static const uint8_t BUTTON_PLUS = 3;
 // static const uint8_t BUTTON_MINUS = 5;
 
-class XiaomiYLYK01YL : public Component, public esp32_ble_tracker::ESPBTDeviceListener {
+static const uint8_t ACTION_TYPE_LONG_PRESS = 2;
+
+class XiaomiYLYK01YL final : public Component, public xiaomi_ble::XiaomiDevice {
  public:
-  void set_address(uint64_t address) { address_ = address; }
-
-  bool parse_device(const esp32_ble_tracker::ESPBTDevice &device) override;
-
   void dump_config() override;
   float get_setup_priority() const override { return setup_priority::DATA; }
   void set_keycode(sensor::Sensor *keycode) { keycode_ = keycode; }
   void add_on_receive_callback(std::function<void(uint8_t, bool)> &&callback);
 
  protected:
-  uint64_t address_;
+  void publish_result(const xiaomi_ble::XiaomiParseResult &res) override;
+
   sensor::Sensor *keycode_{nullptr};
   CallbackManager<void(uint8_t, bool)> receive_callback_{};
 };
@@ -79,5 +75,3 @@ class OnLongPressTrigger : public Trigger<uint8_t> {
 };
 
 }  // namespace esphome::xiaomi_ylyk01yl
-
-#endif

@@ -1,13 +1,6 @@
 #include "xiaomi_ylyk01yl.h"
 #include "esphome/core/log.h"
 
-#ifdef USE_ESP32
-
-// Fallback for ESPHome < 2026.10.0
-#ifndef ESPHOME_LOG_TAG
-#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
-#endif
-
 namespace esphome::xiaomi_ylyk01yl {
 
 ESPHOME_LOG_TAG(TAG, "xiaomi_ylyk01yl");
@@ -17,44 +10,15 @@ void XiaomiYLYK01YL::dump_config() {
   LOG_SENSOR("  ", "Keycode", this->keycode_);
 }
 
-bool XiaomiYLYK01YL::parse_device(const esp32_ble_tracker::ESPBTDevice &device) {
-  if (device.address_uint64() != this->address_) {
-    ESP_LOGVV(TAG, "parse_device(): unknown MAC address.");
-    return false;
-  }
-  ESP_LOGVV(TAG, "parse_device(): MAC address %s found.", device.address_str().c_str());
+void XiaomiYLYK01YL::publish_result(const xiaomi_ble::XiaomiParseResult &res) {
+  if (!res.keycode.has_value())
+    return;
 
-  bool success = false;
-  for (auto &service_data : device.get_service_datas()) {
-    auto res = xiaomi_ble::parse_xiaomi_header(service_data);
-    if (!res.has_value()) {
-      continue;
-    }
-    if (res->is_duplicate) {
-      continue;
-    }
-    if (res->has_encryption) {
-      ESP_LOGVV(TAG, "parse_device(): payload decryption is currently not "
-                     "supported on this device.");
-      continue;
-    }
-    if (!(xiaomi_ble::parse_xiaomi_message(service_data.data, *res))) {
-      continue;
-    }
-    if (!(xiaomi_ble::report_xiaomi_results(res, device.address_str()))) {
-      continue;
-    }
-    if (res->keycode.has_value()) {
-      if (this->keycode_ != nullptr)
-        this->keycode_->publish_state(*res->keycode);
+  if (this->keycode_ != nullptr)
+    this->keycode_->publish_state(*res.keycode);
 
-      if (res->is_long_press.has_value())
-        this->receive_callback_.call(*res->keycode, *res->is_long_press);
-    }
-    success = true;
-  }
-
-  return success;
+  if (res.action_type.has_value())
+    this->receive_callback_.call(*res.keycode, *res.action_type == ACTION_TYPE_LONG_PRESS);
 }
 
 void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(uint8_t, bool)> &&callback) {
@@ -62,5 +26,3 @@ void XiaomiYLYK01YL::add_on_receive_callback(std::function<void(uint8_t, bool)> 
 }
 
 }  // namespace esphome::xiaomi_ylyk01yl
-
-#endif

@@ -1,6 +1,6 @@
 from esphome import automation
 import esphome.codegen as cg
-from esphome.components import esp32_ble_tracker, sensor
+from esphome.components import ble_device_base, sensor, xiaomi_ble
 import esphome.config_validation as cv
 from esphome.const import (
     CONF_BINDKEY,
@@ -11,11 +11,12 @@ from esphome.const import (
     ICON_EMPTY,
     UNIT_EMPTY,
 )
+from esphome.core import HexInt
+from esphome.types import ConfigType
 
-AUTO_LOAD = ["xiaomi_ble", "sensor"]
+AUTO_LOAD = ["ble_device_base", "xiaomi_ble", "sensor"]
 CODEOWNERS = ["@syssi"]
 DOMAIN = "xiaomi_ylkg07yl"
-DEPENDENCIES = ["esp32_ble_tracker"]
 MULTI_CONF = True
 
 CONF_KEYCODE = "keycode"
@@ -40,7 +41,7 @@ ON_PRESS_ACTIONS = [
 
 xiaomi_ylkg07yl_ns = cg.esphome_ns.namespace("xiaomi_ylkg07yl")
 XiaomiYLKG07YL = xiaomi_ylkg07yl_ns.class_(
-    "XiaomiYLKG07YL", esp32_ble_tracker.ESPBTDeviceListener, cg.Component
+    "XiaomiYLKG07YL", xiaomi_ble.XiaomiEncryptedDevice, cg.Component
 )
 
 
@@ -61,7 +62,8 @@ def validate_short_bind_key(value):
     return "".join(f"{part:02X}" for part in parts_int)
 
 
-CONFIG_SCHEMA = (
+CONFIG_SCHEMA = cv.All(
+    ble_device_base.rename_legacy_hub_id("xiaomi_ylkg07yl"),
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(XiaomiYLKG07YL),
@@ -90,18 +92,20 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_ON_ROTATE): automation.validate_automation({}),
         }
     )
-    .extend(esp32_ble_tracker.ESP_BLE_DEVICE_SCHEMA)
     .extend(cv.COMPONENT_SCHEMA)
+    .extend(ble_device_base.BLE_DEVICE_SCHEMA),
 )
 
 
-async def to_code(config):
+async def to_code(config: ConfigType) -> None:
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-    await esp32_ble_tracker.register_ble_device(var, config)
+    await ble_device_base.register_ble_device(var, config)
 
     cg.add(var.set_address(config[CONF_MAC_ADDRESS].as_hex))
-    cg.add(var.set_bindkey(config[CONF_BINDKEY]))
+    # MiBeacon V4/V5 frames are encrypted with the 12 byte bindkey padded with 0xFF to 16 bytes
+    bindkey = bytes.fromhex(config[CONF_BINDKEY]) + b"\xff" * 4
+    cg.add(var.set_bindkey(cg.ArrayInitializer(*(HexInt(byte) for byte in bindkey))))
 
     for key in SENSORS:
         if key in config:

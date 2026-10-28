@@ -54,6 +54,7 @@ jobs:
         run: |
           cd esphome
           cp -r ../components/* esphome/components/
+          cp -r ../tests/components/* tests/components/
           git config user.name "ci"
           git config user.email "ci@github.com"
           git add .
@@ -376,6 +377,33 @@ jobs:
         run: script/ci-suggest-changes
         # yamllint disable-line rule:line-length
         if: always()
+
+  cpp-unit-tests:
+    name: Run C++ unit tests
+    runs-on: ubuntu-24.04
+    needs:
+      - bundle
+      - common
+    defaults:
+      run:
+        working-directory: esphome
+    steps:
+      - name: Download prepared repository
+        uses: pyTooling/download-artifact@dc575e4e9df4b6e3580712285f1c90f579bb8712  # v8
+        with:
+          name: bundle
+          path: .
+
+      - name: Restore Python
+        uses: ./.github/actions/restore-python
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+          cache-key: ${{ needs.common.outputs.cache-key }}
+
+      - name: Run cpp_unit_test.py
+        run: |
+          . venv/bin/activate
+          script/cpp_unit_test.py xiaomi_ble xiaomi_ylkg07yl xiaomi_ylyk01yl
 
   pytest:
     name: Run pytest
