@@ -509,7 +509,7 @@ jobs:
           . venv/bin/activate
           echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml
           # Compile only a few examples as they are all very similar
-          for YAML in yeelink_light_lamp9.yaml yeelink_light_ceiling15.yaml yeerc_ylyk01yl.yaml; do
+          for YAML in yeelink_light_lamp9.yaml yeelink_light_ceiling15.yaml yeelink_light_ceil43.yaml yeerc_ylyk01yl.yaml; do
             esphome -s external_components_source components compile $YAML
           done
         env:
@@ -519,6 +519,8 @@ jobs:
         run: |
           . venv/bin/activate
           echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > tests/secrets.yaml
-          esphome -s external_components_source ../components compile tests/validate-sdkconfig-options.yaml
+          for YAML in tests/validate-sdkconfig-options.yaml tests/sm16825-arduino.yaml; do
+            esphome -s external_components_source ../components compile $YAML
+          done
         env:
           PLATFORMIO_LIBDEPS_DIR: ~/.platformio/libdeps
