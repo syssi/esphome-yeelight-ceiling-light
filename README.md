@@ -45,6 +45,7 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | [Yeelight Jupiter D C400](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/119)  | yeelink.light.ceil49      | YLXDD027x   | AC220V, 2700K-6500K, RGB ambient light (10 segments), 39cm  |
 | Yeelight Jupiter D C500 (untested!)              | yeelink.light.ceil49      | YLXDD027x   | AC220V, 2700K-6500K, RGB ambient light (15 segments)  |
 | [Yeelight Jupiter D C600](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/119)  | yeelink.light.ceil49      | YLXDD0273   | AC220V, 2700K-6500K, RGB ambient light (20 segments), 58.5cm  |
+| [Yilai Aiyue 480 Ceiling Light](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/88) (untested!)  | yilai.light.ceiling1      | YIXD05YI    | AC220-240V, 32W, 2700K-6500K, 48cm  |
 
 ### Flashing over UART
 
@@ -190,6 +191,12 @@ status LED rather than driving it.
 - Sensor
   - ADC1
   - ADC2
+
+### yilai.light.ceiling1
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
 
 
 ## Known bugs
@@ -469,6 +476,34 @@ path to read charge state. Details in
 | GND                 | GND    | GND          |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
+
+### yilai.light.ceiling1
+
+| Name                | Label  | ESP32 GPIO   |
+| ------------------- | ------ | ------------ |
+| Warm white PWM      | IO19   | GPIO19       |
+| Cold white PWM      | IO21   | GPIO21       |
+| TXD                 | TXD0   | GPIO1        |
+| RXD                 | RXD0   | GPIO3        |
+| GPIO0               | IO0    | GPIO0        |
+| 3.3V                | 3V3    | 3.3V         |
+| GND                 | GND    | GND          |
+
+```
+# Pinout of the pin header CON1 between the ESP32 board and the LED driver board
+
+ IO21 -->o
+ IO19 -->o
+  GND -->o
+  3V3 -->o
+```
+
+The pin header only carries GPIO19, GPIO21, GND and 3V3 (order of GND and 3V3 not
+verified). TXD, RXD and GPIO0 are not routed to it, so they have to be soldered to the
+pads of the ESP-WROOM-32D module. The ESP32 will enter the serial bootloader when
+GPIO0 is held low (GND) on reset / power.
+
+There is no power supply enable and no night light on this board.
 
 
 ## Disassembly
