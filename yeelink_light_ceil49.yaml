@@ -1,0 +1,116 @@
+# Yeelight Jupiter D C400 / C500 / C600 (YLXDD027x, yeelink.light.ceil49)
+#
+# To keep a copy of the stock firmware, uncomment the `packages:` block below
+# BEFORE the first flash. Only that first flash leaves the stock firmware
+# readable - the next one overwrites it. See docs/flashing-over-the-network.md.
+#
+# packages:
+#   flash_probe: !include flash_probe.yaml
+
+substitutions:
+  name: yeelight-light-ceil49
+  # Number of WS2811 drivers of the RGB ring: C400 = 10, C500 = 15, C600 = 20.
+  num_leds: "10"
+  external_components_source: github://syssi/esphome-yeelight-ceiling-light@main
+
+esphome:
+  name: ${name}
+  friendly_name: ${name}
+  min_version: 2026.1.0
+
+esp32:
+  board: esp32doit-devkit-v1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+      # Please uncomment these parameters if fast booting is important to you
+      # CONFIG_BOOTLOADER_SKIP_VALIDATE_ON_POWER_ON: y
+      # CONFIG_BOOTLOADER_LOG_LEVEL_NONE: y
+      # CONFIG_LOG_DEFAULT_LEVEL_NONE: y
+    advanced:
+      ignore_efuse_mac_crc: true
+      ignore_efuse_custom_mac: true
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  min_auth_mode: WPA2
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  baud_rate: 0
+  logs:
+    pulse_counter: INFO
+    sensor: INFO
+
+api:
+
+output:
+  - platform: ledc
+    pin: GPIO18
+    id: output_warm
+    frequency: 2kHz
+  - platform: ledc
+    pin: GPIO19
+    id: output_cold
+    frequency: 2kHz
+
+sensor:
+  # GPIO22 is not a power supply enable. It follows the mains (50/60 Hz) and drops
+  # within a second if the wall switch is flipped off and on again.
+  - platform: pulse_counter
+    name: "mains frequency"
+    id: mains_frequency
+    pin: GPIO22
+    update_interval: 1s
+    unit_of_measurement: "Hz"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.016666667  # pulses/min -> Hz
+    on_value_range:
+      - below: 35.0
+        then:
+          # Flex switch: a short off/on of the wall switch toggles the ceiling light.
+          # Ignore the first readings after boot.
+          - if:
+              condition:
+                lambda: return millis() > 10000;
+              then:
+                - light.toggle: ceiling_light
+
+light:
+  # Warm and cold are mixed linearly in kelvin and always add up to the brightness.
+  - platform: yeelight_cct
+    name: "ceiling light"
+    id: ceiling_light
+    warm_white: output_warm
+    cold_white: output_cold
+    interpolation: linear
+    min_brightness: 1%
+    mixing_table:
+      - {color_temperature: 2700 K, warm_white: 100%, cold_white: 0%}
+      - {color_temperature: 6500 K, warm_white: 0%, cold_white: 100%}
+    restore_mode: RESTORE_DEFAULT_ON
+
+  # RGB ring: a chain of WS2811 drivers.
+  - platform: esp32_rmt_led_strip
+    name: "ambient light"
+    id: ambient_light
+    pin: GPIO16
+    num_leds: ${num_leds}
+    chipset: WS2811
+    rgb_order: RGB
+    restore_mode: RESTORE_DEFAULT_OFF
+    effects:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_twinkle:
