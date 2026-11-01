@@ -15,9 +15,10 @@ void XiaomiYLKG07YL::dump_config() {
 
 bool XiaomiYLKG07YL::decrypt_payload(uint8_t *raw, size_t size, const uint8_t *bindkey) {
   // Older firmware sends MiBeacon V2/V3 frames encrypted with the 12 byte bindkey,
-  // newer firmware MiBeacon V4/V5 frames encrypted with the padded 16 byte bindkey
-  if (xiaomi_ble::decrypt_xiaomi_legacy_payload(raw, size, bindkey, this->address_))
-    return true;
+  // newer firmware MiBeacon V4/V5 frames encrypted with the padded 16 byte bindkey.
+  // V2/V3 frames carry no message integrity code, so the scheme follows the version, never a decryption attempt.
+  if (xiaomi_ble::get_xiaomi_version(raw) <= xiaomi_ble::XIAOMI_MAX_LEGACY_VERSION)
+    return xiaomi_ble::decrypt_xiaomi_legacy_payload(raw, size, bindkey, this->address_);
   return xiaomi_ble::decrypt_xiaomi_payload(raw, size, bindkey, this->address_);
 }
 

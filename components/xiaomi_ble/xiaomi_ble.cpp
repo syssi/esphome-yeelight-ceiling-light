@@ -401,6 +401,10 @@ bool decrypt_xiaomi_legacy_payload(uint8_t *raw, size_t size, const uint8_t *bin
     ESP_LOGVV_HEX(TAG, raw, size, XIAOMI_MAX_LOG_BYTES, "  Packet : %s");
     return false;
   }
+  if (get_xiaomi_version(raw) > XIAOMI_MAX_LEGACY_VERSION) {
+    ESP_LOGVV(TAG, "decrypt_xiaomi_legacy_payload(): MiBeacon version %u is not V2/V3!", get_xiaomi_version(raw));
+    return false;
+  }
 
   // key: bindkey[0:6] 8d.3d.3c.97 bindkey[6:12]
   uint8_t key[16] = {0, 0, 0, 0, 0, 0, 0x8d, 0x3d, 0x3c, 0x97, 0, 0, 0, 0, 0, 0};

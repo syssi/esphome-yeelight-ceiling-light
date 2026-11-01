@@ -170,4 +170,27 @@ TEST(XiaomiYLKG07YL, BeaconWithoutValuesDoesNotResetDuplicateFilter) {
   EXPECT_EQ(events.rotations, std::vector<int>{-3});
 }
 
+TEST(XiaomiYLKG07YL, LegacyDecryptionRejectsModernVersion) {
+  // A V3 frame of the legacy size, relabelled as MiBeacon V5
+  auto frame = LEGACY_PRESS_FRAME;
+  frame[1] = (frame[1] & 0x0F) | 0x50;
+  auto raw = frame;
+  EXPECT_FALSE(xiaomi_ble::decrypt_xiaomi_legacy_payload(raw.data(), raw.size(), LEGACY_BINDKEY.begin(),
+                                                         device_from(LEGACY_MAC, frame).address_uint64()));
+  EXPECT_EQ(raw, frame);
+}
+
+TEST(XiaomiYLKG07YL, DropsModernVersionFrameOfLegacySize) {
+  auto frame = LEGACY_PRESS_FRAME;
+  frame[1] = (frame[1] & 0x0F) | 0x50;
+  auto device = device_from(LEGACY_MAC, frame);
+  XiaomiYLKG07YL dimmer;
+  Events events;
+  setup_dimmer(dimmer, events, device, LEGACY_BINDKEY);
+  EXPECT_FALSE(dimmer.parse_device(device));
+  EXPECT_TRUE(events.presses.empty());
+  EXPECT_TRUE(events.rotations.empty());
+  EXPECT_TRUE(events.press_and_rotations.empty());
+}
+
 }  // namespace esphome::xiaomi_ylkg07yl::testing

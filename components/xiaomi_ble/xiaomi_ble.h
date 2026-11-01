@@ -76,8 +76,13 @@ bool parse_xiaomi_message(const uint8_t *message, size_t size, XiaomiParseResult
 optional<XiaomiParseResult> parse_xiaomi_header(const uint8_t *raw, size_t size);
 /// Decrypts the payload of `raw` in place and clears its encryption flag.
 bool decrypt_xiaomi_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, uint64_t address);
+/// Highest MiBeacon version that uses the V2/V3 encryption of decrypt_xiaomi_legacy_payload().
+static constexpr uint8_t XIAOMI_MAX_LEGACY_VERSION = 3;
+/// MiBeacon version from the upper nibble of the frame control; `raw` must hold at least 2 bytes.
+inline uint8_t get_xiaomi_version(const uint8_t *raw) { return raw[1] >> 4; }
 /// Decrypts a MiBeacon V2/V3 payload of `raw` with a 12 byte `bindkey` in place and clears its encryption flag.
 /// These frames carry no message integrity code, so a wrong bindkey is not detected.
+/// Frames of a later MiBeacon version are rejected.
 bool decrypt_xiaomi_legacy_payload(uint8_t *raw, size_t size, const uint8_t *bindkey, uint64_t address);
 
 /// A Xiaomi MiBeacon device: matches its address, decodes each frame once and hands it to publish_result().
