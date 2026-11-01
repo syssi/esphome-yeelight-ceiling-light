@@ -123,7 +123,13 @@ will not boot - that still needs UART.
 - Ambient light (RGB)
   - Brightness
   - Color
-- The RGB front light is not supported yet
+- Front light (RGB, 9 segments, untested)
+  - Brightness
+  - Color
+  - Addressable effects
+
+The front light is a chain of 9 SM16825E drivers (5 channels, 16 bit, 800 kbit/s) on
+GPIO13, driven by the `sm16825` component of this repository.
 
 ### yeelink.light.ceiling15, yeelink.light.ceiling11
 
@@ -368,12 +374,17 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 | Red ambient PWM     | R      | GPIO33       |                       |
 | Green ambient PWM   | G      | GPIO27       |                       |
 | Blue ambient PWM    | B      | GPIO26       |                       |
+| Front light data    |        | GPIO13       | SM16825E chain        |
 | Power supply GPIO   |        | GPIO22       |                       |
 | TXD                 | TXD    | GPIO1        |                       |
 | RXD                 | RXD    | GPIO3        |                       |
 | GPIO0               | IO0    | GPIO0        |                       |
 
 The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
+
+The stock firmware (2.1.7_0018) sends one frame of 9 x 80 bit plus the 32 bit current gain
+word `0x4A94A51F` and maps the colours as OUTR = blue, OUTG = red, OUTB = green. It also limits
+R + G + B to 381 (of 765) per segment.
 
 ### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
