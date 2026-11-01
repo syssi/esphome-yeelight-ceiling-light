@@ -81,17 +81,12 @@ void SM16825LightOutput::set_current_gain(uint8_t outr, uint8_t outg, uint8_t ou
 
 void SM16825LightOutput::setup() {
   RAMAllocator<uint8_t> allocator(RAMAllocator<uint8_t>::ALLOC_INTERNAL);
-  const size_t colors_size = this->num_leds_ * this->channel_colors_.bytes_per_led();
-  this->colors_ = allocator.allocate(colors_size);
-  this->effect_data_ = allocator.allocate(this->num_leds_);
   this->frame_ = allocator.allocate(this->get_frame_size_());
-  if (this->colors_ == nullptr || this->effect_data_ == nullptr || this->frame_ == nullptr) {
+  if (this->frame_ == nullptr || !this->internal_accessor_.allocate(allocator, this->num_leds_)) {
     ESP_LOGE(TAG, "Cannot allocate LED buffers!");
     this->mark_failed();
     return;
   }
-  memset(this->colors_, 0, colors_size);
-  memset(this->effect_data_, 0, this->num_leds_);
   memset(this->frame_, 0, this->get_frame_size_());
   memcpy(this->frame_ + this->num_leds_ * BYTES_PER_CHIP, this->trailer_, TRAILER_BYTES);
 
@@ -144,6 +139,8 @@ void SM16825LightOutput::setup() {
     this->mark_failed();
     return;
   }
+
+  this->accessor_ = &this->internal_accessor_;
 }
 
 void SM16825LightOutput::write_state(light::LightState *state) {
@@ -158,8 +155,8 @@ void SM16825LightOutput::write_state(light::LightState *state) {
   this->mark_shown_();
 
   // Expand each 8 bit color to the 16 bit grayscale of its output (0xFF -> 0xFFFF)
-  const uint8_t bytes_per_led = this->channel_colors_.bytes_per_led();
-  const uint8_t *color = this->colors_;
+  const uint8_t bytes_per_led = this->internal_accessor_.channel_colors.bytes_per_led();
+  const uint8_t *color = this->internal_accessor_.color_data;
   uint8_t *chip = this->frame_;
   for (uint16_t led = 0; led < this->num_leds_; led++) {
     for (uint8_t output = 0; output < bytes_per_led; output++) {
@@ -184,7 +181,7 @@ void SM16825LightOutput::write_state(light::LightState *state) {
 
 light::LightTraits SM16825LightOutput::get_traits() {
   auto traits = light::LightTraits();
-  if (this->channel_colors_.has_white()) {
+  if (this->internal_accessor_.channel_colors.has_white()) {
     traits.set_supported_color_modes({light::ColorMode::RGB_WHITE, light::ColorMode::WHITE});
   } else {
     traits.set_supported_color_modes({light::ColorMode::RGB});
@@ -192,18 +189,7 @@ light::LightTraits SM16825LightOutput::get_traits() {
   return traits;
 }
 
-void SM16825LightOutput::clear_effect_data() { memset(this->effect_data_, 0, this->num_leds_); }
-
-light::ESPColorView SM16825LightOutput::get_view_internal(int32_t index) const {
-  const light::ChannelColors &colors = this->channel_colors_;
-  uint8_t *led = this->colors_ + (index * colors.bytes_per_led());
-  return {led + colors.r,
-          led + colors.g,
-          led + colors.b,
-          colors.has_white() ? led + colors.w : nullptr,
-          &this->effect_data_[index],
-          &this->correction_};
-}
+void SM16825LightOutput::clear_effect_data() { this->internal_accessor_.clear_effect_data(this->num_leds_); }
 
 void SM16825LightOutput::dump_config() {
   char channel_colors[5];
@@ -214,8 +200,8 @@ void SM16825LightOutput::dump_config() {
                 "  Channel colors: %s\n"
                 "  Current gain word: 0x%02X%02X%02X%02X\n"
                 "  RMT Symbols: %" PRIu32,
-                this->pin_, this->num_leds_, this->channel_colors_.to_string(channel_colors), this->trailer_[0],
-                this->trailer_[1], this->trailer_[2], this->trailer_[3], this->rmt_symbols_);
+                this->pin_, this->num_leds_, this->internal_accessor_.channel_colors.to_string(channel_colors),
+                this->trailer_[0], this->trailer_[1], this->trailer_[2], this->trailer_[3], this->rmt_symbols_);
 }
 
 }  // namespace esphome::sm16825

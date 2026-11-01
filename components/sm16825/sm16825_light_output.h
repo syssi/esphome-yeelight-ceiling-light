@@ -39,18 +39,16 @@ class SM16825LightOutput final : public light::AddressableLight {
   void set_pin(uint8_t pin) { this->pin_ = pin; }
   void set_inverted(bool inverted) { this->invert_out_ = inverted; }
   void set_num_leds(uint16_t num_leds) { this->num_leds_ = num_leds; }
-  void set_channel_colors(light::ChannelColors channel_colors) { this->channel_colors_ = channel_colors; }
+  void set_channel_colors(light::ChannelColors channel_colors) {
+    this->internal_accessor_.channel_colors = channel_colors;
+  }
   void set_rmt_symbols(uint32_t rmt_symbols) { this->rmt_symbols_ = rmt_symbols; }
   void set_current_gain(uint8_t outr, uint8_t outg, uint8_t outb, uint8_t outw, uint8_t outy);
 
  protected:
-  light::ESPColorView get_view_internal(int32_t index) const override;
-
   size_t get_frame_size_() const { return this->num_leds_ * BYTES_PER_CHIP + TRAILER_BYTES; }
   static bool on_transmit_done(rmt_channel_handle_t channel, const rmt_tx_done_event_data_t *event, void *context);
 
-  uint8_t *colors_{nullptr};
-  uint8_t *effect_data_{nullptr};
   uint8_t *frame_{nullptr};
 
   RmtSymbols symbols_;
@@ -64,7 +62,7 @@ class SM16825LightOutput final : public light::AddressableLight {
   bool invert_out_{false};
   uint8_t trailer_[TRAILER_BYTES]{};
 
-  light::ChannelColors channel_colors_{0, 1, 2, light::ChannelColors::NO_WHITE};
+  light::CorrectedBufferColorAccessor internal_accessor_{nullptr, nullptr, {0, 1, 2}, &this->correction_};
 };
 
 }  // namespace esphome::sm16825
