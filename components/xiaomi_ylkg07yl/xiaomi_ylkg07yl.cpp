@@ -44,8 +44,9 @@ void XiaomiYLKG07YL::publish_result(const xiaomi_ble::XiaomiParseResult &res) {
       this->press_callback_.call(*encoder_value);
     if (*res.action_type == ACTION_TYPE_ROTATE && *res.keycode == KEYCODE_BUTTON)
       this->rotate_callback_.call(*encoder_value);
+    // While the button is held, the keycode carries the signed rotation step count
     if (*res.action_type == ACTION_TYPE_ROTATE && *res.keycode != KEYCODE_BUTTON)
-      this->press_and_rotate_callback_.call(*res.keycode);
+      this->press_and_rotate_callback_.call(static_cast<int8_t>(*res.keycode));
   }
 }
 
