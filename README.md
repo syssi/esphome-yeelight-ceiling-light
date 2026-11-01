@@ -42,6 +42,9 @@ ESPHome custom firmware for ESP32 based Yeelight Ceiling Lights.
 | Yeelight Ceiling Light 300C                      | yeelink.light.ceilb       | YLXDD-0033  | AC220V, 21W, 1600lm, 2700K-6500K, RGB ambient light |
 | Yeelight Ceiling Light 400C                      | yeelink.light.ceilb       | YLXDD-0034  | AC220V, 24W, 2000lm, 2700K-6500K, RGB ambient light |
 | Yeelight Jiaoyue 260 Ceiling Light               | yeelink.light.ceiling24   | YLXD62YI    | AC220V, 10W, 670LM, 2700K-6500K, 26cm |
+| [Yeelight Jupiter D C400](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/119)  | yeelink.light.ceil49      | YLXDD027x   | AC220V, 2700K-6500K, RGB ambient light (10 segments), 39cm  |
+| Yeelight Jupiter D C500 (untested!)              | yeelink.light.ceil49      | YLXDD027x   | AC220V, 2700K-6500K, RGB ambient light (15 segments)  |
+| [Yeelight Jupiter D C600](https://github.com/syssi/esphome-yeelight-ceiling-light/issues/119)  | yeelink.light.ceil49      | YLXDD0273   | AC220V, 2700K-6500K, RGB ambient light (20 segments), 58.5cm  |
 
 ### Flashing over UART
 
@@ -130,6 +133,22 @@ will not boot - that still needs UART.
 
 The front light is a chain of 9 SM16825E drivers (5 channels, 16 bit, 800 kbit/s) on
 GPIO13, driven by the `sm16825` component of this repository.
+
+### yeelink.light.ceil49
+
+- Light (CCWW)
+  - Brightness
+  - Color temperature (2700K-6500K)
+- Ambient light (RGB, 10/15/20 segments)
+  - Brightness
+  - Color
+  - Addressable effects
+- Sensor
+  - Mains frequency
+- Flex switch (toggle the light by a short off/on of the wall switch)
+
+Set the `num_leds` substitution to the size of the lamp: C400 = 10, C500 = 15,
+C600 = 20.
 
 ### yeelink.light.ceiling15, yeelink.light.ceiling11
 
@@ -385,6 +404,29 @@ The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND
 The stock firmware (2.1.7_0018) sends one frame of 9 x 80 bit plus the 32 bit current gain
 word `0x4A94A51F` and maps the colours as OUTR = blue, OUTG = red, OUTB = green. It also limits
 R + G + B to 381 (of 765) per segment.
+
+### yeelink.light.ceil49
+
+| Name                | Label  | ESP32 GPIO   | Stock firmware limits |
+| ------------------- | ------ | ------------ |-----------------------|
+| Warm white PWM      | Y      | GPIO18       |                       |
+| Cold white PWM      | W      | GPIO19       |                       |
+| Ambient light data  |        | GPIO16       | WS2811 chain          |
+| Mains sense         | AC/ON  | GPIO22       |                       |
+| TXD                 | TXD0   | GPIO1        |                       |
+| RXD                 | RXD0   | GPIO3        |                       |
+| GPIO0               | gpio0  | GPIO0        |                       |
+| 3.3V                | 3v3    | 3.3V         |                       |
+| GND                 | GND    | GND          |                       |
+
+The ESP32 will enter the serial bootloader when GPIO0 (gpio0 pad) is held low (GND) on reset / power.
+
+The module is soldered upright onto the LED board; to reach the pads it has to be
+desoldered. Only GPIO16, GPIO18, GPIO19, GPIO22, 3.3V and GND go to the LED board.
+The ESP32 is a single core variant (`CONFIG_FREERTOS_UNICORE`).
+
+There is no power supply enable: GPIO22 follows the mains and is used to detect a
+short off/on of the wall switch.
 
 ### yeelink.light.lamp9, yeelink.light.lampUNKNOWN
 
