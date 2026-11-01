@@ -16,6 +16,9 @@ xiaomi_ylkg07yl:
   on_press:
     then:
       - logger.log: "V3 Frame Press event detected"
+  on_long_press:
+    then:
+      - logger.log: "V3 Frame Long press event detected"
   on_rotate:
     then:
       - logger.log: "V3 Frame Rotate event detected"

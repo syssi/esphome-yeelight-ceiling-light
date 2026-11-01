@@ -31,6 +31,16 @@ static const std::vector<uint8_t> LEGACY_PRESS_AND_ROTATE_LEFT_1_FRAME = {0x58, 
 static const std::vector<uint8_t> LEGACY_PRESS_AND_ROTATE_LEFT_5_FRAME = {0x58, 0x30, 0xB6, 0x03, 0x2B, 0xBC, 0x7B,
                                                                           0xC4, 0x41, 0x24, 0xF8, 0xDF, 0x7A, 0x3D,
                                                                           0x33, 0xC5, 0x09, 0x00, 0x00, 0x00, 0x36};
+// MiBeacon V3, frame counts 0x32 to 0x34: button held, encoder value counting up from 0 to 2
+static const std::vector<uint8_t> LEGACY_LONG_PRESS_0_FRAME = {0x58, 0x30, 0xB6, 0x03, 0x32, 0xBC, 0x7B,
+                                                               0xC4, 0x41, 0x24, 0xF8, 0x15, 0xCF, 0x5C,
+                                                               0x6C, 0x1C, 0xBF, 0x00, 0x00, 0x00, 0xFD};
+static const std::vector<uint8_t> LEGACY_LONG_PRESS_1_FRAME = {0x58, 0x30, 0xB6, 0x03, 0x33, 0xBC, 0x7B,
+                                                               0xC4, 0x41, 0x24, 0xF8, 0x7D, 0x46, 0xCD,
+                                                               0x05, 0xE3, 0x76, 0x00, 0x00, 0x00, 0x7F};
+static const std::vector<uint8_t> LEGACY_LONG_PRESS_2_FRAME = {0x58, 0x30, 0xB6, 0x03, 0x34, 0xBC, 0x7B,
+                                                               0xC4, 0x41, 0x24, 0xF8, 0x3D, 0xE1, 0xEA,
+                                                               0x82, 0xC1, 0x2C, 0x00, 0x00, 0x00, 0x7C};
 // Unencrypted beacon without values, frame count 0x01, sent between the event frames
 static const std::vector<uint8_t> LEGACY_BEACON_FRAME = {0x51, 0x32, 0xB6, 0x03, 0x01, 0xBC, 0x7B, 0xC4,
                                                          0x41, 0x24, 0xF8, 0x02, 0x00, 0x02, 0x01, 0x10};
@@ -47,6 +57,7 @@ static constexpr std::initializer_list<uint8_t> MODERN_BINDKEY = {0x5A, 0xB9, 0x
 
 struct Events {
   std::vector<int> presses;
+  std::vector<int> long_presses;
   std::vector<int> rotations;
   std::vector<int> press_and_rotations;
 };
@@ -64,6 +75,7 @@ static void setup_dimmer(XiaomiYLKG07YL &dimmer, Events &events, const ble_devic
   dimmer.set_address(device.address_uint64());
   dimmer.set_bindkey(bindkey);
   dimmer.add_on_press_callback([&events](int value) { events.presses.push_back(value); });
+  dimmer.add_on_long_press_callback([&events](int value) { events.long_presses.push_back(value); });
   dimmer.add_on_rotate_callback([&events](int value) { events.rotations.push_back(value); });
   dimmer.add_on_press_and_rotate_callback([&events](int value) { events.press_and_rotations.push_back(value); });
 }
@@ -75,9 +87,22 @@ TEST(XiaomiYLKG07YL, DecryptsLegacyPressFrame) {
   setup_dimmer(dimmer, events, device, LEGACY_BINDKEY);
   EXPECT_TRUE(dimmer.parse_device(device));
   EXPECT_EQ(events.presses, std::vector<int>{1});
+  EXPECT_TRUE(events.long_presses.empty());
   EXPECT_TRUE(events.rotations.empty());
   EXPECT_TRUE(events.press_and_rotations.empty());
   EXPECT_EQ(device.get_service_datas()[0].data, LEGACY_PRESS_FRAME);
+}
+
+TEST(XiaomiYLKG07YL, ReportsEachFrameOfLongPress) {
+  XiaomiYLKG07YL dimmer;
+  Events events;
+  setup_dimmer(dimmer, events, device_from(LEGACY_MAC, LEGACY_LONG_PRESS_0_FRAME), LEGACY_BINDKEY);
+  for (const auto *frame : {&LEGACY_LONG_PRESS_0_FRAME, &LEGACY_LONG_PRESS_1_FRAME, &LEGACY_LONG_PRESS_2_FRAME})
+    EXPECT_TRUE(dimmer.parse_device(device_from(LEGACY_MAC, *frame)));
+  EXPECT_EQ(events.long_presses, (std::vector<int>{0, 1, 2}));
+  EXPECT_TRUE(events.presses.empty());
+  EXPECT_TRUE(events.rotations.empty());
+  EXPECT_TRUE(events.press_and_rotations.empty());
 }
 
 TEST(XiaomiYLKG07YL, DecryptsLegacyRotateFrame) {

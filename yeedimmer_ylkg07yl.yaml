@@ -59,6 +59,13 @@ xiaomi_ylkg07yl:
           service: light.toggle
           data:
             entity_id: ${light_entity}
+  # Fires about every 0.4 s while the button is held, starting after about 1 s.
+  # x counts up from 0 in steps of about 0.35 s; use x == 0 to act once per hold.
+  on_long_press:
+    then:
+      - logger.log:
+          format: "Long press event %d"
+          args: [x]
   on_rotate:
     then:
       - logger.log: "Rotate event"
