@@ -30,11 +30,13 @@ SENSORS = [
 ]
 
 # CONF_ON_PRESS = "on_press"
+CONF_ON_LONG_PRESS = "on_long_press"
 CONF_ON_PRESS_AND_ROTATE = "on_press_and_rotate"
 CONF_ON_ROTATE = "on_rotate"
 
 ON_PRESS_ACTIONS = [
     CONF_ON_PRESS,
+    CONF_ON_LONG_PRESS,
     CONF_ON_PRESS_AND_ROTATE,
     CONF_ON_ROTATE,
 ]
@@ -88,6 +90,7 @@ CONFIG_SCHEMA = cv.All(
                 device_class=DEVICE_CLASS_EMPTY,
             ),
             cv.Optional(CONF_ON_PRESS): automation.validate_automation({}),
+            cv.Optional(CONF_ON_LONG_PRESS): automation.validate_automation({}),
             cv.Optional(CONF_ON_PRESS_AND_ROTATE): automation.validate_automation({}),
             cv.Optional(CONF_ON_ROTATE): automation.validate_automation({}),
         }
@@ -115,6 +118,7 @@ async def to_code(config: ConfigType) -> None:
 
     callback_map = {
         CONF_ON_PRESS: ("add_on_press_callback", cg.int_),
+        CONF_ON_LONG_PRESS: ("add_on_long_press_callback", cg.int_),
         CONF_ON_ROTATE: ("add_on_rotate_callback", cg.int_),
         CONF_ON_PRESS_AND_ROTATE: ("add_on_press_and_rotate_callback", cg.int_),
     }

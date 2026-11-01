@@ -8,6 +8,7 @@
 namespace esphome::xiaomi_ylkg07yl {
 
 static const uint8_t KEYCODE_BUTTON = 0;
+static const uint8_t KEYCODE_LONG_PRESS = 1;
 
 static const uint8_t ACTION_TYPE_PRESS = 3;
 static const uint8_t ACTION_TYPE_ROTATE = 4;
@@ -20,6 +21,9 @@ class XiaomiYLKG07YL final : public Component, public xiaomi_ble::XiaomiEncrypte
   void set_encoder_value_sensor(sensor::Sensor *encoder_value_sensor) { encoder_value_sensor_ = encoder_value_sensor; }
   void set_action_type_sensor(sensor::Sensor *action_type_sensor) { action_type_sensor_ = action_type_sensor; }
   void add_on_press_callback(std::function<void(int)> &&callback) { this->press_callback_.add(std::move(callback)); }
+  void add_on_long_press_callback(std::function<void(int)> &&callback) {
+    this->long_press_callback_.add(std::move(callback));
+  }
   void add_on_rotate_callback(std::function<void(int)> &&callback) { this->rotate_callback_.add(std::move(callback)); }
   void add_on_press_and_rotate_callback(std::function<void(int)> &&callback) {
     this->press_and_rotate_callback_.add(std::move(callback));
@@ -33,6 +37,7 @@ class XiaomiYLKG07YL final : public Component, public xiaomi_ble::XiaomiEncrypte
   sensor::Sensor *encoder_value_sensor_{nullptr};
   sensor::Sensor *action_type_sensor_{nullptr};
   CallbackManager<void(int)> press_callback_{};
+  CallbackManager<void(int)> long_press_callback_{};
   CallbackManager<void(int)> rotate_callback_{};
   CallbackManager<void(int)> press_and_rotate_callback_{};
 };

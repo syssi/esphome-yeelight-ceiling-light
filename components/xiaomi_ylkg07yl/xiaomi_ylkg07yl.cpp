@@ -42,6 +42,9 @@ void XiaomiYLKG07YL::publish_result(const xiaomi_ble::XiaomiParseResult &res) {
   if (encoder_value.has_value() && res.action_type.has_value()) {
     if (*res.action_type == ACTION_TYPE_PRESS && *res.keycode == KEYCODE_BUTTON)
       this->press_callback_.call(*encoder_value);
+    // While the button is held, a frame follows about every 0.4 s; its encoder value counts up from 0
+    if (*res.action_type == ACTION_TYPE_PRESS && *res.keycode == KEYCODE_LONG_PRESS)
+      this->long_press_callback_.call(*encoder_value);
     if (*res.action_type == ACTION_TYPE_ROTATE && *res.keycode == KEYCODE_BUTTON)
       this->rotate_callback_.call(*encoder_value);
     // While the button is held, the keycode carries the signed rotation step count

@@ -25,7 +25,8 @@ class TestYlkg07ylConstants:
     def test_on_press_actions_list(self):
         assert ylkg07yl.CONF_ON_PRESS_AND_ROTATE in ylkg07yl.ON_PRESS_ACTIONS
         assert ylkg07yl.CONF_ON_ROTATE in ylkg07yl.ON_PRESS_ACTIONS
-        assert len(ylkg07yl.ON_PRESS_ACTIONS) == 3
+        assert ylkg07yl.CONF_ON_LONG_PRESS in ylkg07yl.ON_PRESS_ACTIONS
+        assert len(ylkg07yl.ON_PRESS_ACTIONS) == 4
 
 
 class TestYlyk01ylConstants:
