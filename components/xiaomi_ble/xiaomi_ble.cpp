@@ -512,10 +512,12 @@ bool XiaomiDevice::parse_xiaomi_device_(const ble_device_base::ESPBTDevice &devi
         continue;
       raw = plaintext;
     }
-    // Only a frame that decrypted (or was plain) advances the duplicate filter
-    this->last_frame_count_ = raw[4];
     if (!parse_xiaomi_message(raw, size, *res))
       continue;
+    // Only a frame that decrypted (or was plain) and carried a value advances the duplicate filter.
+    // Some devices interleave beacons without values and with their own frame count,
+    // which would otherwise reset the filter and let the next repeat of an event through.
+    this->last_frame_count_ = raw[4];
 #if ESPHOME_LOG_LEVEL >= ESPHOME_LOG_LEVEL_DEBUG
     char addr_buf[MAC_ADDRESS_PRETTY_BUFFER_SIZE];
     report_xiaomi_results(*res, device.address_str_to(addr_buf));
