@@ -140,7 +140,9 @@ void SM16825LightOutput::setup() {
     return;
   }
 
+#ifdef SM16825_USE_COLOR_ACCESSOR
   this->accessor_ = &this->internal_accessor_;
+#endif
 }
 
 void SM16825LightOutput::write_state(light::LightState *state) {

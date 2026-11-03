@@ -8,6 +8,8 @@
 #include "esphome/components/light/channel_colors.h"
 #include "esphome/core/component.h"
 
+#include "sm16825_compat.h"
+
 #include <driver/rmt_tx.h>
 
 namespace esphome::sm16825 {
@@ -46,6 +48,12 @@ class SM16825LightOutput final : public light::AddressableLight {
   void set_current_gain(uint8_t outr, uint8_t outg, uint8_t outb, uint8_t outw, uint8_t outy);
 
  protected:
+#ifndef SM16825_USE_COLOR_ACCESSOR
+  light::ESPColorView get_view_internal(int32_t index) const override {
+    return this->internal_accessor_.get_view(index);
+  }
+#endif
+
   size_t get_frame_size_() const { return this->num_leds_ * BYTES_PER_CHIP + TRAILER_BYTES; }
   static bool on_transmit_done(rmt_channel_handle_t channel, const rmt_tx_done_event_data_t *event, void *context);
 
@@ -62,7 +70,7 @@ class SM16825LightOutput final : public light::AddressableLight {
   bool invert_out_{false};
   uint8_t trailer_[TRAILER_BYTES]{};
 
-  light::CorrectedBufferColorAccessor internal_accessor_{nullptr, nullptr, {0, 1, 2}, &this->correction_};
+  ColorBufferAccessor internal_accessor_{nullptr, nullptr, {0, 1, 2}, &this->correction_};
 };
 
 }  // namespace esphome::sm16825
