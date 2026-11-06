@@ -163,7 +163,7 @@ status LED rather than driving it.
   - Color button
   - Touch slider (22 levels)
 
-See [`yeelight_light_lamp10.yaml`](yeelight_light_lamp10.yaml). The front panel is
+See [`yeelink_light_lamp10.yaml`](yeelink_light_lamp10.yaml). The front panel is
 an I2C device and needs the `yeelight_front_panel` component; its protocol is
 documented in [docs/yeelight-front-panel.md](docs/yeelight-front-panel.md). The
 LEDs need a PWM floor of about 7% to light.
