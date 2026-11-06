@@ -164,6 +164,18 @@ light:
     gamma_correct: 2.0
     default_transition_length: 500ms
     restore_mode: RESTORE_DEFAULT_OFF
+    # The slider LEDs show the brightness and the button LEDs light with the
+    # light; everything goes dark when it turns off.
+    on_state:
+      - lambda: |-
+          const auto &target_values = id(floor_light).remote_values;
+          if (target_values.is_on()) {
+            id(front_panel).set_slider_level(target_values.get_brightness());
+            id(front_panel).turn_on_leds(yeelight_front_panel::LED_POWER_BUTTON |
+                                         yeelight_front_panel::LED_COLOR_BUTTON);
+          } else {
+            id(front_panel).set_leds(yeelight_front_panel::LED_NONE);
+          }
 
 binary_sensor:
   - platform: yeelight_front_panel
