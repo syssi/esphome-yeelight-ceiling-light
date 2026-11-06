@@ -75,10 +75,3 @@ bytes only and loses the position.
 Not handled yet: a slider touch registered briefly next to a button press. The
 original firmware suppresses touches right after a button action
 (`touch_act_delay`, "ignore the touch action").
-
-## Known but not yet implemented
-
-The **Yeelight Staria Table Lamp** (`lamp9`) also has an I²C front panel, on a
-different address again, using 7 byte messages with a `0a` prefix and 22 slider
-levels. Note that `yeelight_light_lamp9.yaml` in this repository drives that
-lamp's plain GPIO button instead and leaves the panel unused.
