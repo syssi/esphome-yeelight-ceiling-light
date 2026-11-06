@@ -409,7 +409,7 @@ The ESP32 will enter the serial bootloader when GPIO0 (test point IO0 at the bac
 The ESP32 will enter the serial bootloader when GPIO0 (IO0 pad) is held low (GND) on reset / power.
 
 The stock firmware (2.1.7_0018) sends one frame of 9 x 80 bit plus the 32 bit current gain
-word `0x4A94A51F` and maps the colours as OUTR = blue, OUTG = red, OUTB = green. It also limits
+word `0x4A94A51F` and maps the colors as OUTR = blue, OUTG = red, OUTB = green. It also limits
 R + G + B to 381 (of 765) per segment.
 
 ### yeelink.light.ceil49

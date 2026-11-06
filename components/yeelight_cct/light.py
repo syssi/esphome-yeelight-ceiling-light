@@ -48,7 +48,7 @@ def kelvin(mireds):
 
 
 def validate_mixing_table(value):
-    """Require strictly rising colour temperatures."""
+    """Require strictly rising color temperatures."""
     temperatures = [kelvin(point[CONF_COLOR_TEMPERATURE]) for point in value]
     if temperatures != sorted(set(temperatures)):
         raise cv.Invalid(
