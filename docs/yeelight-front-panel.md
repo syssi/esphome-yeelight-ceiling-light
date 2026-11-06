@@ -50,7 +50,7 @@ needed; a plain 6 byte read returns:
 | 2 | colour button (top): same as the power button |
 | 3 | slider: `01` touch and while moving, `02` release |
 | 4 | slider position, `00` at the "−" end .. `15` at the "+" end |
-| 5 | always `00` |
+| 5 | unknown, only `00` seen so far; possibly both buttons touched at once. A change is logged and otherwise ignored |
 
 The component has to handle a few quirks of this panel:
 

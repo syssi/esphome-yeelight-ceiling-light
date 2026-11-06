@@ -112,8 +112,14 @@ void YeelightFrontPanel::read_event_() {
 }
 
 bool YeelightFrontPanel::parse_event_(const uint8_t *message, FrontPanelEvent *event) {
-  if (message[0] != 0x0A || message[5] != 0x00 || message[4] >= SLIDER_LEVELS)
+  if (message[0] != 0x0A || message[4] >= SLIDER_LEVELS)
     return false;
+
+  // Byte 5 has only been seen as 00 so far; it may report both buttons touched
+  // at once. Until that is known, a change is logged and otherwise ignored.
+  if (message[5] != this->last_message_[5]) {
+    ESP_LOGI(TAG, "Byte 5 changed to 0x%02X (power 0x%02X, color 0x%02X)", message[5], message[1], message[2]);
+  }
 
   // The panel reports its whole state on every read and never clears stale
   // fields: after a button press the slider still shows its last state and
