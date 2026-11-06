@@ -7,7 +7,7 @@
 #
 #   * The white channels will not conduct below roughly 6% PWM duty.
 #     yeelink_light_lamp9.yaml drives them straight from the light component,
-#     which makes low brightness drop out entirely and flicker as the colour
+#     which makes low brightness drop out entirely and flicker as the color
 #     temperature moves off the extremes. The template outputs below apply a
 #     floor with a deadband.
 #   * GPIO33 is not the status LED drive - it is an ENABLE for the LED's supply
@@ -43,9 +43,9 @@ substitutions:
   min_duty: "0.06"
 
   # --- button behaviour ---------------------------------------------------
-  # Brightness and colour temperature form one continuous ramp axis:
+  # Brightness and color temperature form one continuous ramp axis:
   #
-  #   1% @ warmest  <-->  100% @ warmest  <-->  100% @ mid colour temperature
+  #   1% @ warmest  <-->  100% @ warmest  <-->  100% @ mid color temperature
   #
   # Holding the button travels along it. Mid CT is the top end because both LED
   # channels run at full duty there, which is the brightest the lamp gets.
@@ -55,15 +55,15 @@ substitutions:
   button_step_interval_ms: "100"
   button_hold_time: 500ms
 
-  # Whether the ramp continues past 100% brightness into colour temperature.
+  # Whether the ramp continues past 100% brightness into color temperature.
   # false stops it at full brightness.
   button_ramp_ct: "true"
 
   # Requests below this are treated as off rather than being lifted to min_duty.
   # Needed because the light component does not produce an exact zero at the
-  # colour temperature extremes: mired rounding leaves the opposite channel at
+  # color temperature extremes: mired rounding leaves the opposite channel at
   # ~0.17%, which a plain min_power would raise to full floor and visibly
-  # contaminate the colour. Must sit above that residual and below the duty a
+  # contaminate the color. Must sit above that residual and below the duty a
   # channel receives at the lowest usable brightness.
   deadband: "0.004"
 
@@ -210,7 +210,7 @@ light:
     warm_white: output_warm
     cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
-    # Remember brightness and colour temperature across a power cycle but
+    # Remember brightness and color temperature across a power cycle but
     # come back off - this is what makes 'restore last state' work.
     restore_mode: RESTORE_AND_OFF
     # true, and this is measured rather than reasoned. Two lamps were compared
@@ -227,7 +227,7 @@ light:
     # With it off the converted lamp ran 1.75x brighter than stock ever drives
     # it, which means both LED sets at full duty on a shared heatsink.
     #
-    # The cost of true is at the bottom of the range: mid colour temperature
+    # The cost of true is at the bottom of the range: mid color temperature
     # splits the requested brightness across both channels, so each one reaches
     # the driver's conduction floor sooner. That is what the deadband and
     # ${min_duty} mapping on the outputs above exist to handle.
@@ -386,7 +386,7 @@ number:
           id(night_light).set_default_transition_length(ms);
 
 
-  # Used when "restore state on turn on" is off. Colour temperature is a
+  # Used when "restore state on turn on" is off. Color temperature is a
   # percentage of the lamp's range: 0% warmest, 100% coldest, so 50% is the
   # midpoint where both channels run at full duty.
   - platform: template
@@ -416,7 +416,7 @@ number:
     mode: box
 
 
-  # Brightness percent per second while the button is held. The colour
+  # Brightness percent per second while the button is held. The color
   # temperature stage of the ramp scales with it.
   - platform: template
     name: "ramp speed"

@@ -105,17 +105,17 @@ raising the duty until the LEDs lit steadily.
 Symptoms when this is not compensated for:
 
 - at or below ~4% brightness the light goes fully dark
-- at ~5% it lights only near the colour temperature extremes; moving toward the
+- at ~5% it lights only near the color temperature extremes; moving toward the
   middle makes it flicker and then drop out
 
-The second symptom is the giveaway. With `constant_brightness`, mid-range colour
+The second symptom is the giveaway. With `constant_brightness`, mid-range color
 temperature splits the requested brightness across both channels, so each one
 falls under the threshold even though their sum does not.
 
 ### Why `min_power` alone is not the fix
 
 `min_power` lifts *every* non-zero value, and `zero_means_zero` only catches an
-exact `0.0`. The light component does not produce an exact zero at the colour
+exact `0.0`. The light component does not produce an exact zero at the color
 temperature extremes: with the range declared as 2700K-6500K, a request for the
 warm end arrives rounded in mireds and leaves the cold channel at about **0.17%**
 rather than 0.
@@ -133,7 +133,7 @@ the channel is genuinely off, at or above it the floor applies.
 
 ### Range floor
 
-At the colour temperature extremes one channel carries everything, so the dimmest
+At the color temperature extremes one channel carries everything, so the dimmest
 usable output is around 6%. Mid-range both channels run, so it is roughly 12%
 combined. The night light uses a different driver, dims cleanly below 1%, and is
 the right output for very low light.
@@ -188,12 +188,12 @@ Home Assistant can also override the fade per call with the `transition`
 parameter of `light.turn_on` / `light.turn_off`, which takes precedence over the
 default.
 
-## Brightness across colour temperature
+## Brightness across color temperature
 
 ESPHome normalises the two channel fractions so `max(cw, ww) == 1`, then
 `constant_brightness` decides how they are combined. At 100% brightness:
 
-| Colour temp | `constant_brightness: true` | `constant_brightness: false` |
+| Color temp | `constant_brightness: true` | `constant_brightness: false` |
 | ----------- | --------------------------- | ---------------------------- |
 | 2700K warm  | one channel 100%, sum 100%  | one channel 100%, sum 100%   |
 | 3815K       | each 50%, sum 100%          | **both 100%, sum 200%**      |
@@ -234,7 +234,7 @@ rather than halfway along it.
 
 ### What `true` costs at the bottom of the range
 
-Splitting the requested brightness across both channels at mid colour temperature
+Splitting the requested brightness across both channels at mid color temperature
 sends each one closer to the driver's conduction floor, which is what the deadband
 and `min_duty` mapping on the outputs exist to handle. Measured at 1% brightness:
 
@@ -246,7 +246,7 @@ and `min_duty` mapping on the outputs exist to handle. Measured at 1% brightness
 
 Two things fall out of that.
 
-The lamp gets **brighter** toward mid colour temperature at low brightness -
+The lamp gets **brighter** toward mid color temperature at low brightness -
 1.67x the extremes here - because `min_duty` is a floor applied *per channel*, so
 lighting both doubles it. Stock does the same thing, 1.39x, so the shape is not an
 artefact of this config; it is milder on stock because its floor is lower.
@@ -281,11 +281,11 @@ here - it keeps the mapping predictable enough for the `${min_duty}` floor and
 deadband to work. A value below 1 would push more output into the low end.
 
 Matching stock's low-end feel would need its curve measured properly first: a
-brightness sweep at fixed colour temperature on a stock unit, enough points to see
+brightness sweep at fixed color temperature on a stock unit, enough points to see
 whether it is even a power law or a lookup table with a knee. Two points cannot
 tell those apart.
 
-One edge worth knowing: at mid colour temperature each channel receives half the
+One edge worth knowing: at mid color temperature each channel receives half the
 requested brightness, so below about **0.8%** both fall under the `${deadband}`
 and the lamp goes fully dark. Home Assistant's slider bottoms out at 1%, so this
 is only reachable from a scene or automation setting a fractional value.

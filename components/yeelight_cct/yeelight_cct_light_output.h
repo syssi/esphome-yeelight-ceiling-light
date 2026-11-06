@@ -26,7 +26,7 @@ enum class BrightnessCurve : uint8_t {
   QUADRATIC,
 };
 
-/// Colour temperature light that drives the warm and cold channel like the Yeelight stock firmware.
+/// Color temperature light that drives the warm and cold channel like the Yeelight stock firmware.
 class YeelightCCTLightOutput : public light::LightOutput {
  public:
   // Setters called by the code generated from light.py.
@@ -38,15 +38,15 @@ class YeelightCCTLightOutput : public light::LightOutput {
   void set_min_share(float min_share) { this->min_share_ = min_share; }
   void set_min_brightness(float min_brightness) { this->min_brightness_ = min_brightness; }
 
-  /// Report a colour-temperature-only light whose range is the first to the last table point.
+  /// Report a color-temperature-only light whose range is the first to the last table point.
   light::LightTraits get_traits() override;
 
-  /// Compute the warm and cold level for the current colour temperature and brightness.
+  /// Compute the warm and cold level for the current color temperature and brightness.
   /// ESPHome calls this on every state change and on every step of a transition.
   void write_state(light::LightState *state) override;
 
  protected:
-  /// One calibration point: warm and cold share of full scale (0..1) at a colour temperature.
+  /// One calibration point: warm and cold share of full scale (0..1) at a color temperature.
   struct MixPoint {
     uint16_t kelvin;
     float warm;
