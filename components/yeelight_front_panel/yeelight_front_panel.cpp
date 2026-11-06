@@ -3,6 +3,7 @@
 #include "esphome/core/log.h"
 
 #include <algorithm>
+#include <cinttypes>
 #include <cmath>
 #include <cstring>
 
@@ -29,7 +30,7 @@ void YeelightFrontPanel::setup() {
     // A trigger line stuck low, or a wrong pin that never moves, shows up here
     // even when no interrupt ever fires.
     this->set_interval("health", 10000, [this]() {
-      ESP_LOGD(TAG, "Health: trigger level=%d, interrupts=%u, handled=%u, leds=0x%04X%s",
+      ESP_LOGD(TAG, "Health: trigger level=%d, interrupts=%" PRIu32 ", handled=%" PRIu32 ", leds=0x%04X%s",
                this->trigger_pin_->digital_read(), this->store_.event_count, this->last_event_count_, this->led_state_,
                this->leds_dirty_ ? LOG_STR_LITERAL(" (pending)") : LOG_STR_LITERAL(""));
     });
@@ -48,9 +49,9 @@ void YeelightFrontPanel::loop() {
   if (event_count != this->last_event_count_) {
     const uint32_t missed = event_count - this->last_event_count_ - 1;
     if (missed > 0) {
-      ESP_LOGW(TAG, "Missed %u front panel event(s)", missed);
+      ESP_LOGW(TAG, "Missed %" PRIu32 " front panel event(s)", missed);
     }
-    ESP_LOGD(TAG, "Trigger interrupt #%u, line now %d", event_count, this->trigger_pin_->digital_read());
+    ESP_LOGD(TAG, "Trigger interrupt #%" PRIu32 ", line now %d", event_count, this->trigger_pin_->digital_read());
     this->last_event_count_ = event_count;
     this->read_event_();
     this->last_read_ms_ = millis();
