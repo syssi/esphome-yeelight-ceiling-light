@@ -125,7 +125,7 @@ bool YeelightFrontPanel::parse_event_(const uint8_t *message, FrontPanelEvent *e
   // fields: after a button press the slider still shows its last state and
   // position. Only a field that changed since the previous message is an event.
   // Where several changed, the original touch_event_handler's precedence
-  // applies: colour button over power button over slider.
+  // applies: color button over power button over slider.
   //
   // A button can also drop from touch or held straight to 00 without the 03
   // ever being read (seen when the panel released the trigger line early).

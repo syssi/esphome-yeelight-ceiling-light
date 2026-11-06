@@ -1,6 +1,6 @@
 # Yeelight Staria LED Floor Lamp (YLLD01YL, yeelink.light.lamp10)
 #
-# RGB plus tunable white, with an I2C front panel: a power button, a colour
+# RGB plus tunable white, with an I2C front panel: a power button, a color
 # button and a touch slider. The panel needs the yeelight_front_panel component;
 # its protocol is documented in docs/yeelight-front-panel.md.
 #
@@ -157,7 +157,7 @@ light:
     cold_white: output_cold
     warm_white_color_temperature: 2700 K
     cold_white_color_temperature: 6500 K
-    # The original firmware never mixes colour and white.
+    # The original firmware never mixes color and white.
     color_interlock: true
     # With the default 2.8 the lower third of the range sits on the min_duty
     # floor; linear duty looked uneven. 2.0 was even across the slider.
@@ -184,7 +184,7 @@ binary_sensor:
     on_press:
       - light.toggle: floor_light
 
-  # Steps through three whites and five colours, keeping the brightness.
+  # Steps through three whites and five colors, keeping the brightness.
   - platform: yeelight_front_panel
     name: "color button"
     part: color_button

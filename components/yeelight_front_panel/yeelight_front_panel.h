@@ -22,7 +22,7 @@ static const uint8_t LED_COMMAND = 0xF0;
 ///
 ///   [0]  fixed 0A
 ///   [1]  power button:  01 touch, 02 held (repeats), 03 release
-///   [2]  colour button: 01 touch, 02 held (repeats), 03 release
+///   [2]  color button: 01 touch, 02 held (repeats), 03 release
 ///   [3]  slider: 01 touch / moving, 02 release
 ///   [4]  slider position, 00 at the "-" end (power button) .. 15 at "+"
 ///   [5]  unknown, only 00 seen so far

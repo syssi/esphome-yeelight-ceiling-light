@@ -1,7 +1,7 @@
 # Yeelight I²C front panel
 
 The Yeelight Staria Floor Lamp (`yeelink.light.lamp10`) puts its power button,
-colour button and brightness slider on a small microcontroller of its own
+color button and brightness slider on a small microcontroller of its own
 rather than wiring them to the ESP32 directly. That controller is an I²C slave,
 and it also drives the LEDs that illuminate the panel. Because there is no
 stock ESPHome component that can speak to it, the lamp needs the
@@ -47,7 +47,7 @@ needed; a plain 6 byte read returns:
 |---|---|
 | 0 | fixed `0A` |
 | 1 | power button (bottom): `01` touch, `02` held (repeats), `03` release |
-| 2 | colour button (top): same as the power button |
+| 2 | color button (top): same as the power button |
 | 3 | slider: `01` touch and while moving, `02` release |
 | 4 | slider position, `00` at the "−" end .. `15` at the "+" end |
 | 5 | unknown, only `00` seen so far; possibly both buttons touched at once. A change is logged and otherwise ignored |
@@ -58,7 +58,7 @@ The component has to handle a few quirks of this panel:
   and stale fields are never cleared — after a button press the slider still
   shows its last state and position. The component therefore only emits an
   event for a field that changed since the previous message, with the original
-  firmware's precedence: colour button over power button over slider.
+  firmware's precedence: color button over power button over slider.
 * **The trigger line can stay low.** A falling-edge interrupt alone loses
   events, so the hub keeps reading every 50 ms while the line is low. Reads
   with nothing pending return `0A:00:00:00:00:00`.
