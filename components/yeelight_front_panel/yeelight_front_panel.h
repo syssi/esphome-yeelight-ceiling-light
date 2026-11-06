@@ -7,14 +7,16 @@
 
 namespace esphome::yeelight_front_panel {
 
-/// LED updates are 3 bytes: a command byte followed by the 16 bit LED state.
-/// Established by static analysis of the original firmware: the front panel
-/// driver writes three bytes to I2C address 0x50 on I2C port 1, caching a 16 bit
-/// LED state into the last two bytes first -- structurally the same LED update
-/// the Bedside Lamp 2 performs.
+/// LED updates are 3 bytes, always written in full:
+///
+///   [0]  fixed F0
+///   [1]  slider LEDs 1..8, bit n = LED n + 1
+///   [2]  bit 0 = slider LED 9, bit 1 and bit 2 = the two button LEDs
+///
+/// The LED state below keeps these bits in the same order, so byte 1 is its low
+/// byte and byte 2 its high byte.
 static const uint8_t LED_MESSAGE_LENGTH = 3;
-/// Unverified: the command byte that precedes the 16 bit LED state.
-static const uint8_t LED_COMMAND = 0x02;
+static const uint8_t LED_COMMAND = 0xF0;
 
 /// Events are read as 6 bytes, captured on the device on 2026-09-12:
 ///
@@ -29,8 +31,8 @@ static const uint8_t LED_COMMAND = 0x02;
 /// then return all zeros once it has nothing more to report.
 static const uint8_t EVENT_LENGTH = 6;
 
-/// Unverified: taken from the number of slider LEDs visible on the device.
-static const uint8_t SLIDER_LEDS = 10;
+/// The slider has 9 LEDs.
+static const uint8_t SLIDER_LEDS = 9;
 /// Verified: positions 00..15 were all observed.
 static const uint8_t SLIDER_LEVELS = 22;
 
@@ -49,9 +51,12 @@ enum class FrontPanelAction : uint8_t {
   RELEASE = 2,
 };
 
-/// LED bitmask, written to the panel as is.
+/// LED bitmask: the low byte goes into message byte 1, the high byte into
+/// message byte 2.
 ///
-/// Slider LED 1 is the one closest to the power button.
+/// Slider LED 1 is presumably the one closest to the power button, where the
+/// slider position counts from. Which button LED is bit 9 and which bit 10 has
+/// not been verified on the device.
 enum FrontPanelLED : uint16_t {
   LED_NONE = 0,
   LED_SLIDER_1 = 1 << 0,
@@ -63,11 +68,10 @@ enum FrontPanelLED : uint16_t {
   LED_SLIDER_7 = 1 << 6,
   LED_SLIDER_8 = 1 << 7,
   LED_SLIDER_9 = 1 << 8,
-  LED_SLIDER_10 = 1 << 9,
-  LED_POWER_BUTTON = 1 << 10,
-  LED_COLOR_BUTTON = 1 << 11,
-  LED_ALL_SLIDER = 0x03FF,
-  LED_ALL = 0x0FFF,
+  LED_POWER_BUTTON = 1 << 9,
+  LED_COLOR_BUTTON = 1 << 10,
+  LED_ALL_SLIDER = 0x01FF,
+  LED_ALL = 0x07FF,
 };
 
 struct FrontPanelEvent {
@@ -138,7 +142,8 @@ class YeelightFrontPanel : public Component, public i2c::I2CDevice {
   uint32_t last_read_ms_{0};
   bool last_trigger_level_{true};
   uint16_t led_state_{LED_NONE};
-  bool leds_dirty_{true};
+  /// Nothing is written until the LED state first changes.
+  bool leds_dirty_{false};
   /// The panel reports its whole state on every read, so events are derived
   /// from what changed since the previous message.
   uint8_t last_message_[EVENT_LENGTH]{};

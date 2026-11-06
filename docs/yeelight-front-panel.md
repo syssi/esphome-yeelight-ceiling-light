@@ -17,8 +17,8 @@ Inspired by [esphome-xiaomi_bslamp2](https://github.com/mmakaay/esphome-xiaomi_b
 1. The panel pulls a GPIO line low when an event is waiting.
 2. The ESP32 reads a message back and decodes it.
 
-LED updates go the other way: the ESP32 writes a message containing a 16 bit
-bitmask of the LEDs that should be lit.
+LED updates go the other way: the ESP32 writes a message with a bit for each
+LED that should be lit.
 
 The component keeps the interrupt handler to a single counter increment and
 does all I²C work from the main loop, so a slow bus can never block the ISR.
@@ -28,11 +28,17 @@ does all I²C work from the main loop, so a slow bus can never block the ISR.
 Address `0x50`, SDA GPIO21, SCL GPIO19, trigger GPIO16. LED messages are
 3 bytes, events are read as 6 bytes. 22 slider levels.
 
-The LED message comes from static analysis of the original firmware: the front
-panel driver writes three bytes to slave `0x50` on I²C port 1, and caches a
-16 bit LED state into the last two bytes immediately before the write. So the
-LED message is `<command>:<state_hi>:<state_lo>`. The command byte and the
-slider LED count are still unverified.
+An LED message is always written in full, all three bytes to `0x50`:
+
+| Byte | Meaning |
+|---|---|
+| 0 | fixed `F0` |
+| 1 | slider LEDs 1–8, bit n = LED n + 1 |
+| 2 | bit 0 = slider LED 9, bit 1 and bit 2 = the two button LEDs |
+
+The slider has 9 LEDs. Which button LED is bit 1 and which bit 2 has not been
+verified on the device. The component only writes when the LED state changes,
+and does not retry a failed write.
 
 The event layout was captured on the device (2026-09-12). No request message is
 needed; a plain 6 byte read returns:

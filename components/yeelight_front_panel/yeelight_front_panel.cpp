@@ -179,16 +179,17 @@ bool YeelightFrontPanel::parse_event_(const uint8_t *message, FrontPanelEvent *e
 }
 
 void YeelightFrontPanel::flush_leds_() {
-  const uint8_t message[LED_MESSAGE_LENGTH] = {LED_COMMAND, static_cast<uint8_t>(this->led_state_ >> 8),
-                                               static_cast<uint8_t>(this->led_state_ & 0xFF)};
+  const uint8_t message[LED_MESSAGE_LENGTH] = {LED_COMMAND, static_cast<uint8_t>(this->led_state_ & 0xFF),
+                                               static_cast<uint8_t>(this->led_state_ >> 8)};
+  // A failed write is logged and not retried: the next change of the LED state
+  // writes the whole state again.
+  this->leds_dirty_ = false;
   char hex[format_hex_pretty_size(LED_MESSAGE_LENGTH)];
   ESP_LOGD(TAG, "LED update 0x%04X: %s", this->led_state_, format_hex_pretty_to(hex, message, LED_MESSAGE_LENGTH, '.'));
   const i2c::ErrorCode err = this->write(message, LED_MESSAGE_LENGTH);
   if (err != i2c::ERROR_OK) {
     ESP_LOGW(TAG, "Updating the front panel LEDs failed (i2c error %d)", err);
-    return;
   }
-  this->leds_dirty_ = false;
 }
 
 void YeelightFrontPanel::set_slider_level(float level) {
@@ -197,16 +198,11 @@ void YeelightFrontPanel::set_slider_level(float level) {
     return;
   }
 
-  uint8_t lit = static_cast<uint8_t>(std::ceil(std::min(level, 1.0f) * SLIDER_LEDS));
-  if (lit < 1)
-    lit = 1;
+  // At least one LED stays lit for any level above zero.
+  const uint8_t lit_count = std::max<uint8_t>(1, static_cast<uint8_t>(std::ceil(std::min(level, 1.0f) * SLIDER_LEDS)));
+  const uint16_t slider_leds = static_cast<uint16_t>((1u << lit_count) - 1u);
 
-  uint16_t leds = 0;
-  for (uint8_t i = 0; i < lit; i++)
-    leds |= 1 << i;
-
-  this->turn_off_leds(LED_ALL_SLIDER);
-  this->turn_on_leds(leds);
+  this->set_leds((this->led_state_ & ~LED_ALL_SLIDER) | slider_leds);
 }
 
 }  // namespace esphome::yeelight_front_panel
