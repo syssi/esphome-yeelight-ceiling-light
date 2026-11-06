@@ -190,23 +190,24 @@ binary_sensor:
     part: color_button
     on_press:
       - lambda: |-
-          struct Preset { bool white; float kelvin; float r, g, b; };
+          struct Preset { bool white; float kelvin; float red, green, blue; };
           static const Preset PRESETS[] = {
               {true, 2700, 0, 0, 0},   {true, 4000, 0, 0, 0},   {true, 6500, 0, 0, 0},
               {false, 0, 1, 0, 0},     {false, 0, 1, 0.5, 0},   {false, 0, 0, 1, 0},
               {false, 0, 0, 0, 1},     {false, 0, 0.6, 0, 1},
           };
           static const size_t COUNT = sizeof(PRESETS) / sizeof(PRESETS[0]);
-          static size_t index = 0;
-          index = (index + 1) % COUNT;
-          const Preset &p = PRESETS[index];
+          // The first press selects the first preset.
+          static size_t next_index = 0;
+          const Preset &preset = PRESETS[next_index];
+          next_index = (next_index + 1) % COUNT;
           auto call = id(floor_light).turn_on();
-          if (p.white) {
+          if (preset.white) {
             call.set_color_mode(ColorMode::COLD_WARM_WHITE);
-            call.set_color_temperature(1000000.0f / p.kelvin);
+            call.set_color_temperature(1000000.0f / preset.kelvin);
           } else {
             call.set_color_mode(ColorMode::RGB);
-            call.set_rgb(p.r, p.g, p.b);
+            call.set_rgb(preset.red, preset.green, preset.blue);
           }
           call.set_transition_length(300);
           call.perform();
