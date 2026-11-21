@@ -6,6 +6,9 @@ substitutions:
 esphome:
   name: ${name}
   friendly_name: ${name}
+  project:
+    name: "syssi.esphome-yeelight-ceiling-light"
+    version: 2.0.0
 
 esp32:
   board: esp32doit-devkit-v1

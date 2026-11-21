@@ -27,10 +27,6 @@
 substitutions:
   name: yeelight-light-lamp9-pro
 
-  # Shown in Home Assistant next to the model. Bump when the config changes in a
-  # way worth telling apart on the device page.
-  project_version: "1.0"
-
   # Fade applied when the light turns on or off, in milliseconds. The stock
   # firmware fades over roughly a second. This is the power-on default; it is
   # also adjustable at runtime from the "transition length" number entity, whose
@@ -71,14 +67,9 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   min_version: 2024.10.0
-  # Home Assistant otherwise labels the device "esp32doit-devkit-v1 by Espressif":
-  # the API reports ESPHOME_BOARD as the model and a per-platform hardcoded string
-  # as the manufacturer, neither of which is configurable. HA does however split
-  # project.name on its single dot and use the halves as manufacturer and model,
-  # so setting it here gets the real hardware named instead of the dev board.
   project:
-    name: "Yeelight.Staria Bedside Lamp Pro"
-    version: "${project_version}"
+    name: "syssi.esphome-yeelight-ceiling-light"
+    version: 2.0.0
   on_boot:
     priority: -100
     then:

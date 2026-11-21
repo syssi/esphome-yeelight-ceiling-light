@@ -18,6 +18,9 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   min_version: 2026.11.0
+  project:
+    name: "syssi.esphome-yeelight-ceiling-light"
+    version: 2.0.0
 
 external_components:
   - source: ${external_components_source}

@@ -297,14 +297,16 @@ The API reports `ESPHOME_BOARD` as the model and a hardcoded per-platform string
 as the manufacturer, and neither is configurable.
 
 Home Assistant does, however, split `project.name` on its single dot and use the
-halves, so the config sets:
+halves. Like all examples of this repository, the config sets:
 
 ```yaml
 esphome:
   project:
-    name: "Yeelight.Staria Bedside Lamp Pro"
-    version: "1.0"
+    name: "syssi.esphome-yeelight-ceiling-light"
+    version: 2.0.0
 ```
 
-which yields `manufacturer=Yeelight`, `model=Staria Bedside Lamp Pro`, and a
-`sw_version` of `1.0 (ESPHome <version>)`.
+which yields `manufacturer=syssi`, `model=esphome-yeelight-ceiling-light`, and a
+`sw_version` of `2.0.0 (ESPHome <version>)`. To name the real hardware instead,
+use `name: "Yeelight.Staria Bedside Lamp Pro"`, which yields
+`manufacturer=Yeelight` and `model=Staria Bedside Lamp Pro`.
